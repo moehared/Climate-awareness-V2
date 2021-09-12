@@ -10,7 +10,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 
 
 # project Documentation
-0: [project start-up sign off presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
+0: [project proposal presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
 
 
 
