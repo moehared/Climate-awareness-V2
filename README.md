@@ -1,5 +1,5 @@
-# project abstract
-this application is intened with the hope of reducing carbon footprint to support goal 13 of UN's [sustainable Development](https://www.un.org/sustainabledevelopment/climate-change/) goal.
+# Project Abstract
+This application is intened with the hope of reducing carbon footprint to support goal 13 of UN's [sustainable Development](https://www.un.org/sustainabledevelopment/climate-change/) goal.
 Climate change is one of many important environmental issues that needs to be addressed. Climate change is caused by the increase of greenhouse gases in the atmosphere. This increase of GHG in the atmosphere is due to various human activities that emit the major GHG such as carbon dioxide, methane, nitrous oxide, fluorinated gases, and water vapour. 
 
 We want to help educate the community about the climate issues we face by developing a knowledge-based content application that provides users with a supportive community, informative resources, and tools to help lower their carbon footprint. 
@@ -9,7 +9,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 
 
 
-# project Documentation
+# Project Documentation
 0: [project proposal presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
 <br>
 1: [community characteristics & Orientation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/community%20characteristics/P02%20-%20405%20-%20Activity%20-%20Community%20characteristics%20%20orientation.pdf)
