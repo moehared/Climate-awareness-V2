@@ -11,8 +11,11 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 
 # project Documentation
 0: [project proposal presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
+<br>
+1: [project vlog introduction documentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Project%20Vlog%20%231.pdf) and [presentation slides](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Vlog%20Presentation.pdf) 
 
 # project vlogs
+* [project vlog video #1](https://youtu.be/VdBLrs5eckA)
 
 ## License 
 
