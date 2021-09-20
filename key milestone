@@ -8,19 +8,20 @@
   2.2: Functional requirement 
   2.3: Stakeholder requirement 
   2.4: Technical requirement 
-3: System design and architecture 
+  
+3: System design and architecture oct 8 - oct 22
   3.1: User story map and user story scenarios 
   3.2: Data model diagram e.g Uml diagram, system context, sequence diagram
   3.3: Database modeling
   3.4: User: Developer/administrator (server requirements, installation instructions, etc.),
 
 
-4: Software design 
+4: Software design oct 22 - nov 5 
   4.1: Lo-fi prototypes
   4.2: Hi-fi prototype
   4:3 Testing/Results of Lo-fi and Hi-fi prototypes
 
-5: Development
+5: Development nov 5 - dec 3
   5.1: Build MVP 1 
   5.2: Run tests for MVP 1
 
