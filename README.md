@@ -7,7 +7,7 @@ We want to help educate the community about the climate issues we face by develo
 This application is built to support the United Nations Sustainability Goal 13 Climate Action.
 Focusing on Target 13.3: Improve education, awareness-raising and human and institutional capacity on climate change mitigation, adaptation, impact reduction and early warning.
 
-Test
+
 
 # project Documentation
 0: [project proposal presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
