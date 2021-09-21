@@ -13,8 +13,9 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 1: [community characteristics & Orientation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/community%20characteristics/P02%20-%20405%20-%20Activity%20-%20Community%20characteristics%20%20orientation.pdf)
 <br>
 2: [project vlog# 1 introduction documentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Project%20Vlog%20%231.pdf) and [presentation slides](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Vlog%20Presentation.pdf) 
-## 3: project requirements
+###### 3: project requirements
 * [Technical Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/technical%20requirment.pdf)
+* [technology configuration](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/P03%20-%20405%20-%20Activity%20-%20Technology%20configuration%20inventory.pdf)
 
 # project vlogs
 * [project vlog video #1](https://youtu.be/VdBLrs5eckA)
