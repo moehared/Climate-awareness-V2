@@ -14,6 +14,9 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 <br>
 2: [project vlog# 1 introduction documentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Project%20Vlog%20%231.pdf) and [presentation slides](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Vlog%20Presentation.pdf) 
 
+3: ## project requirements
+* [Technical Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/technical%20requirment.pdf)
+
 # project vlogs
 * [project vlog video #1](https://youtu.be/VdBLrs5eckA)
 
