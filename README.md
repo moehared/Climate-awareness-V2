@@ -14,6 +14,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 <br>
 2: [project vlog# 1 introduction documentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Project%20Vlog%20%231.pdf) and [presentation slides](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Vlog%20Presentation.pdf) 
 ## 3: project requirements
+* [business case requirement](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/Ch%202%20-%20Business%20Case%20Template%20(1).pdf)
 * [Technical Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/technical%20requirment.pdf)
 * [Technology Configuration](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/P03%20-%20405%20-%20Activity%20-%20Technology%20configuration%20inventory.pdf)
 * [Functional Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/Functional%20Requirements.pdf)
