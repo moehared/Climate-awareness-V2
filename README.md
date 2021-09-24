@@ -8,7 +8,7 @@ This application is built to support the United Nations Sustainability Goal 13 C
 Focusing on Target 13.3: Improve education, awareness-raising and human and institutional capacity on climate change mitigation, adaptation, impact reduction and early warning.
 
 # Project Documentation
-0: [project charter](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
+0: [project proposal](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
 <br>
 1: [community characteristics & Orientation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/community%20characteristics/P02%20-%20405%20-%20Activity%20-%20Community%20characteristics%20%20orientation.pdf)
 <br>
