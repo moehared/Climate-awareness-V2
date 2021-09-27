@@ -1,5 +1,5 @@
 # Project Abstract
-This application is intened with the hope of reducing carbon footprint to support goal 13 of UN's [sustainable Development](https://www.un.org/sustainabledevelopment/climate-change/) goal.
+This application is intended with the hope of reducing carbon footprint to support goal 13 of UN's [sustainable Development](https://www.un.org/sustainabledevelopment/climate-change/) goal.
 Climate change is one of many important environmental issues that needs to be addressed. Climate change is caused by the increase of greenhouse gases in the atmosphere. This increase of GHG in the atmosphere is due to various human activities that emit the major GHG such as carbon dioxide, methane, nitrous oxide, fluorinated gases, and water vapour. 
 
 We want to help educate the community about the climate issues we face by developing a knowledge-based content application that provides users with a supportive community, informative resources, and tools to help lower their carbon footprint. 
