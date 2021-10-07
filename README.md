@@ -26,6 +26,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [role/attribute-based access provisions](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/role_base_access.pdf)
 * [user stories map](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/user%20stories%20map.pdf)
 * [authentication flow chart](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/user-flowchart.pdf)
+* [non-tested lofi ui](https://github.com/moehared/Climate-awareness-V2/tree/main/design/Lofi_ui_)
 
 
 # project vlogs
