@@ -34,7 +34,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 
 
 # Project vlogs
-* [Project vlog video #1](https://youtu.be/VdBLrs5eckA)
+* [Project vlog video #1](https://youtu.be/VdBLrs5eckA) due Sept 17 , 2021
 
 ## License 
 
