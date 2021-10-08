@@ -23,12 +23,12 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 ### 3: System Design and Architecture - due Oct 8, 2021
 * [Class Diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Class%20Diagrams.drawio.pdf)
 * [Database Model](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Database%20Model%20(1).pdf)
-* [System architectural diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/software%20system%20architecture.pdf)
-* [Admin flow chart](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/admin-flowchart.pdf)
+* [System Architectural Diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/software%20system%20architecture.pdf)
+* [Admin Flow Chart](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/admin-flowchart.pdf)
 * [Role/attribute-based access provisions](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/role_base_access.pdf)
-* [User stories map](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/user%20stories%20map.pdf)
-* [Authentication flow chart](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/user-flowchart.pdf)
-* [Non-tested lofi ui](https://github.com/moehared/Climate-awareness-V2/tree/main/design/Lofi_ui_)
+* [User Stories Map](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/user%20stories%20map.pdf)
+* [Authentication Flow Chart](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/user-flowchart.pdf)
+* [Non-Tested Lofi UI](https://github.com/moehared/Climate-awareness-V2/tree/main/design/Lofi_ui_)
 
 
 # Project vlogs
