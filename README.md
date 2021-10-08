@@ -10,9 +10,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 # Project Documentation
 ### 1: project initialization  - due Sept 17,2021
 * [project proposal](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
-<br>
 * [community characteristics & Orientation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/community%20characteristics/P02%20-%20405%20-%20Activity%20-%20Community%20characteristics%20%20orientation.pdf)
-<br>
 * [project vlog# 1 introduction documentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Project%20Vlog%20%231.pdf) and [presentation slides](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Vlog%20Presentation.pdf) 
 ### 2: project requirements - due Sept 24,2021
 * [business case requirement](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/Ch%202%20-%20Business%20Case%20Template%20(1).pdf)
