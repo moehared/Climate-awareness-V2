@@ -8,12 +8,13 @@ This application is built to support the United Nations Sustainability Goal 13 C
 Focusing on Target 13.3: Improve education, awareness-raising and human and institutional capacity on climate change mitigation, adaptation, impact reduction and early warning.
 
 # Project Documentation
-0: [project proposal](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
+### 1: project initialization  - due Sept 17,2021
+* [project proposal](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20sign%20off/ENSE%20400%20Project%20Start-up_.pdf)
 <br>
-1: [community characteristics & Orientation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/community%20characteristics/P02%20-%20405%20-%20Activity%20-%20Community%20characteristics%20%20orientation.pdf)
+* [community characteristics & Orientation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/community%20characteristics/P02%20-%20405%20-%20Activity%20-%20Community%20characteristics%20%20orientation.pdf)
 <br>
-2: [project vlog# 1 introduction documentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Project%20Vlog%20%231.pdf) and [presentation slides](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Vlog%20Presentation.pdf) 
-### 3: project requirements - due Sept 24,2021
+* [project vlog# 1 introduction documentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Project%20Vlog%20%231.pdf) and [presentation slides](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/vlog1/Vlog%20Presentation.pdf) 
+### 2: project requirements - due Sept 24,2021
 * [business case requirement](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/Ch%202%20-%20Business%20Case%20Template%20(1).pdf)
 * [project charter](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/Ch%202%20-%20Project%20Charter%20Template.pdf)
 * [stakeholder analysis](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/Ch%203%20-%20Stakeholder%20Analysis%20Template.pdf)
@@ -21,7 +22,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [Technical Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/technical%20requirment.pdf)
 * [Technology Configuration](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/P03%20-%20405%20-%20Activity%20-%20Technology%20configuration%20inventory.pdf)
 
-### 4: System design and architecture - due Oct 8, 2021
+### 3: System design and architecture - due Oct 8, 2021
 * [class diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Class%20Diagrams.drawio.pdf)
 * [database model](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Database%20Model%20(1).pdf)
 * [system architectural diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/software%20system%20architecture.pdf)
