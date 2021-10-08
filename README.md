@@ -21,7 +21,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [Technical Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/technical%20requirment.pdf)
 * [Technology Configuration](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/P03%20-%20405%20-%20Activity%20-%20Technology%20configuration%20inventory.pdf)
 
-### 4: System design and architecture 
+### 4: System design and architecture - due Oct 8
 * [class diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Class%20Diagrams.drawio.pdf)
 * [database model](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Database%20Model%20(1).pdf)
 * [system architectural diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/software%20system%20architecture.pdf)
