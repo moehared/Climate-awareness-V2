@@ -23,6 +23,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 
 ### 4: System design and architecture 
 * [class diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Class%20Diagrams.drawio.pdf)
+* [database model](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Database%20Model%20(1).pdf)
 * [system architectural diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/software%20system%20architecture.pdf)
 * [admin flow chart](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/admin-flowchart.pdf)
 * [role/attribute-based access provisions](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/role_base_access.pdf)
