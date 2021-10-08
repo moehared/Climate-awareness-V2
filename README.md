@@ -19,6 +19,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [Functional Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/Functional%20Requirements.pdf)
 * [Technical Requirements](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/technical%20requirment.pdf)
 * [Technology Configuration](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20requirement/P03%20-%20405%20-%20Activity%20-%20Technology%20configuration%20inventory.pdf)
+* [Scrum 1 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%201.pdf)
 
 ### 3: System Design and Architecture - due Oct 8, 2021
 * [Class Diagram](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/Class%20Diagrams.drawio.pdf)
