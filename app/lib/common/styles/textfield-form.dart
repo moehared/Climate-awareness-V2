@@ -1,6 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
-final kTextFieldform = InputDecoration(
+const kTextFieldform = InputDecoration(
   fillColor: Colors.white,
   filled: true,
   contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
