@@ -1,0 +1,6 @@
+enum ViewState {
+  IDLE,
+  BUSY,
+}
+
+enum AuthMode { LOGIN, SIGNUP, FORGET_PASSWORD, SIGNUP_WITH_THIRD_PARTY }

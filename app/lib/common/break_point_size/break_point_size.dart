@@ -1,0 +1,4 @@
+const MOBILE_SIZE = 350;
+const TABLET_SIZE = 600;
+const DESKTOP_SIZE = 800;
+const WEBSITE_SIZE = 1200;
