@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1046361626966-0ruvmf2t1nutm7lg0vtt5850p97nonld.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1046361626966-0ruvmf2t1nutm7lg0vtt5850p97nonld</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCY2IvYt-wL9sINOH1zCwC4-wUb4k8FdAA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1046361626966</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.climateawarenesscapestone.app</string>
+	<key>PROJECT_ID</key>
+	<string>capestone-project-2022</string>
+	<key>STORAGE_BUCKET</key>
+	<string>capestone-project-2022.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1046361626966:ios:d008f986e5566fbc2cdef7</string>
+</dict>
+</plist>

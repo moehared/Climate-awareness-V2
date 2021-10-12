@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1046361626966",
+    "project_id": "capestone-project-2022",
+    "storage_bucket": "capestone-project-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046361626966:android:01af0bbac01fd1992cdef7",
+        "android_client_info": {
+          "package_name": "com.climateawareness.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046361626966-jmc1n5ots16e35tro2tosp5hmvejffea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaI9Ygfp-7s4Mb9s4gZj94GW_i0lreTic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046361626966-jmc1n5ots16e35tro2tosp5hmvejffea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
