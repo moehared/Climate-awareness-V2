@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:app/ui/widgets/image-widgets/logo_image.dart';
+import 'package:app/ui/widgets/text-widgets/user_registeration_text_title.dart';
 import 'package:flutter/material.dart';
 
 class LoginWithThirdPartyApplication extends StatelessWidget {
@@ -10,16 +11,27 @@ class LoginWithThirdPartyApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
-        LogoImageAvatar(
-          imageAsset: 'images/facebook.png',
-          isCircle: true,
+    return Column(
+      children: [
+        UserRegisterationTitleText(
+          longTextTitle: "Or Login with",
+          smallText: true,
         ),
-        LogoImageAvatar(
-          imageAsset: 'images/google.png',
-          isCircle: true,
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            LogoImageAvatar(
+              imageAsset: 'images/facebook.png',
+              isCircle: true,
+            ),
+            LogoImageAvatar(
+              imageAsset: 'images/google.png',
+              isCircle: true,
+            ),
+          ],
         ),
       ],
     );

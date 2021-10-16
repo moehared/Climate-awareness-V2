@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:app/common/enums/view_state.dart';
+import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/user-registeration-view-model/user_registeration_viewmodel.dart';
 import 'package:app/ui/widgets/button-widget/create-account-button.dart';
@@ -12,15 +14,9 @@ import 'package:app/ui/widgets/login-with-third-party-app/login-with-third-party
 import 'package:app/ui/widgets/text-widgets/user_registeration_text_title.dart';
 import 'package:flutter/material.dart';
 
-class UserRegisterationFormView extends StatefulWidget {
+class UserRegisterationFormView extends StatelessWidget {
   const UserRegisterationFormView({Key? key}) : super(key: key);
 
-  @override
-  _UserRegisterationFormViewState createState() =>
-      _UserRegisterationFormViewState();
-}
-
-class _UserRegisterationFormViewState extends State<UserRegisterationFormView> {
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<UserRegisterationViewModel>(
@@ -29,24 +25,34 @@ class _UserRegisterationFormViewState extends State<UserRegisterationFormView> {
           backgroundImage: "images/space.png",
           child: SafeArea(
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const UserRegisterationTitleText(
-                    longTextTitle: "Create Account",
+                  UserRegisterationTitleText(
+                    longTextTitle: model.authMode == AuthMode.LOGIN
+                        ? "Welcome Back"
+                        : "Create Account",
                   ),
                   const LogoImageAvatar(
                     imageAsset: "images/global.png",
                   ),
-                  CreateRegisterationForm(model: model),
+                  CreateRegisterationForm(
+                    model: model,
+                  ),
                   const SizedBox(height: 10),
-                  const LoginOrSignUpButton(),
+                  LoginOrSignUpButton(
+                    model: model,
+                  ),
                   const SizedBox(height: 10),
-                  const ForgetPasswordButton(),
+                  if (model.authMode == AuthMode.LOGIN)
+                    const ForgetPasswordButton(),
                   const SizedBox(height: 40),
-                  const LoginWithThirdPartyApplication(),
-                  const SizedBox(height: 40),
-                  const CreateAccountButton(),
+                  if (model.authMode == AuthMode.LOGIN)
+                    const LoginWithThirdPartyApplication(),
+                  if (model.authMode == AuthMode.LOGIN)
+                    const SizedBox(height: 40),
+                  CreateAccountButton(model: model),
                 ],
               ),
             ),
