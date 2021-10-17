@@ -8,6 +8,7 @@ class UserModel {
   final bool isVerified;
   final double c02Score;
   final String email;
+  final String phoneNumber;
   final String dateCreated;
   final String dateUpdated;
   UserModel({
@@ -18,6 +19,7 @@ class UserModel {
     required this.isVerified,
     required this.c02Score,
     required this.email,
+    required this.phoneNumber,
     required this.dateCreated,
     required this.dateUpdated,
   });
@@ -31,6 +33,7 @@ class UserModel {
     bool? isVerified,
     double? c02Score,
     String? email,
+    String? phoneNumber,
     String? dateCreated,
     String? dateUpdated,
   }) {
@@ -42,6 +45,7 @@ class UserModel {
       isVerified: isVerified ?? this.isVerified,
       c02Score: c02Score ?? this.c02Score,
       email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       dateCreated: dateCreated ?? this.dateCreated,
       dateUpdated: dateUpdated ?? this.dateUpdated,
     );
@@ -54,10 +58,11 @@ class UserModel {
       'lastName': lastName,
       'password': password,
       'isVerified': isVerified,
-      'c02_score': c02Score,
+      'c02Score': c02Score,
       'email': email,
-      'date_created': dateCreated,
-      'date_updated': dateUpdated,
+      'phoneNumber': phoneNumber,
+      'dateCreated': dateCreated,
+      'dateUpdated': dateUpdated,
     };
   }
 
@@ -68,10 +73,11 @@ class UserModel {
       lastName: map['lastName'],
       password: map['password'],
       isVerified: map['isVerified'],
-      c02Score: map['c02_score'],
+      c02Score: map['c02Score'],
       email: map['email'],
-      dateCreated: map['date_created'],
-      dateUpdated: map['date_updated'],
+      phoneNumber: map['phoneNumber'],
+      dateCreated: map['dateCreated'],
+      dateUpdated: map['dateUpdated'],
     );
   }
 
@@ -82,7 +88,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(userId: $userId, firstName: $firstName, lastName: $lastName, password: $password, isVerified: $isVerified, c02_score: $c02Score, email: $email, date_created: $dateCreated, date_updated: $dateUpdated)';
+    return 'UserModel(userId: $userId, firstName: $firstName, lastName: $lastName, password: $password, isVerified: $isVerified, c02Score: $c02Score, email: $email, phoneNumber: $phoneNumber, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -97,6 +103,7 @@ class UserModel {
         other.isVerified == isVerified &&
         other.c02Score == c02Score &&
         other.email == email &&
+        other.phoneNumber == phoneNumber &&
         other.dateCreated == dateCreated &&
         other.dateUpdated == dateUpdated;
   }
@@ -110,6 +117,7 @@ class UserModel {
         isVerified.hashCode ^
         c02Score.hashCode ^
         email.hashCode ^
+        phoneNumber.hashCode ^
         dateCreated.hashCode ^
         dateUpdated.hashCode;
   }

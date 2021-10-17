@@ -1,4 +1,5 @@
 import 'package:app/common/enums/view_state.dart';
+import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/viewmodel/baseview_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +11,20 @@ class UserRegisterationViewModel extends BaseViewModel {
   final _offsetY = 0.0;
   final _beginOpacity = 0.0;
   final _endOpacity = 1.0;
+  var _showPassword = false;
+  var _showConfirmedPassword = false;
+  UserModel _userModel = UserModel(
+    userId: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    isVerified: false,
+    c02Score: 0.00,
+    email: "",
+    phoneNumber: "",
+    dateCreated: "",
+    dateUpdated: "",
+  );
 
   Animation<double>? _opacityAnim; // fade in animation
   Animation<Offset>? _slideAnimation;
@@ -40,6 +55,10 @@ class UserRegisterationViewModel extends BaseViewModel {
     );
   }
 
+  void setUserModelObj(UserModel copy) {
+    _userModel = copy;
+  }
+
   void toggleAuthMode() {
     if (authMode == AuthMode.LOGIN) {
       authMode = AuthMode.SIGNUP;
@@ -52,9 +71,22 @@ class UserRegisterationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void togglePassword() {
+    _showPassword = !_showPassword;
+    notifyListeners();
+  }
+
+  void toggleConfirmedPassword() {
+    _showConfirmedPassword = !_showConfirmedPassword;
+    notifyListeners();
+  }
+
   GlobalKey<FormState> get formkey => _formKey;
 
   Animation<double>? get opacityAnim => _opacityAnim;
   Animation<Offset>? get slideAnimation => _slideAnimation;
   AnimationController? get controller => _controller;
+  UserModel get userModel => _userModel;
+  bool get showPassword => _showPassword;
+  bool get showConfirmedPassword => _showConfirmedPassword;
 }
