@@ -13,3 +13,10 @@ extension EmailValidator on String {
         .hasMatch(this);
   }
 }
+
+extension PasswordValidator on String {
+  bool isValidPassword() {
+    return RegExp(r'^[a-zA-Z0-9_\-=@,\.;\$&\+:#|<>*!%\^\()\{}\[]\?]+$')
+        .hasMatch(this);
+  }
+}

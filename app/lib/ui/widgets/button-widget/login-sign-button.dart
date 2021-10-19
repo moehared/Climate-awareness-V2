@@ -25,7 +25,7 @@ class LoginOrSignUpButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(32),
           ),
         ),
-        onPressed: () {},
+        onPressed: model.submit,
         child: Text(
           model.authMode == AuthMode.LOGIN ? "Sign In" : "Sign Up",
           textAlign: TextAlign.center,

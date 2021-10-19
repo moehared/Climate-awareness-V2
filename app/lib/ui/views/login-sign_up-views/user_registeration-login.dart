@@ -22,7 +22,7 @@ class UserRegisterationFormView extends StatelessWidget {
     return BuildViewModel<UserRegisterationViewModel>(
       builder: (ctx, model, child) => Scaffold(
         body: BackgroundImage(
-          backgroundImage: "images/space.png",
+          backgroundImage: "images/space2.png",
           child: SafeArea(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -47,7 +47,7 @@ class UserRegisterationFormView extends StatelessWidget {
                   const SizedBox(height: 10),
                   if (model.authMode == AuthMode.LOGIN)
                     const ForgetPasswordButton(),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   if (model.authMode == AuthMode.LOGIN)
                     const LoginWithThirdPartyApplication(),
                   if (model.authMode == AuthMode.LOGIN)

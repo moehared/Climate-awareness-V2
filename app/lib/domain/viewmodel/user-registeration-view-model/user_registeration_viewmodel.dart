@@ -3,6 +3,7 @@ import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/viewmodel/baseview_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_pw_validator/Utilities/ConditionsHelper.dart';
 
 class UserRegisterationViewModel extends BaseViewModel {
   AuthMode authMode = AuthMode.LOGIN;
@@ -12,6 +13,7 @@ class UserRegisterationViewModel extends BaseViewModel {
   final _beginOpacity = 0.0;
   final _endOpacity = 1.0;
   var _showPassword = false;
+  var _isValidPass = false;
   var _showConfirmedPassword = false;
   UserModel _userModel = UserModel(
     userId: "",
@@ -29,9 +31,11 @@ class UserRegisterationViewModel extends BaseViewModel {
   Animation<double>? _opacityAnim; // fade in animation
   Animation<Offset>? _slideAnimation;
   AnimationController? _controller;
+  late final TextEditingController passwordController;
 
   /// initialize our animation objects
   void init(TickerProvider obj) {
+    passwordController = TextEditingController();
     _controller = AnimationController(
       vsync: obj,
       duration: const Duration(milliseconds: 300),
@@ -81,6 +85,17 @@ class UserRegisterationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  bool validPassWord() {
+    print('valid password called...\n');
+    return _isValidPass;
+  }
+
+  void disposeTextController() {
+    passwordController.dispose();
+  }
+
+  set setSuccess(bool value) => _isValidPass = value;
+
   GlobalKey<FormState> get formkey => _formKey;
 
   Animation<double>? get opacityAnim => _opacityAnim;
@@ -89,4 +104,10 @@ class UserRegisterationViewModel extends BaseViewModel {
   UserModel get userModel => _userModel;
   bool get showPassword => _showPassword;
   bool get showConfirmedPassword => _showConfirmedPassword;
+
+  void submit() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+  }
 }

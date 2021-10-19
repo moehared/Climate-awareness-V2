@@ -2,10 +2,11 @@
 
 import 'package:app/common/enums/view_state.dart';
 import 'package:app/common/styles/textfield-form.dart';
-import 'package:app/common/utils/validator.dart';
-import 'package:app/domain/services/locator.dart';
+import 'package:app/common/utils/input_validator.dart';
 import 'package:app/domain/viewmodel/user-registeration-view-model/user_registeration_viewmodel.dart';
+import 'package:app/ui/widgets/password_validator/password_validator_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
 class CreateRegisterationForm extends StatefulWidget {
   const CreateRegisterationForm({
@@ -24,6 +25,12 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
   void initState() {
     widget.model.init(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.model.disposeTextController();
+    super.dispose();
   }
 
   @override
@@ -156,30 +163,87 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
               ),
             ),
             const SizedBox(height: 20),
-            TextFormField(
-              // focusNode: _passFocus,
-              textInputAction: widget.model.authMode == AuthMode.LOGIN
-                  ? TextInputAction.done
-                  : TextInputAction.next,
-              keyboardType: TextInputType.text,
-              obscureText: widget.model.showPassword ? false : true,
-              textAlign: TextAlign.center,
-              onSaved: (val) {},
-              validator: (enteredText) {
-                return null;
-              },
-              decoration: kTextFieldform.copyWith(
-                prefixIcon: const Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    widget.model.showPassword
-                        ? Icons.visibility_rounded
-                        : Icons.visibility_off_rounded,
+            // if (widget.model.authMode == AuthMode.SIGNUP)
+
+            // PasswordField(
+            //   errorMessage: '''
+            //   - A uppercase letter
+            //   - A lowercase letter
+            //   - A digit
+            //   - A special character
+            //   - A minimum length of 8 characters
+            //   ''',
+            //   hintText: 'Enter password ',
+            //   inputDecoration: PasswordDecoration(
+            //     suffixIcon: ,
+            //     inputPadding: const EdgeInsets.symmetric(horizontal: 20),
+            //   ),
+            //   border: PasswordBorder(
+            //     border: OutlineInputBorder(
+            //       borderSide: const BorderSide(width: 0, color: Colors.grey),
+            //       borderRadius: BorderRadius.circular(25.7),
+            //     ),
+            //     enabledBorder: const OutlineInputBorder(
+            //       borderSide: BorderSide(color: Colors.white, width: 1),
+            //     ),
+            //     focusedBorder: const OutlineInputBorder(
+            //       borderSide: BorderSide(color: Colors.white, width: 1),
+            //     ),
+            //   ),
+            // ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  // focusNode: _passFocus,
+                  controller: widget.model.passwordController,
+                  textInputAction: widget.model.authMode == AuthMode.LOGIN
+                      ? TextInputAction.done
+                      : TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  obscureText: widget.model.showPassword ? false : true,
+                  textAlign: TextAlign.center,
+                  onSaved: (val) {},
+                  validator: (password) {
+                    if (password!.isEmpty) {
+                      return 'password must not be empty';
+                    } else if (widget.model.validPassWord() == false) {
+                      // print('not valid');
+                      return 'Password Must match The following rules';
+                    }
+                    return null;
+                  },
+                  decoration: kTextFieldform.copyWith(
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        widget.model.showPassword
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off_rounded,
+                      ),
+                      onPressed: widget.model.togglePassword,
+                    ),
+                    hintText: "Enter Password",
                   ),
-                  onPressed: widget.model.togglePassword,
                 ),
-                hintText: "Enter Password",
-              ),
+                if (widget.model.authMode == AuthMode.SIGNUP)
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: FlutterPwValidator(
+                      width: 450,
+                      height: 150,
+                      uppercaseCharCount: 1,
+                      numericCharCount: 1,
+                      specialCharCount: 1,
+                      minLength: 8,
+                      onSuccess: (bool value) {
+                        print('on success value: $value');
+                        widget.model.setSuccess = value;
+                      },
+                      controller: widget.model.passwordController,
+                    ),
+                  ),
+              ],
             ),
             if (widget.model.authMode == AuthMode.SIGNUP)
               const SizedBox(height: 20),
