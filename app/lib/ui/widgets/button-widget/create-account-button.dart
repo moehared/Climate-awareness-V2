@@ -23,21 +23,26 @@ class CreateAccountButton extends StatelessWidget {
               text: model.authMode == AuthMode.LOGIN
                   ? "don'\tt have account? "
                   : "Already have an Acount?",
-              style: TextStyle(fontFamily: 'Roboto-Regular', fontSize: 18),
+              style:
+                  const TextStyle(fontFamily: 'Roboto-Regular', fontSize: 18),
             ),
             TextSpan(
-              text: model.authMode == AuthMode.LOGIN ? 'Sign Up' : ' Sign In',
+              text: model.authMode == AuthMode.LOGIN
+                  ? 'Sign Up Here'
+                  : ' Sign In',
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   model.toggleAuthMode();
                   print("button clicked.....\n");
                   print("model.authMode = ${model.authMode}");
                 },
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Roboto-Regular',
                 fontSize: 18,
+                backgroundColor: Colors.black,
                 decoration: TextDecoration.underline,
-                color: Color(0xff112BF4),
+                // color: Color(0xff112BF4),
+                color: Colors.blueAccent.shade100,
               ),
             ),
           ],

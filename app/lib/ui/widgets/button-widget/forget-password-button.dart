@@ -9,14 +9,16 @@ class ForgetPasswordButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Align(
+    return Align(
       alignment: Alignment.centerRight,
       child: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Text(
           "Forget password?",
           style: TextStyle(
-            color: Color(0xff112BF4),
+            // color: Color(0xff112BF4),
+            color: Colors.black,
+            backgroundColor: Colors.blueAccent.shade100,
             fontFamily: "Roboto-Regular",
             fontSize: 20,
             decoration: TextDecoration.underline,

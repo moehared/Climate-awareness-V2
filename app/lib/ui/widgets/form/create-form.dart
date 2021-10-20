@@ -115,7 +115,7 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                           if (number!.isEmpty) {
                             return 'Please Enter Phone number';
                           } else if (!number.isValidPhoneNumber()) {
-                            return 'Phone number must be in the form: (area code) ### - ####';
+                            return 'Phone number must be in the form:\n\n(area code) ### - ####';
                           }
                           return null;
                         },
@@ -167,10 +167,10 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
 
             // PasswordField(
             //   errorMessage: '''
-            //   - A uppercase letter
-            //   - A lowercase letter
-            //   - A digit
-            //   - A special character
+            // - A uppercase letter
+            // - A lowercase letter
+            // - A digit
+            // - A special character
             //   - A minimum length of 8 characters
             //   ''',
             //   hintText: 'Enter password ',
