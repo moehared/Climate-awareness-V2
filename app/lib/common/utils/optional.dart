@@ -1,10 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 /// Java's Optional data type.
-/// I learned this concept from work so It is really usefull when checking null
+/// It is really usefull when checking null
 /// in our application and gets rid of code smell
-/// There is package dependency for dart and flutter in pub.dev but this is will do for our use case.
-/// if we need to do more advance stuff, we could look into the package
 
 @immutable
 class Optional<T> {
