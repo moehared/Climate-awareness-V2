@@ -11,9 +11,9 @@ on:
       - '.gitignore'
       - 'pre-commit-config.yaml'
 
-defaults:
-  run:
-    working-directory: Climate-awareness-V2/app
+# defaults:
+#   run:
+#     working-directory: Climate-awareness-V2/app
 
 jobs:
   build_and_integration_test:
