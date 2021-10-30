@@ -41,7 +41,7 @@ class AuthService {
         accountService.updateUser(user.userModel);
       }
     } catch (e) {
-      //TODO: create a custom class that handles
+      //TODO: create a custom class that handles error
       throw ("error occured while authenticating: $e");
     }
   }
