@@ -16,12 +16,12 @@ class UserModel {
     required this.firstName,
     required this.lastName,
     required this.password,
-    required this.isVerified,
-    required this.c02Score,
+    this.isVerified = false,
+    this.c02Score = 0.0,
     required this.email,
     required this.phoneNumber,
     required this.dateCreated,
-    required this.dateUpdated,
+    this.dateUpdated = '',
   });
   // location object
 

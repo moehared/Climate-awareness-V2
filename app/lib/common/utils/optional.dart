@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 /// Java's Optional data type.
@@ -16,7 +17,7 @@ class Optional<T> {
 
   factory Optional.ofNullable(T it) => Optional._internal(it);
 
-  factory Optional.empty() => const Optional._internal(null);
+  factory Optional.empty(User? currentUser) => const Optional._internal(null);
 
   T orElse({required T other}) => _optional != null ? _optional! : other;
   bool isPresent() => _optional != null;

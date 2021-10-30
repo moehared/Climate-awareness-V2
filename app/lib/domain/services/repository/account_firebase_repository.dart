@@ -6,25 +6,25 @@ class AccountFirebaseFireStoreRepo implements RepositoryInterface<UserModel> {
   AccountFirebaseFireStoreRepo();
 
   @override
-  Future<void> create(UserModel data) {
+  Future<void> create(UserModel data) async {
     // TODO: implement create
     throw UnimplementedError();
   }
 
   @override
-  Future<void> delete(UserModel data) {
+  Future<void> delete(UserModel data) async {
     // TODO: implement delete
     throw UnimplementedError();
   }
 
   @override
-  Future<void> read(UserModel data) {
+  Future<void> read(UserModel data) async {
     // TODO: implement read
     throw UnimplementedError();
   }
 
   @override
-  Future<void> update(UserModel data) {
+  Future<void> update(UserModel data) async {
     // TODO: implement update
     throw UnimplementedError();
   }

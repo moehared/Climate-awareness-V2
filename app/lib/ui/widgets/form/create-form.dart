@@ -67,10 +67,8 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                         },
                         // onChanged: (firstName) {},
                         onSaved: (firstName) {
-                          widget.model.setUserModelObj(
-                            widget.model.userModel
-                                .copyWith(firstName: firstName),
-                          );
+                          widget.model.setUserModelObj = widget.model.userModel
+                              .copyWith(firstName: firstName);
                         },
                         decoration: kTextFieldform.copyWith(
                           prefixIcon: const Icon(Icons.person),
@@ -91,12 +89,10 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                           }
                           return null;
                         },
-                        // onChanged: (firstName) {},
+
                         onSaved: (lastName) {
-                          widget.model.setUserModelObj(
-                            widget.model.userModel
-                                .copyWith(firstName: lastName),
-                          );
+                          widget.model.setUserModelObj = widget.model.userModel
+                              .copyWith(lastName: lastName);
                         },
                         decoration: kTextFieldform.copyWith(
                           prefixIcon: const Icon(Icons.person),
@@ -121,10 +117,8 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                         },
                         // onChanged: (firstName) {},
                         onSaved: (number) {
-                          widget.model.setUserModelObj(
-                            widget.model.userModel
-                                .copyWith(phoneNumber: number),
-                          );
+                          widget.model.setUserModelObj = widget.model.userModel
+                              .copyWith(phoneNumber: number);
                         },
                         decoration: kTextFieldform.copyWith(
                           prefixIcon: const Icon(Icons.phone),
@@ -153,9 +147,8 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
               },
               // onChanged: (email) {},
               onSaved: (email) {
-                widget.model.setUserModelObj(
-                  widget.model.userModel.copyWith(email: email),
-                );
+                widget.model.setUserModelObj =
+                    widget.model.userModel.copyWith(email: email);
               },
               decoration: kTextFieldform.copyWith(
                 prefixIcon: const Icon(Icons.email),
@@ -163,34 +156,6 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
               ),
             ),
             const SizedBox(height: 20),
-            // if (widget.model.authMode == AuthMode.SIGNUP)
-
-            // PasswordField(
-            //   errorMessage: '''
-            // - A uppercase letter
-            // - A lowercase letter
-            // - A digit
-            // - A special character
-            //   - A minimum length of 8 characters
-            //   ''',
-            //   hintText: 'Enter password ',
-            //   inputDecoration: PasswordDecoration(
-            //     suffixIcon: ,
-            //     inputPadding: const EdgeInsets.symmetric(horizontal: 20),
-            //   ),
-            //   border: PasswordBorder(
-            //     border: OutlineInputBorder(
-            //       borderSide: const BorderSide(width: 0, color: Colors.grey),
-            //       borderRadius: BorderRadius.circular(25.7),
-            //     ),
-            //     enabledBorder: const OutlineInputBorder(
-            //       borderSide: BorderSide(color: Colors.white, width: 1),
-            //     ),
-            //     focusedBorder: const OutlineInputBorder(
-            //       borderSide: BorderSide(color: Colors.white, width: 1),
-            //     ),
-            //   ),
-            // ),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -203,7 +168,15 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                   keyboardType: TextInputType.text,
                   obscureText: widget.model.showPassword ? false : true,
                   textAlign: TextAlign.center,
-                  onSaved: (val) {},
+                  onSaved: (password) {
+                    widget.model.setUserModelObj =
+                        widget.model.userModel.copyWith(password: password);
+                  },
+                  onChanged: (password) {
+                    widget.model.setUserModelObj =
+                        widget.model.userModel.copyWith(password: password);
+                    // print('password: --->${widget.model.userModel.password}\n');
+                  },
                   validator: (password) {
                     if (password!.isEmpty) {
                       return 'password must not be empty';
@@ -237,7 +210,7 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                       specialCharCount: 1,
                       minLength: 8,
                       onSuccess: (bool value) {
-                        print('on success value: $value');
+                        // print('on success value: $value');
                         widget.model.setSuccess = value;
                       },
                       controller: widget.model.passwordController,
@@ -259,8 +232,10 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                     // obscureText: showPass ? false : true,
                     textAlign: TextAlign.center,
                     onSaved: (val) {},
-                    validator: (confirm) {
-                      if (confirm!.isEmpty) {
+                    validator: (String? confirm) {
+                      if (confirm == null)
+                        throw ('Please confirm your password');
+                      if (confirm.isEmpty) {
                         return 'Please confirm your password';
                       } else if (confirm != widget.model.userModel.password) {
                         return "confirm Password does not match with entered password";

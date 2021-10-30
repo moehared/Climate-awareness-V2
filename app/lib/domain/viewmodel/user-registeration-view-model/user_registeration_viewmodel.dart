@@ -59,7 +59,7 @@ class UserRegisterationViewModel extends BaseViewModel {
     );
   }
 
-  void setUserModelObj(UserModel copy) {
+  set setUserModelObj(UserModel copy) {
     _userModel = copy;
   }
 
@@ -109,5 +109,11 @@ class UserRegisterationViewModel extends BaseViewModel {
     if (!_formKey.currentState!.validate()) {
       return;
     }
+    _formKey.currentState!.save();
+    print('first Name:${userModel.firstName}\n ');
+    print('last Name:${userModel.lastName}\n ');
+    print('phone number:${userModel.phoneNumber}\n ');
+    print('emai:${userModel.email}\n ');
+    print('password:${userModel.password}\n ');
   }
 }
