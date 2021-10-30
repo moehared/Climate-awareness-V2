@@ -1,4 +1,4 @@
-name: github workflow and integration test
+name: flutter app
 
 on:
   push:
