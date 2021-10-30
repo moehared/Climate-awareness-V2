@@ -1,5 +1,6 @@
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
+import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
 import 'package:app/domain/services/repository/account_firebase_repository.dart';
@@ -25,7 +26,7 @@ void setUpLocatorService() {
       () => AccountFirebaseFireStoreRepo());
   locator.registerLazySingleton<RepositoryInterface<UserPostModel>>(
       () => PostFirebaseFireStoreRepo());
-
+  locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(() => AccountFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountDatabaseService>(
       () => AccountDatabaseService(locator<AccountFirebaseFireStoreRepo>()));
   locator.registerLazySingleton<PostDatabaseService>(

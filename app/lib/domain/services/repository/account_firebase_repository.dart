@@ -4,7 +4,6 @@ import 'package:app/domain/services/repository/repo_interface.dart';
 
 class AccountFirebaseFireStoreRepo implements RepositoryInterface<UserModel> {
   AccountFirebaseFireStoreRepo();
-
   @override
   Future<void> create(UserModel data) async {
     // TODO: implement create
