@@ -1,4 +1,4 @@
-name: Climate Awareness workflow and integration test
+name: github workflow and integration test
 
 on:
   push:
