@@ -1,4 +1,4 @@
-name: flutter app v2
+name: CI
 
 on:
   push:
@@ -35,18 +35,6 @@ jobs:
         with:
           flutter-version: '2.5.1'
           channel: 'stable'
-      - name: List all available devices
-        run: xcrun instruments -s
-      - name: Start devices
-        run: |
-          UDID=$(
-            xcrun instruments -s |
-            awk \
-              -F ' *[][]' \
-              -v 'device=${{ matrix.device }}' \
-              '$1 == device { print $2 }'
-          )
-          xcrun simctl boot ${UDID:?No Simulator with this name found}
       - run: flutter pub get
       - run: flutter format --set-exit-if-changed .
       - run: flutter analyze .
