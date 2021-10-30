@@ -1,8 +1,13 @@
-name: CI/CD
+name: CI 
 on:
   push:
     branches:
       [ main ]
+      
+      
+defaults:
+  run:
+    working-directory: ./app
 
 jobs:
   flutter_test:
