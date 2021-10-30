@@ -1,5 +1,3 @@
-import 'package:app/domain/models/user_model.dart';
-
 // this class must be implemented by concrete classess
 abstract class RepositoryInterface<T> {
   Future<void> delete(T data);
