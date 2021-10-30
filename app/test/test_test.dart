@@ -1,10 +1,12 @@
-import 'package:app/domain/services/database_services/account_service.dart';
-import 'package:app/domain/services/locator.dart';
+import 'package:app/dummy_test.dart/dummy_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
   test('Counter value should be incremented', () {
-    final ser = locator<AccountDatabaseService>();
-    expect(ser != null, ser);
+    final counter = Counter();
+
+    counter.increment();
+
+    expect(counter.value, 1);
   });
 }
