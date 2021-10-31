@@ -1,13 +1,15 @@
+import 'package:app/common/constant.dart';
 import 'package:app/domain/models/user_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
 
 class AccountFirebaseFireStoreRepo implements RepositoryInterface<UserModel> {
   AccountFirebaseFireStoreRepo();
   @override
-  Future<void> create(UserModel data) async {
-    // TODO: implement create
-    throw UnimplementedError();
+  Future<void> create(UserModel user) async {
+    firestore.collection(USER_COLLECTION).doc(user.userId).set(
+          user.toMap(),
+        );
   }
 
   @override

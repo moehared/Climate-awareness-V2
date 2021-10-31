@@ -1,6 +1,5 @@
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/repository/account_firebase_repository.dart';
-import 'package:app/domain/services/repository/repo_interface.dart';
 
 class AccountDatabaseService {
   final AccountFirebaseFireStoreRepo _repository;

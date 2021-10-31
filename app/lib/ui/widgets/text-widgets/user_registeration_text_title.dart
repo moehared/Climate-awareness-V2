@@ -6,10 +6,10 @@ class UserRegisterationTitleText extends StatelessWidget {
   UserRegisterationTitleText({
     Key? key,
     required this.longTextTitle,
-    this.smallText = false,
+    required this.smallText,
   }) : super(key: key);
   final String longTextTitle;
-  bool smallText = false;
+  final bool smallText;
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<UserRegisterationViewModel>(

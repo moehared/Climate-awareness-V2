@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:app/common/enums/view_state.dart';
-import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/user-registeration-view-model/user_registeration_viewmodel.dart';
 import 'package:app/ui/widgets/button-widget/create-account-button.dart';
@@ -30,6 +29,7 @@ class UserRegisterationFormView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   UserRegisterationTitleText(
+                    smallText: false,
                     longTextTitle: model.authMode == AuthMode.LOGIN
                         ? "Welcome Back"
                         : "Create Account",

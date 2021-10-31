@@ -1,6 +1,4 @@
-import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
 
 class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {

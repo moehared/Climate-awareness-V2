@@ -4,7 +4,6 @@ import 'package:app/common/enums/view_state.dart';
 import 'package:app/common/styles/textfield-form.dart';
 import 'package:app/common/utils/input_validator.dart';
 import 'package:app/domain/viewmodel/user-registeration-view-model/user_registeration_viewmodel.dart';
-import 'package:app/ui/widgets/password_validator/password_validator_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
@@ -180,7 +179,7 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                   validator: (password) {
                     if (password!.isEmpty) {
                       return 'password must not be empty';
-                    } else if (widget.model.validPassWord() == false) {
+                    } else if (widget.model.validPassWord() == false && widget.model.authMode == AuthMode.SIGNUP) {
                       // print('not valid');
                       return 'Password Must match The following rules';
                     }
