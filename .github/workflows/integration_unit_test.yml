@@ -1,6 +1,6 @@
 name: CI 
 on:
-  push:
+  pull_request:
     branches:
       [ main ]
       
@@ -55,4 +55,5 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter clean
+      - run: flutter analyze .
       - run: flutter build appbundle
