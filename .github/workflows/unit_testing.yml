@@ -16,7 +16,7 @@ defaults:
     working-directory: ./app
 
 jobs:
-  formatting_and_unit_testing:
+  unit_testing:
     runs-on: macOS-latest
     steps:
       - name: Check out repository
@@ -30,6 +30,5 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter pub get
-      - run: flutter format --set-exit-if-changed .
       - run: flutter analyze .
       - run: flutter test
