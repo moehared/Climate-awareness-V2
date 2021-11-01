@@ -1,4 +1,4 @@
-import 'package:app/ui/views/login-sign_up-views/user_registeration-login.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'domain/services/authentication_service/auth_service.dart';
 import 'domain/services/locator.dart';
+import 'ui/views/user-registeration-view/user_registeration_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
