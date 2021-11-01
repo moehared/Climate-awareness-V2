@@ -1,11 +1,11 @@
 // ignore_for_file: file_names
 
+import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app/domain/services/locator.dart';
 
-import '../baseview_model.dart';
 
 // inspired by stack architecture package created by filled stack .
 // https://pub.dev/packages/stacked

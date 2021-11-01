@@ -1,5 +1,5 @@
 import 'package:app/common/enums/view_state.dart';
-import 'package:app/domain/viewmodel/user-registeration-view-model/user_registeration_viewmodel.dart';
+import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: file_names

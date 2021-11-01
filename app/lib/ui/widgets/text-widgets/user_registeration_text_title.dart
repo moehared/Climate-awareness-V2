@@ -1,5 +1,5 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
-import 'package:app/domain/viewmodel/user-registeration-view-model/user_registeration_viewmodel.dart';
+import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class UserRegisterationTitleText extends StatelessWidget {

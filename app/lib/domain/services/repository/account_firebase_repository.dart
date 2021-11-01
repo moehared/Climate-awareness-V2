@@ -25,8 +25,7 @@ class AccountFirebaseFireStoreRepo implements RepositoryInterface<UserModel> {
   }
 
   @override
-  Future<void> update(UserModel data) async {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<void> update(UserModel user) async {
+    firestore.collection(USER_COLLECTION).doc(user.userId).set(user.toMap());
   }
 }

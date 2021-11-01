@@ -8,7 +8,7 @@ import 'package:app/domain/services/repository/post_firebase_repository.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
 
 import 'package:app/domain/viewmodel/homeView_model.dart';
-import 'package:app/domain/viewmodel/user-registeration-view-model/user_registeration_viewmodel.dart';
+import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:get_it/get_it.dart';

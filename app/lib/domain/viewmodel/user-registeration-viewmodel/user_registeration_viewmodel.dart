@@ -1,7 +1,7 @@
 import 'package:app/common/enums/view_state.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
-import 'package:app/domain/viewmodel/baseview_model.dart';
+import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';

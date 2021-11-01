@@ -20,9 +20,10 @@ class AuthService {
   Optional<User?> get currentUser => Optional.ofNullable(_currentUser);
 
   Future<void> _authenticate(
-    //TODO: validate user phone number . make sure user put correct format
-    
-      {required UserModel userModel, bool isLogin = false}) async {
+      //TODO: validate user phone number . make sure user put correct format
+
+      {required UserModel userModel,
+      bool isLogin = false}) async {
     try {
       if (isLogin) {
         final _loggedInUser = await _firebaseAuth.signInWithEmailAndPassword(
@@ -37,8 +38,9 @@ class AuthService {
             email: userModel.email, password: userModel.password);
         _userCredential = Optional.of(newUser);
         if (_userCredential.isPresent()) {
-          userModel =
-              userModel.copyWith(userId: _userCredential.get()!.user!.uid,dateCreated: createdDateTime);
+          userModel = userModel.copyWith(
+              userId: _userCredential.get()!.user!.uid,
+              dateCreated: createdDateTime);
           _userCredential.get()!.user!.updateDisplayName(
                 userModel.firstName + " " + userModel.lastName,
               );
@@ -61,5 +63,28 @@ class AuthService {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  Future<void> verifyUser(UserModel user) async {
+    if (_isUserEmailVerified()) {
+      user = user.copyWith(isVerified: true);
+      accountService.updateUser(user);
+      return;
+    }
+    if (currentUser.isPresent()) {
+      await currentUser.get()!.reload();
+      if (!_isUserEmailVerified()) {
+        currentUser.get()!.sendEmailVerification();
+      }
+    }
+  }
+
+  bool _isUserEmailVerified() {
+    return currentUser.get()!.emailVerified;
+  }
+
+//TODO: verify user phone number then link their number with their account.
+  bool _isUserPhoneVerified() {
+    return currentUser.get()!.phoneNumber!.isNotEmpty;
   }
 }
