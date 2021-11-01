@@ -1,8 +1,7 @@
-name: CI 
+name: Integration testing
 on:
-  pull_request:
-    branches:
-      [ main ]
+  schedule:
+  - cron: "59 23 * * 6"
       
       
 defaults:
