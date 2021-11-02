@@ -19,6 +19,7 @@ class UserRegisterationFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<UserRegisterationViewModel>(
+      
       builder: (ctx, model, child) => Scaffold(
         body: BackgroundImage(
           backgroundImage: "images/space2.png",
