@@ -3,6 +3,7 @@ import 'package:app/domain/viewmodel/confirm_user_email_viewmodel/confirm_user_e
 import 'package:flutter/material.dart';
 
 class ConfirmEmailView extends StatelessWidget {
+  static const routeName = '/ConfirmEmailView';
   const ConfirmEmailView({Key? key}) : super(key: key);
 
   @override
@@ -11,6 +12,9 @@ class ConfirmEmailView extends StatelessWidget {
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Confirm Email'),
+          actions: [
+            IconButton(onPressed: model.signOut, icon: Icon(Icons.exit_to_app))
+          ],
         ),
         body: Column(
           children: [],

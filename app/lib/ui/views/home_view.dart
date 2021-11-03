@@ -3,6 +3,7 @@ import 'package:app/domain/viewmodel/homeView_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
+  static const routeName = '/HomeView';
   const HomeView({Key? key}) : super(key: key);
 
   @override

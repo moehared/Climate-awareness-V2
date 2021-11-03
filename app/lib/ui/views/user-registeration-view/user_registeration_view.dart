@@ -14,6 +14,7 @@ import 'package:app/ui/widgets/text-widgets/user_registeration_text_title.dart';
 import 'package:flutter/material.dart';
 
 class UserRegisterationFormView extends StatelessWidget {
+  static const routeName = '/UserRegisterationFormView';
   const UserRegisterationFormView({Key? key}) : super(key: key);
 
   @override

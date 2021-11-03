@@ -1,12 +1,11 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'common/routes/app_routes.dart';
+import 'domain/services/authentication_service/auth_service_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'domain/services/authentication_service/auth_service.dart';
+import 'domain/dialog_manager/dialog_manager.dart';
 import 'domain/services/locator.dart';
-import 'ui/views/user-registeration-view/user_registeration_view.dart';
+import 'domain/services/navigation_service/navigation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,25 +17,34 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AuthService>(
-          create: (_) => AuthService(FirebaseAuth.instance),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color(0xFF512da8),
+        primaryColorDark: const Color(0xff140078),
+        primaryColorLight: const Color(0xff8559da),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: const Color(0xffc2185b),
         ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: const Color(0xFF512da8),
-          primaryColorDark: const Color(0xff140078),
-          primaryColorLight: const Color(0xff8559da),
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            secondary: const Color(0xffc2185b),
+      ),
+      builder: (ctx, widget) => Navigator(
+        onGenerateRoute: (settings) => MaterialPageRoute(
+          builder: (ctx) => DiaglogManager(
+            child: widget ?? Text("could not load dialog!"),
           ),
         ),
-        // home: HomeView(),
-        home: const UserRegisterationFormView(),
       ),
+      navigatorKey: locator<NavigationService>().navigationKey,
+      initialRoute: AuthServiceWrapper.routeName,
+      onGenerateRoute: AppRouter.generateRoute,
+      // home: const UserRegisterationFormView(),
     );
   }
 }
+
+
+// providers: [
+//         Provider<AuthService>(
+//           create: (_) => AuthService(FirebaseAuth.instance),
+//         ),
+//       ],
