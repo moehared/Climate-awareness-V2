@@ -179,7 +179,8 @@ class _CreateRegisterationFormState extends State<CreateRegisterationForm>
                   validator: (password) {
                     if (password!.isEmpty) {
                       return 'password must not be empty';
-                    } else if (widget.model.validPassWord() == false && widget.model.authMode == AuthMode.SIGNUP) {
+                    } else if (widget.model.validPassWord() == false &&
+                        widget.model.authMode == AuthMode.SIGNUP) {
                       // print('not valid');
                       return 'Password Must match The following rules';
                     }

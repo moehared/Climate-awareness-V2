@@ -1,14 +1,23 @@
 import 'package:app/common/enums/view_state.dart';
+import 'package:app/domain/dialog_manager/prompt_dialog.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
+import 'package:app/domain/services/dialog_service/dialog_service.dart';
+import 'package:app/domain/services/locator.dart';
+import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
+import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
+import 'package:app/ui/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class UserRegisterationViewModel extends BaseViewModel {
   AuthMode authMode = AuthMode.LOGIN;
+  final _authService = locator<AuthService>();
   final _formKey = GlobalKey<FormState>();
+  final _navService = locator<NavigationService>();
+  final _dialogService = locator<DiaglogService>();
   final _offsetX = -1.5;
   final _offsetY = 0.0;
   final _beginOpacity = 0.0;
@@ -106,24 +115,45 @@ class UserRegisterationViewModel extends BaseViewModel {
   bool get showPassword => _showPassword;
   bool get showConfirmedPassword => _showConfirmedPassword;
 
-  void submit(context) {
-    final _authService = Provider.of<AuthService>(context, listen: false);
+  void submit(context) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    _formKey.currentState!.save();
-    // print('first Name:${userModel.firstName}\n ');
-    // print('last Name:${userModel.lastName}\n ');
-    // print('phone number:${userModel.phoneNumber}\n ');
-    // print('emai:${userModel.email}\n ');
-    // print('password:${userModel.password}\n ');
 
+    _formKey.currentState!.save();
+    setViewState(ViewState.BUSY);
+    var isError = false;
     if (authMode == AuthMode.LOGIN) {
       print('signing in\n ');
-      _authService.signIn(userModel);
+
+      await _authService.signIn(userModel).onError((error, stackTrace) {
+        isError = error as bool;
+      });
+      if (isError) {
+        setViewState(ViewState.IDLE);
+        isError = false;
+        return;
+      }
+      if (!_authService.isUserEmailVerified()) {
+        setViewState(ViewState.IDLE);
+        print('sign in button tapped inside user == null ');
+        promptDialog('an Email has been sent to you. Please check your email',
+            'You are not verify yet', _dialogService);
+      } else {
+        _navService.navigateAndReplce(HomeView.routeName);
+      }
     } else if (authMode == AuthMode.SIGNUP) {
       print('signing up\n ');
-      _authService.signUp(userModel);
+      await _authService
+          .signUp(userModel)
+          .onError((error, stackTrace) => isError = error as bool);
+      if (isError) {
+        setViewState(ViewState.IDLE);
+        isError = false;
+        return;
+      }
+      _navService.navigateAndReplce(ConfirmEmailView.routeName);
     }
+    setViewState(ViewState.IDLE);
   }
 }

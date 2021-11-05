@@ -11,20 +11,22 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
   }
 
   @override
-  Future<void> delete(UserPostModel data) {
+  Future<void> delete(String id) {
     // TODO: implement delete
     throw UnimplementedError();
   }
 
   @override
-  Future<void> read(UserPostModel data) {
+  Future<UserPostModel> read(String id) {
     // TODO: implement read
     throw UnimplementedError();
   }
 
   @override
-  Future<void> update(UserPostModel data) {
+  Future<void> update(String id) {
     // TODO: implement update
     throw UnimplementedError();
   }
+
+  
 }

@@ -1,6 +1,8 @@
 import 'package:app/common/utils/optional.dart';
 import 'package:flutter/material.dart';
 
+/// credit: from filled stack youtube tutorial. 
+
 class NavigationService {
   final _navKey = Optional.of(GlobalKey<NavigatorState>());
   GlobalKey<NavigatorState> get navigationKey => _navKey.get();

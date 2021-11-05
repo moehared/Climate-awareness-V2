@@ -12,7 +12,11 @@ class HomeView extends StatelessWidget {
     return BuildViewModel<HomeViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text('capstone project tutorial'),
+          actions: [
+            IconButton(onPressed:() => model.signOut(context), icon: Icon(Icons.exit_to_app))
+          ],
         ),
         body: SafeArea(
           child: Center(

@@ -12,6 +12,7 @@ class AuthServiceWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     // final user = Provider.of<AuthService>(context);
     final user = locator<AuthService>();
+
     if (user.currentUser.isPresent() &&
         !(user.currentUser.get()!.emailVerified)) {
       return ConfirmEmailView();

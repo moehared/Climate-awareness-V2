@@ -1,14 +1,17 @@
 import 'package:app/common/utils/optional.dart';
+import 'package:app/domain/dialog_manager/prompt_dialog.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
+import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   late final Stream<User?> _authState;
-  late final User? _currentUser;
+  User? _currentUser;
   final FirebaseAuth _firebaseAuth;
-  final accountService = locator<AccountDatabaseService>();
+  final _accountService = locator<AccountDatabaseService>();
   Optional<UserCredential?> _userCredential = Optional.empty(null);
 
   AuthService(this._firebaseAuth) {
@@ -30,13 +33,16 @@ class AuthService {
           email: userModel.email,
           password: userModel.password,
         );
+
         _userCredential = Optional.of(_loggedInUser);
+        _currentUser = _userCredential.get()?.user;
         print('display name: ${_userCredential.get()!.user!.displayName}\n');
       } else {
         final String createdDateTime = DateTime.now().toIso8601String();
         final newUser = await _firebaseAuth.createUserWithEmailAndPassword(
             email: userModel.email, password: userModel.password);
         _userCredential = Optional.of(newUser);
+        _currentUser = _userCredential.get()?.user;
         if (_userCredential.isPresent()) {
           userModel = userModel.copyWith(
               userId: _userCredential.get()!.user!.uid,
@@ -44,11 +50,34 @@ class AuthService {
           _userCredential.get()!.user!.updateDisplayName(
                 userModel.firstName + " " + userModel.lastName,
               );
-          accountService.createNewUser(userModel);
+
+          _accountService.createNewUser(userModel);
+          await verifyUser(userModel);
         }
       }
+    } on FirebaseAuthException catch (e) {
+      print('catch error is ${e.toString()}');
+      var errorMessage = 'Authentication failed.';
+      if (e.message!.contains('The password is invalid')) {
+        errorMessage = 'You have enter invalid password or email';
+        print(errorMessage);
+      } else if (e.message!.contains('already in use by another account.')) {
+        errorMessage = 'email address is already in use.';
+      } else if (e.message!.contains('operation not allowed')) {
+        errorMessage = 'OPERATION_NOT_ALLOWED';
+      } else if (e.message!.contains('many failed login attempts')) {
+        errorMessage =
+            'Access to this account has been temporarily disabled due to many failed login attempts\n. You can immediately restore it by resetting your password or you can try again later.';
+      } else if (e.message!.contains('no user record')) {
+        errorMessage = 'Email does not exist. Please Create new email address';
+      } else if (e.message!.contains('account has been disabled')) {
+        errorMessage = 'The user account has been disabled by an administrator';
+      } else if (e.message!.contains('email doesnt exist')) {
+        errorMessage = 'this email does not exist';
+      }
+      promptDialog(errorMessage, errorMessage, locator<DiaglogService>());
+      throw (true);
     } catch (e) {
-      //TODO: create a custom class that handles error
       throw ("error occured while authenticating: $e");
     }
   }
@@ -63,26 +92,31 @@ class AuthService {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
-    
-    
   }
 
   Future<void> verifyUser(UserModel user) async {
-    if (_isUserEmailVerified()) {
-      user = user.copyWith(isVerified: true);
-      accountService.updateUser(user);
-      return;
-    }
     if (currentUser.isPresent()) {
       await currentUser.get()!.reload();
-      if (!_isUserEmailVerified()) {
+      if (!isUserEmailVerified()) {
         currentUser.get()!.sendEmailVerification();
       }
     }
   }
 
-  bool _isUserEmailVerified() {
-    return currentUser.get()!.emailVerified;
+  void updateUserEmailStatus() async {
+    await currentUser.get()!.reload();
+
+
+    if (isUserEmailVerified()) {
+          UserModel user = await _accountService.fetchUser(currentUser.get()!.uid);
+      user = user.copyWith(isVerified: true);
+      _accountService.updateUser(user.userId);
+    }
+  }
+
+  bool isUserEmailVerified() {
+    return _userCredential.isPresent() &&
+        _userCredential.get()!.user!.emailVerified;
   }
 
 //TODO: verify user phone number then link their number with their account.

@@ -9,15 +9,15 @@ class AccountDatabaseService {
     _repository.create(userModel);
   }
 
-  void updateUser(UserModel userModel) async {
-    return await _repository.update(userModel);
+  void updateUser(String id) async {
+    return await _repository.update(id);
   }
 
-  void deleteUser(UserModel userModel) async {
-    return await _repository.delete(userModel);
+  void deleteUser(String id) async {
+    return await _repository.delete(id);
   }
 
-  void fetchUser(UserModel userModel) async {
-    return await _repository.read(userModel);
+  Future<UserModel> fetchUser(String id) async {
+    return await _repository.read(id);
   }
 }

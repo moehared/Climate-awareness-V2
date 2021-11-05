@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:app/domain/dialog_manager/dialog_model.dart';
 
-
+/// credit: from filled stack youtube tutorial.
 
 class DiaglogService {
   Function(DialogRequest)? _showDialogListener;
   Completer<DialogResponse>? _completer;
-
   void registerDialogListener(Function(DialogRequest) showDiaglogLisener) {
     _showDialogListener = showDiaglogLisener;
   }

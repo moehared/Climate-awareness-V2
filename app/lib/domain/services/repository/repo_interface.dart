@@ -1,7 +1,7 @@
 // this class must be implemented by concrete classess
 abstract class RepositoryInterface<T> {
-  Future<void> delete(T data);
-  Future<void> read(T data);
-  Future<void> update(T data);
+  Future<void> delete(String id);
+  Future<T> read(String id);
+  Future<void> update(String id);
   Future<void> create(T data);
 }

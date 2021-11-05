@@ -25,7 +25,7 @@ import 'navigation_service/navigation_service.dart';
 // service locator design pattern
 final locator = GetIt.instance;
 final firestore = FirebaseFirestore.instance;
-
+final firebaseAuth = FirebaseAuth.instance;
 void setUpLocatorService() {
   // init singleton object here
   locator.registerLazySingleton<RepositoryInterface<UserModel>>(
@@ -38,10 +38,9 @@ void setUpLocatorService() {
       () => AccountDatabaseService(locator<AccountFirebaseFireStoreRepo>()));
   locator.registerLazySingleton<PostDatabaseService>(
       () => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
-  locator.registerLazySingleton<AuthService>(() => AuthService(FirebaseAuth.instance));
+  locator.registerLazySingleton<AuthService>(() => AuthService(firebaseAuth));
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DiaglogService>(() => DiaglogService());
-
 
   // init factory view here
   locator.registerFactory<HomeViewModel>(() => HomeViewModel());
