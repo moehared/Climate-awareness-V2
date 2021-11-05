@@ -22,14 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    return 
-    // MultiProvider(
-    //   providers: [
-    //     Provider<AuthService>(
-    //       create: (_) => AuthService(firebaseAuth),
-    //     ),
-       
-    //   ],
-    //  child:
+ 
        MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -50,8 +43,6 @@ class MyApp extends StatelessWidget {
         navigatorKey: locator<NavigationService>().navigationKey,
         initialRoute: AuthServiceWrapper.routeName,
         onGenerateRoute: AppRouter.generateRoute,
-        // home: const UserRegisterationFormView(),
-     // ),
     );
   }
 }
