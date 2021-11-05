@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'common/routes/app_routes.dart';
-import 'domain/services/authentication_service/auth_service.dart';
 import 'domain/services/authentication_service/auth_service_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

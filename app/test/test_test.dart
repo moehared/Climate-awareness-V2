@@ -1,6 +1,5 @@
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/locator.dart';
-import 'package:app/dummy_test.dart/dummy_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
