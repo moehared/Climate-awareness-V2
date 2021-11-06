@@ -30,7 +30,7 @@ class UserRegisterationViewModel extends BaseViewModel {
     firstName: "",
     lastName: "",
     password: "",
-    isVerified: false,
+    isEmailVerified: false,
     c02Score: 0.00,
     email: "",
     phoneNumber: "",

@@ -9,8 +9,8 @@ class AccountDatabaseService {
     _repository.create(userModel);
   }
 
-  void updateUser(String id) async {
-    return await _repository.update(id);
+  void updateUser(UserModel user) async {
+    return await _repository.update(user);
   }
 
   void deleteUser(String id) async {
@@ -18,6 +18,10 @@ class AccountDatabaseService {
   }
 
   Future<UserModel> fetchUser(String id) async {
-    return await _repository.read(id);
+    try {
+      return await _repository.read(id);
+    } catch (e) {
+      return Future.error('Data does not exist');
+    }
   }
 }

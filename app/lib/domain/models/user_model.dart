@@ -5,7 +5,8 @@ class UserModel {
   final String firstName;
   final String lastName;
   final String password;
-  final bool isVerified;
+  final bool isEmailVerified;
+  final bool isPhoneVerified;
   final double c02Score;
   final String email;
   final String phoneNumber;
@@ -16,7 +17,8 @@ class UserModel {
     required this.firstName,
     required this.lastName,
     required this.password,
-    this.isVerified = false,
+    this.isPhoneVerified = false,
+    this.isEmailVerified = false,
     this.c02Score = 0.0,
     required this.email,
     required this.phoneNumber,
@@ -30,7 +32,8 @@ class UserModel {
     String? firstName,
     String? lastName,
     String? password,
-    bool? isVerified,
+    bool? isEmailVerified,
+    bool? isPhoneVerified,
     double? c02Score,
     String? email,
     String? phoneNumber,
@@ -40,9 +43,10 @@ class UserModel {
     return UserModel(
       userId: userId ?? this.userId,
       firstName: firstName ?? this.firstName,
+      isPhoneVerified: isPhoneVerified ?? this.isPhoneVerified,
       lastName: lastName ?? this.lastName,
       password: password ?? this.password,
-      isVerified: isVerified ?? this.isVerified,
+      isEmailVerified: isEmailVerified ?? this.isEmailVerified,
       c02Score: c02Score ?? this.c02Score,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -57,7 +61,8 @@ class UserModel {
       'firstName': firstName,
       'lastName': lastName,
       'password': password,
-      'isVerified': isVerified,
+      'isEmailVerified': isEmailVerified,
+      'isPhoneVerified': isPhoneVerified,
       'c02Score': c02Score,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -72,7 +77,8 @@ class UserModel {
       firstName: map['firstName'],
       lastName: map['lastName'],
       password: map['password'],
-      isVerified: map['isVerified'],
+      isEmailVerified: map['isEmailVerified'],
+      isPhoneVerified: map['isPhoneVerified'],
       c02Score: map['c02Score'],
       email: map['email'],
       phoneNumber: map['phoneNumber'],
@@ -88,7 +94,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(userId: $userId, firstName: $firstName, lastName: $lastName, password: $password, isVerified: $isVerified, c02Score: $c02Score, email: $email, phoneNumber: $phoneNumber, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'UserModel(userId: $userId, firstName: $firstName, lastName: $lastName, password: $password, isEmailVerified: $isEmailVerified, c02Score: $c02Score, email: $email, phoneNumber: $phoneNumber, dateCreated: $dateCreated, dateUpdated: $dateUpdated,isPhoneVerified:$isPhoneVerified,)';
   }
 
   @override
@@ -100,11 +106,12 @@ class UserModel {
         other.firstName == firstName &&
         other.lastName == lastName &&
         other.password == password &&
-        other.isVerified == isVerified &&
+        other.isEmailVerified == isEmailVerified &&
         other.c02Score == c02Score &&
         other.email == email &&
         other.phoneNumber == phoneNumber &&
         other.dateCreated == dateCreated &&
+        other.isPhoneVerified == isPhoneVerified &&
         other.dateUpdated == dateUpdated;
   }
 
@@ -114,11 +121,12 @@ class UserModel {
         firstName.hashCode ^
         lastName.hashCode ^
         password.hashCode ^
-        isVerified.hashCode ^
+        isEmailVerified.hashCode ^
         c02Score.hashCode ^
         email.hashCode ^
         phoneNumber.hashCode ^
         dateCreated.hashCode ^
+        isPhoneVerified.hashCode ^
         dateUpdated.hashCode;
   }
 }

@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   late final Stream<User?> _authState;
+  final _dialogService = locator<DiaglogService>();
   User? _currentUser;
   final FirebaseAuth _firebaseAuth;
   final _accountService = locator<AccountDatabaseService>();
@@ -36,6 +37,7 @@ class AuthService {
 
         _userCredential = Optional.of(_loggedInUser);
         _currentUser = _userCredential.get()?.user;
+        updateUserEmailStatus();
         print('display name: ${_userCredential.get()!.user!.displayName}\n');
       } else {
         final String createdDateTime = DateTime.now().toIso8601String();
@@ -103,17 +105,24 @@ class AuthService {
     }
   }
 
+  /// update user email to verified once
   void updateUserEmailStatus() async {
     await currentUser.get()!.reload();
-
-
-    if (isUserEmailVerified()) {
-          UserModel user = await _accountService.fetchUser(currentUser.get()!.uid);
-      user = user.copyWith(isVerified: true);
-      _accountService.updateUser(user.userId);
+    if (!isUserEmailVerified()) return;
+    UserModel user =
+        await _accountService.fetchUser(currentUser.get()!.uid).onError((e, s) {
+      return Future.error(
+        promptDialog(e.toString(), 'Data does not exist', _dialogService),
+      );
+    });
+    if (isUserEmailVerified() && !user.isEmailVerified) {
+      print('updated email');
+      user = user.copyWith(isEmailVerified: true);
+      _accountService.updateUser(user);
     }
   }
 
+  /// return true if user is verified
   bool isUserEmailVerified() {
     return _userCredential.isPresent() &&
         _userCredential.get()!.user!.emailVerified;
