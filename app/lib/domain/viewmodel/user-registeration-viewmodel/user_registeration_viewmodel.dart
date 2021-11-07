@@ -7,7 +7,7 @@ import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
-import 'package:app/ui/views/home_view.dart';
+import 'package:app/ui/views/community-view/community_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +140,7 @@ class UserRegisterationViewModel extends BaseViewModel {
         promptDialog('an Email has been sent to you. Please check your email',
             'You are not verify yet', _dialogService);
       } else {
-        _navService.navigateAndReplce(HomeView.routeName);
+        _navService.navigateAndReplce(CommunityView.routeName);
       }
     } else if (authMode == AuthMode.SIGNUP) {
       print('signing up\n ');

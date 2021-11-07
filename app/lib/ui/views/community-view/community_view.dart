@@ -1,21 +1,21 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
-import 'package:app/domain/viewmodel/homeView_model.dart';
+import 'package:app/domain/viewmodel/community_viewmodel/community_viewmodel.dart';
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
-  static const routeName = '/HomeView';
-  const HomeView({Key? key}) : super(key: key);
+class CommunityView extends StatelessWidget {
+  static const routeName = '/CommunityView';
+  const CommunityView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print('building home view .......\n');
-    return BuildViewModel<HomeViewModel>(
+    return BuildViewModel<CommunityViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text('capstone project tutorial'),
+          title: const Text('Community Post'),
           actions: [
-            IconButton(onPressed:() => model.signOut(context), icon: Icon(Icons.exit_to_app))
+            IconButton(onPressed: model.signOut, icon: Icon(Icons.exit_to_app))
           ],
         ),
         body: SafeArea(
