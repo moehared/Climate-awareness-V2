@@ -2,7 +2,7 @@ import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:flutter/material.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
-
+import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
 class ForumView extends StatelessWidget {
   static const routeName = '/ForumView';
   const ForumView({Key? key}) : super(key: key);
@@ -28,7 +28,12 @@ class ForumView extends StatelessWidget {
                         hintStyle: TextStyle(color: Colors.black),
                         hintText: "Add a title"),
                   ),
-                  Text("Description"),
+                  Text("Select a category"),
+               
+                  Text("Description",
+                  style: TextStyle(height: 5, fontSize: 10, color: Colors.white),
+                  
+                  ),
                   TextField(
                     maxLines: null,
                     decoration: InputDecoration(

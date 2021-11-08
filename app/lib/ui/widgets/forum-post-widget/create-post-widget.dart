@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
 class CreateForumPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,8 @@ class CreateForumPost extends StatelessWidget {
               return null;
             },
           ),
+          Text("Select a Catergory"),
+          DropDownMenuWidget(),
           TextFormField(
             maxLines: null,
             textInputAction: TextInputAction.next,
@@ -31,6 +33,7 @@ class CreateForumPost extends StatelessWidget {
               }
               return null;
             },
+
           ),
         ],
       ),

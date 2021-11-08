@@ -6,11 +6,32 @@ class DropDownMenuWidget extends StatefulWidget {
 }
 
 class _DropDownState extends State<DropDownMenuWidget> {
-  String chosenValue = "Select";
+  String dropDownValue = "Select";
   @override
   Widget build(BuildContext context) {
+    items: [];
     return DropdownButton<String>(
-      items: [],
+      value: dropDownValue,
+      icon: const Icon(Icons.arrow_downward),
+      iconSize:  24,
+      elevation: 16,
+      style:  const TextStyle(color: Colors.deepPurple),
+      underline:  Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? newValue){
+        setState(() {
+          dropDownValue = newValue!;
+        });
+      },
+      items: <String>['Environment', 'Climate', 'DIY', 'Other']
+        .map<DropdownMenuItem<String>>((String value){
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
     );
   }
 }
