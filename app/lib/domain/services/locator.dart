@@ -11,6 +11,9 @@ import 'package:app/domain/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 import 'package:app/domain/viewmodel/confirm_user_email_viewmodel/confirm_user_email_viewmodel.dart';
 
 import 'package:app/domain/viewmodel/community_viewmodel/community_viewmodel.dart';
+import 'package:app/domain/viewmodel/filter-viewmodels/all_viewmodel.dart';
+import 'package:app/domain/viewmodel/filter-viewmodels/articles_viewmodel.dart';
+import 'package:app/domain/viewmodel/filter-viewmodels/media_viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
@@ -63,4 +66,7 @@ void setUpLocatorService() {
   locator.registerFactory<ChatViewModel>(() => ChatViewModel());
   locator.registerFactory<LocationViewModel>(() => LocationViewModel());
   locator.registerFactory<ProfileViewModel>(() => ProfileViewModel());
+    locator.registerFactory<AllViewModel>(() => AllViewModel());
+      locator.registerFactory<MediaViewModel>(() => MediaViewModel());
+        locator.registerFactory<ArticleViewModel>(() => ArticleViewModel());
 }

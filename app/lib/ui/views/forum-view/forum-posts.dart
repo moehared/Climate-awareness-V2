@@ -10,6 +10,10 @@ class ForumView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BuildViewModel<ForumPostViewModel>(
       builder: (ctx, model, child) => Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text('Forums'),
+        ),
         body: BackgroundImage(
           backgroundImage: "images/space2.png",
           child: SafeArea(
@@ -21,17 +25,15 @@ class ForumView extends StatelessWidget {
                   Text("Title"),
                   TextField(
                     decoration: InputDecoration(
-                      hintStyle: TextStyle(color: Colors.black),
-                      hintText: "Add a title"
-                    ),
+                        hintStyle: TextStyle(color: Colors.black),
+                        hintText: "Add a title"),
                   ),
                   Text("Description"),
                   TextField(
                     maxLines: null,
                     decoration: InputDecoration(
-                      hintStyle: TextStyle(color: Colors.black),
-                      hintText: "Add a Description"
-                    ),
+                        hintStyle: TextStyle(color: Colors.black),
+                        hintText: "Add a Description"),
                   ),
                 ],
               ),

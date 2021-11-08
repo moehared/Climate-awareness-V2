@@ -26,6 +26,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: const Color(0xffc2185b),
         ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       builder: (ctx, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

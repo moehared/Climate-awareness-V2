@@ -1,5 +1,6 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/chat_viewmodel/chat_viewmodel.dart';
+import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:flutter/material.dart';
 
 class ChatView extends StatelessWidget {
@@ -14,8 +15,11 @@ class ChatView extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: const Text('Chat View'),
         ),
-        body: SafeArea(
-          child: Center(child: Text('Chat View')),
+        body: BackgroundImage(
+          backgroundImage: 'images/space2.png',
+          child: SafeArea(
+            child: Center(child: Text('Chat View')),
+          ),
         ),
       ),
     );

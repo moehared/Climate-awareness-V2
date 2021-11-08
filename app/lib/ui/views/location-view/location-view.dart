@@ -1,5 +1,6 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
+import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:flutter/material.dart';
 
 class LocationView extends StatelessWidget {
@@ -9,19 +10,19 @@ class LocationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<LocationViewModel>(
-      
       builder: (ctx, model, ch) => Scaffold(
-        
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: const Text('Location View'),
         ),
-      
-        body: SafeArea(
-          child: ch!,
+        body: BackgroundImage(
+          backgroundImage: 'images/space2.png',
+          child: SafeArea(
+            child: ch!,
           ),
         ),
-        child: Center(
+      ),
+      child: Center(
         child: Text('Location View'),
       ),
     );
