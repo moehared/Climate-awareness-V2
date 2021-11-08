@@ -17,7 +17,23 @@ class ForumView extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [],
+                children: [
+                  Text("Title"),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: "Add a title"
+                    ),
+                  ),
+                  Text("Description"),
+                  TextField(
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: "Add a Description"
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
