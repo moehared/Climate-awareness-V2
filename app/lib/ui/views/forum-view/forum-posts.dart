@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
 import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
+
 class ForumView extends StatelessWidget {
   static const routeName = '/ForumView';
   const ForumView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<ForumPostViewModel>(
@@ -22,16 +24,21 @@ class ForumView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Title"),
+                  Text("Title",
+                  style: TextStyle(height: 5, fontSize: 20, color: Colors.white)),
                   TextField(
                     decoration: InputDecoration(
                         hintStyle: TextStyle(color: Colors.black),
                         hintText: "Add a title"),
                   ),
-                  Text("Select a category"),
+                  Text("Select a category",
+                  style: TextStyle(height: 5, fontSize: 20, color: Colors.white)
+                  ),
+                  DropDownMenuWidget(),
+                  
                
                   Text("Description",
-                  style: TextStyle(height: 5, fontSize: 10, color: Colors.white),
+                  style: TextStyle(height: 5, fontSize: 20, color: Colors.white),
                   
                   ),
                   TextField(
