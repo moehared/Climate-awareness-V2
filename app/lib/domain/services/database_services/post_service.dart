@@ -4,4 +4,11 @@ import 'package:app/domain/services/repository/repo_interface.dart';
 class PostDatabaseService {
   final RepositoryInterface<UserPostModel> repository;
   PostDatabaseService(this.repository);
+
+
+  void createNewPost(UserPostModel userPostModel) async{
+
+
+  }
+
 }

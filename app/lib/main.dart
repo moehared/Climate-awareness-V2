@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+        
       ),
       builder: (ctx, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(
