@@ -1,2 +1,2 @@
 const String USER_COLLECTION = 'user';
-const String POST_COLLECTION = 'post';
+const String POST_COLLECTION = 'user-post';

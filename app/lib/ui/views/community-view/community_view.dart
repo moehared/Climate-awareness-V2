@@ -28,10 +28,12 @@ class _CommunityViewState extends State<CommunityView>
             title: Text('Community'),
             actions: [
               IconButton(
-                  icon: Icon(
-                    Icons.add,
-                  ),
-                  onPressed: () {}),
+                icon: Icon(
+                  Icons.add,
+                ),
+                // add form widget
+                onPressed: () {},
+              ),
             ],
           ),
           body: BackgroundImage(

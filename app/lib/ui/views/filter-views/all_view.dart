@@ -8,13 +8,15 @@ class AllViews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BuildViewModel<AllViewModel>(builder: (ctx,model,child) =>  Column(
-              children: [
-                UserPostStream(
-                  filterByArticle: false,
-                  filterByMedia: false,
-                ),
-              ],
-            ),);
+    return BuildViewModel<AllViewModel>(
+      builder: (ctx, model, child) => Column(
+        children: [
+          UserPostStream(
+            filterByArticle: false,
+            filterByMedia: false,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,11 +1,15 @@
 import 'package:app/domain/models/user_post_model.dart';
-import 'package:app/ui/widgets/reusable-post-card-widget/reusable_post_card_widget.dart';
+
+import 'package:app/ui/widgets/reusable-widget/reusable_post_card_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserPostStream extends StatelessWidget {
-  const UserPostStream(
-      {this.filterByArticle = false, this.filterByMedia = false, this.user});
+  const UserPostStream({
+    this.filterByArticle = false,
+    this.filterByMedia = false,
+    this.user,
+  });
 
   final bool filterByArticle;
   final bool filterByMedia;
@@ -45,17 +49,14 @@ class UserPostStream extends StatelessWidget {
       }
       return Expanded(
         child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            // reverse: true,
-            physics: BouncingScrollPhysics(),
-            itemCount: cardWidget.length,
-            itemBuilder: (_, index) {
-              return cardWidget[index];
-              // return ReusablePostCard(
-              //   id: id,
-              //   post: userPost[index],
-              // );
-            }),
+          scrollDirection: Axis.vertical,
+          // reverse: true,
+          physics: BouncingScrollPhysics(),
+          itemCount: cardWidget.length,
+          itemBuilder: (_, index) {
+            return cardWidget[index];
+          },
+        ),
       );
     });
   }
