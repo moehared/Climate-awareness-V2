@@ -46,13 +46,16 @@ void setUpLocatorService() {
       () => PostFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(
       () => AccountFirebaseFireStoreRepo());
+  locator.registerLazySingleton<PostFirebaseFireStoreRepo>(
+      () => PostFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountDatabaseService>(
       () => AccountDatabaseService(locator<AccountFirebaseFireStoreRepo>()));
   locator.registerLazySingleton<AuthService>(() => AuthService(firebaseAuth));
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DiaglogService>(() => DiaglogService());
 
-  locator.registerLazySingleton<PostDatabaseService>(() => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
+  locator.registerLazySingleton<PostDatabaseService>(
+      () => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
 
   // init factory view here
   locator.registerFactory<CommunityViewModel>(() => CommunityViewModel());
@@ -62,11 +65,11 @@ void setUpLocatorService() {
       () => ConfirmUserEmailViewModel());
 
   locator.registerFactory<TabViewModel>(() => TabViewModel());
-    locator.registerFactory<ForumPostViewModel>(() => ForumPostViewModel());
+  locator.registerFactory<ForumPostViewModel>(() => ForumPostViewModel());
   locator.registerFactory<ChatViewModel>(() => ChatViewModel());
   locator.registerFactory<LocationViewModel>(() => LocationViewModel());
   locator.registerFactory<ProfileViewModel>(() => ProfileViewModel());
-    locator.registerFactory<AllViewModel>(() => AllViewModel());
-      locator.registerFactory<MediaViewModel>(() => MediaViewModel());
-        locator.registerFactory<ArticleViewModel>(() => ArticleViewModel());
+  locator.registerFactory<AllViewModel>(() => AllViewModel());
+  locator.registerFactory<MediaViewModel>(() => MediaViewModel());
+  locator.registerFactory<ArticleViewModel>(() => ArticleViewModel());
 }

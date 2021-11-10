@@ -1,6 +1,4 @@
-import 'package:app/common/constant.dart';
 import 'package:app/domain/models/user_post_model.dart';
-import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
 
 class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
@@ -8,12 +6,11 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
 
   @override
   Future<void> create(UserPostModel post) async {
- //  final docRef = firestore.collection(POST_COLLECTION).doc();
+    //  final docRef = firestore.collection(POST_COLLECTION).doc();
 //   final id = docRef.id;
- //  post = post.copyWith(postID: id);
- //   docRef.set(post.toMap());
-
- //   print('post id: $id');
+    //  post = post.copyWith(postID: id);
+    //   docRef.set(post.toMap());
+    //   print('post id: $id');
   }
 
   @override
@@ -33,6 +30,4 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
     // TODO: implement update
     throw UnimplementedError();
   }
-
-  
 }
