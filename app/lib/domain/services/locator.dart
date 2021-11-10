@@ -48,11 +48,11 @@ void setUpLocatorService() {
       () => AccountFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountDatabaseService>(
       () => AccountDatabaseService(locator<AccountFirebaseFireStoreRepo>()));
-  locator.registerLazySingleton<PostDatabaseService>(
-      () => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
   locator.registerLazySingleton<AuthService>(() => AuthService(firebaseAuth));
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DiaglogService>(() => DiaglogService());
+
+  locator.registerLazySingleton<PostDatabaseService>(() => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
 
   // init factory view here
   locator.registerFactory<CommunityViewModel>(() => CommunityViewModel());

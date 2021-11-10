@@ -31,7 +31,7 @@ class _CommunityViewState extends State<CommunityView>
                   icon: Icon(
                     Icons.add,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {},),
             ],
           ),
           body: BackgroundImage(

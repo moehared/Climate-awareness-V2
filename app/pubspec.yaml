@@ -41,6 +41,9 @@ dependencies:
   responsive_framework: ^0.1.4
   shared_preferences: ^2.0.8
   uuid: ^3.0.5
+  file_picker: ^4.2.1
+  firebase_storage: ^10.1.0
+ 
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -48,6 +51,7 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.0.16
   build_runner: ^2.1.4
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

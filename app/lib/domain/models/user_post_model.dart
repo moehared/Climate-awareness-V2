@@ -27,6 +27,30 @@ class UserPostModel {
     this.date ="",
   });
 
+  UserPostModel copyWith({
+   String ? userId,
+   String  ? title,
+   String ? description,
+   String ? url,
+   String ? imageUrl,
+   String ? imagePath,
+   String ? type,
+   String ? user,
+   String ?category 
+  })
+  {
+    return UserPostModel(
+    userId: userId ?? this.userId, 
+    category: category ?? this.category, 
+    user: user ?? this.user,
+    title: title ?? this.title,
+    description: description ?? this.description,
+    url: url ?? this.url, 
+    imageUrl: imageUrl ?? this.imageUrl,
+    imagePath: imagePath ?? this.imagePath,
+    type: type ?? this.type );
+  }
+
 //Take saved values in local variable and return a map
     Map<String, dynamic> toMap() {
     return {
