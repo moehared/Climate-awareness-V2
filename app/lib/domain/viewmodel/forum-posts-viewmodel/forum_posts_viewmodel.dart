@@ -1,3 +1,6 @@
+import 'package:app/domain/services/authentication_service/auth_service.dart';
+import 'package:app/domain/services/database_services/post_service.dart';
+import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,25 +13,40 @@ import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:app/domain/services/database_services/account_service.dart';
+
 
 
 
 class ForumPostViewModel extends BaseViewModel{
-  var _validURLPath = false;
+  var _validUrlPath = false;
   var _validImagePath = false;
   var _uploadToFireBase = false;
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  String myId = '';
-  String myUsername = '';
-  //check if user is signed in get instance 
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  User? user = FirebaseAuth.instance.currentUser;
+  var errorUrl = false;
+  var mediaError = false;
 
-  
+  File ? file;
+
+  final _userAuthService = locator<AuthService>();
+  final _userPostService = locator<PostDatabaseService>();
+
 
   final _formKey = GlobalKey<FormState>();
 
-  GlobalKey<FormState> get formkey => _formKey;
+  Future selectFile() async{
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false );
+    if(result == null)return;
+    final path = result.files.single.path!;
+    file = File(path);
+    if(file == null)return "Add a image";
+  }
+
+  Future uploadFile() async{
+    if (file == null) return;
+
+    final fileName = basename(file!.path);
+    final destination = 'Path To firebase/$fileName';
+  }
 
 
   UserPostModel _userPostModel = UserPostModel(
@@ -43,16 +61,30 @@ class ForumPostViewModel extends BaseViewModel{
     type: ""
   );
 
+  set setUserPostObj(UserPostModel copy) {
+    _userPostModel = copy;
+  }
+
+
+  UserPostModel get userPostsModel =>  _userPostModel;
+
+    
+
+
+ GlobalKey<FormState> get formkey => _formKey;
+
+  void submit(context) async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    _formKey.currentState!.save();
+ //   _userPostService.createNewPost(userPostModel)
+  }
 
 
 
-void getUserData() async{
-  if( _firebaseAuth.currentUser == null) return;
-  User ? user = _firebaseAuth.currentUser;
-  FirebaseFirestore.instance.collection('user').doc(user?.uid).snapshots().listen( (userdata){ 
 
 
-    });
-   }
+
 
 }

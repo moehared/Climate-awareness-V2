@@ -1,4 +1,5 @@
 import 'package:app/domain/services/repository/post_firebase_repository.dart';
+import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
@@ -6,34 +7,29 @@ import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:file_picker/file_picker.dart';
+import 'package:app/common/utils/input_validator.dart';
 
 
-class CreateForumPost extends StatefulWidget {
-  const CreateForumPost({
-    Key? key,
+class CreateForumPost extends StatelessWidget {
+  CreateForumPost({
     required this.model,
+    Key? key,
   }) : super(key: key);
-  final ForumPostViewModel model;
-  @override
-  State<CreateForumPost> createState() =>
-      _CreatePostForumState();
-}
 
-
-class _CreatePostForumState extends State<CreateForumPost> with SingleTickerProviderStateMixin { 
-  File ? file;
-
+ final  ForumPostViewModel model;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+ return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-
       child: Form(
-        key: widget.model.formkey,
+        key: model.formkey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text("Title",
+                  style:Theme.of(context).textTheme.bodyText1,),
             TextFormField(
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
@@ -45,10 +41,21 @@ class _CreatePostForumState extends State<CreateForumPost> with SingleTickerProv
                 }
                 return null;
               },
+              onSaved: (titleName) {
+                model.setUserPostObj = model.userPostsModel.
+                copyWith(title: titleName);
+              },
             ),
-            Text("Select a Catergory"),
+
+            Text("Select a Catergory",
+            style: TextStyle(fontSize: 20, color: Colors.white)
+            ),
             DropDownMenuWidget(),
 
+            Text("Description",
+            
+                  style: TextStyle(fontSize: 20, color: Colors.white,)
+                  ),
             TextFormField(
               maxLines: null,
               textInputAction: TextInputAction.next,
@@ -61,49 +68,53 @@ class _CreatePostForumState extends State<CreateForumPost> with SingleTickerProv
                 }
                 return null;
               },
+              onSaved: (description){
+                model.setUserPostObj = model.userPostsModel.
+                copyWith(description: description);
+              },
             ),
+            Text("URL",
+                  style: TextStyle(fontSize: 20, color: Colors.white,),),
             TextFormField(
               maxLines: null,
               onFieldSubmitted: (_){},
               validator: (url){
                 if(url!.isEmpty){
-                  return "Add a URL";
+                  return "Add a article url";
+                }
+                else if(!url.isValidUrl())
+                {
+                  return "Enter a Valid URL in the form of https://wwww.Example.com";
                 }
               },
+              onSaved:(postUrl){
+                model.setUserPostObj = model.userPostsModel.
+                copyWith(url: postUrl);
+              },
             ),
-            ElevatedButton(onPressed: (){
-              selectFile();
-            },
+            ElevatedButton(onPressed: model.selectFile,
+  
             child: const Text("Select image file")
             ),
-
 
             ElevatedButton(onPressed:(){},
             child: const Text("Upload image file")
             ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(onPressed:(){
+                model.submit(context);
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Posting")));
+              }, child: const Text("Post")),
+              )
           ],
       ),
-      )
+      ),
     );
   }
 
 
-// move to viewmodel 
-  Future selectFile() async{
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-    if(result == null)return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
-  }
-
-  Future uploadFile() async{
-    if (file == null) return;
-
-    final fileName = basename(file!.path);
-    final destination = 'Path To firebase/$fileName';
-    
-    //Create function to upload to firebase 
-  }
 
 
 }

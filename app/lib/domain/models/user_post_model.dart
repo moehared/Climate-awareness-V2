@@ -27,7 +27,7 @@ class UserPostModel {
     this.date ="",
   });
 
-  UserPostModel _copyWith({
+  UserPostModel copyWith({
    String ? userId,
    String  ? title,
    String ? description,
