@@ -8,9 +8,17 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
   Future<void> create(UserPostModel post) async {
     //  final docRef = firestore.collection(POST_COLLECTION).doc();
 //   final id = docRef.id;
+<<<<<<< Updated upstream
     //  post = post.copyWith(postID: id);
     //   docRef.set(post.toMap());
     //   print('post id: $id');
+=======
+ //  post = post.copyWith(postID: id);
+ //   docRef.set(post.toMap());
+
+ //   print('post id: $id');
+ throw UnimplementedError();
+>>>>>>> Stashed changes
   }
 
   @override
