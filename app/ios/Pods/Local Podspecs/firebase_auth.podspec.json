@@ -24,7 +24,7 @@
 
     ],
     "Firebase/Auth": [
-      "8.8.0"
+      "8.9.0"
     ]
   },
   "static_framework": true,

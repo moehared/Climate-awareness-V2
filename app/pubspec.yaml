@@ -44,7 +44,7 @@ dependencies:
   uuid: ^3.0.5
   file_picker: ^4.2.1
   firebase_storage: ^10.1.0
- 
+  flutter_animation_progress_bar: ^2.0.1
 
 dev_dependencies:
   build_runner: ^2.1.4
@@ -52,7 +52,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.0.16
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
