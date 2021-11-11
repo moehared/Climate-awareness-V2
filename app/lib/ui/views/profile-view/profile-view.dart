@@ -19,6 +19,7 @@ class ProfileView extends StatelessWidget {
 
     return BuildViewModel<ProfileViewModel>(
       builder: (ctx, model, child) => Scaffold(
+        key: model.scaffoldKey,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           brightness: Brightness.light,
@@ -28,7 +29,7 @@ class ProfileView extends StatelessWidget {
               icon: Icon(
                 Icons.more_vert_rounded,
               ),
-              onPressed: () {},
+              onPressed: () => model.showPopUpMenu(model),
             ),
           ],
         ),
