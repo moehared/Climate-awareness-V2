@@ -17,12 +17,13 @@ import 'package:app/domain/viewmodel/filter-viewmodels/media_viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
+import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/food-viewmodel.dart';
+import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/goods-services-viewmodel.dart';
+import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/transportation-viewmodel.dart';
+import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
+import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmodel.dart';
 import 'package:app/domain/viewmodel/tab_viewmodel.dart/tab_viewmodel.dart';
 import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
-import 'package:app/ui/views/chat-view/chat-view.dart';
-import 'package:app/ui/views/location-view/location-view.dart';
-import 'package:app/ui/views/profile-view/profile-view.dart';
-import 'package:app/ui/views/tab-views/tab-views.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -72,4 +73,9 @@ void setUpLocatorService() {
   locator.registerFactory<AllViewModel>(() => AllViewModel());
   locator.registerFactory<MediaViewModel>(() => MediaViewModel());
   locator.registerFactory<ArticleViewModel>(() => ArticleViewModel());
+  locator.registerFactory<QuestionaireViewModel>(() => QuestionaireViewModel());
+    locator.registerFactory<UtilitiesViewModel>(() => UtilitiesViewModel());
+      locator.registerFactory<FoodViewModel>(() => FoodViewModel());
+        locator.registerFactory<TransportationViewModel>(() => TransportationViewModel());
+          locator.registerFactory<GoodsServicesViewModel>(() => GoodsServicesViewModel());
 }
