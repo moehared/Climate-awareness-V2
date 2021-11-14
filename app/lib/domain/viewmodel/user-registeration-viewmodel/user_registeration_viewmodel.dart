@@ -115,7 +115,7 @@ class UserRegisterationViewModel extends BaseViewModel {
   bool get showPassword => _showPassword;
   bool get showConfirmedPassword => _showConfirmedPassword;
 
-  void submit(context) async {
+  void submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }

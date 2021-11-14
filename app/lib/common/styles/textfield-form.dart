@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 const kTextFieldform = InputDecoration(
   fillColor: Colors.white,
+  
   filled: true,
   contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
   hintText: "value",
@@ -21,4 +22,11 @@ const kTextFieldform = InputDecoration(
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Colors.white, width: 1),
   ),
+);
+
+const kTextTitleStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  fontStyle: FontStyle.italic,
+  color: Colors.white,
 );
