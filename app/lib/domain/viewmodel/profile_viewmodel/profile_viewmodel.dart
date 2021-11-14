@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:app/domain/services/authentication_service/auth_service.dart';
+import 'package:app/domain/services/authentication_service/auth_service_wrapper.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
+import 'package:app/ui/views/user-registeration-view/user_registeration_view.dart';
 import 'package:app/ui/widgets/user-setting-menu/user_setting_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,7 @@ class ProfileViewModel extends BaseViewModel {
   void signOut() {
     _authService.signOut();
     notifyListeners();
+    _navService.navigateAndReplce(UserRegisterationFormView.routeName);
   }
 
   void showPopUpMenu(model) {

@@ -43,7 +43,11 @@ class UserRegisterationFormView extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   LoginOrSignUpButton(
-                    model: model,
+                    title: model.authMode == AuthMode.LOGIN
+                        ? "Sign In"
+                        : "Sign Up",
+                    isBusy: model.viewState == ViewState.BUSY,
+                    onPress: model.submit,
                   ),
                   const SizedBox(height: 10),
                   if (model.authMode == AuthMode.LOGIN)

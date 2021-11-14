@@ -19,14 +19,14 @@ class QuestionaireViewModel extends BaseViewModel {
     GoodsServicesView(),
   ];
 
-  double? stepAmount, beginWidth, endWidth;
+  double? _stepAmount, beginWidth, endWidth;
 
 // all methods here
 
   void setProgressAnim(int curPageIndex) {
-    stepAmount = curPageIndex + 1;
+    _stepAmount = curPageIndex + 1;
     beginWidth = curPageIndex == 0 ? 1.0 : curPageIndex.toDouble();
-    endWidth = stepAmount! * curPageIndex;
+    endWidth = _stepAmount! * curPageIndex;
     notifyListeners();
   }
 
@@ -63,6 +63,6 @@ class QuestionaireViewModel extends BaseViewModel {
   List<Widget> get pages => _pages;
   int get selectedPage => _selectedPage;
   int get totalPages => _pages.length;
-  int get growthStep => growthStep.toInt();
+  double get growthStep => _stepAmount ?? 1.0;
   PageController get pageController => _pageController;
 }

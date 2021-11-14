@@ -14,6 +14,7 @@ import 'package:app/domain/viewmodel/community_viewmodel/community_viewmodel.dar
 import 'package:app/domain/viewmodel/filter-viewmodels/all_viewmodel.dart';
 import 'package:app/domain/viewmodel/filter-viewmodels/articles_viewmodel.dart';
 import 'package:app/domain/viewmodel/filter-viewmodels/media_viewmodel.dart';
+import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
@@ -74,8 +75,11 @@ void setUpLocatorService() {
   locator.registerFactory<MediaViewModel>(() => MediaViewModel());
   locator.registerFactory<ArticleViewModel>(() => ArticleViewModel());
   locator.registerFactory<QuestionaireViewModel>(() => QuestionaireViewModel());
-    locator.registerFactory<UtilitiesViewModel>(() => UtilitiesViewModel());
-      locator.registerFactory<FoodViewModel>(() => FoodViewModel());
-        locator.registerFactory<TransportationViewModel>(() => TransportationViewModel());
-          locator.registerFactory<GoodsServicesViewModel>(() => GoodsServicesViewModel());
+  locator.registerFactory<UtilitiesViewModel>(() => UtilitiesViewModel());
+  locator.registerFactory<FoodViewModel>(() => FoodViewModel());
+  locator.registerFactory<TransportationViewModel>(
+      () => TransportationViewModel());
+  locator
+      .registerFactory<GoodsServicesViewModel>(() => GoodsServicesViewModel());
+  locator.registerFactory<ForgetPassWordViewModel>(() => ForgetPassWordViewModel());
 }
