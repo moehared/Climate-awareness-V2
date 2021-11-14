@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:app/common/utils/optional.dart';
 import 'package:app/domain/dialog_manager/prompt_dialog.dart';
+import 'package:app/domain/error_exceptions/firebase_auth_exception.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
@@ -103,6 +106,27 @@ class AuthService {
         currentUser.get()!.sendEmailVerification();
       }
     }
+  }
+
+  Future<void> resetPassword({required String userEmailAddress}) async {
+    var isError = false;
+    _firebaseAuth
+        .sendPasswordResetEmail(email: userEmailAddress)
+        .catchError((e) {
+      isError = true;
+      return promptDialog(
+        'An error occurred while reseting password. Please check your email and try again.',
+        'Could not reset password',
+        _dialogService,
+      );
+    }).then((_) {
+      // TODO: get the action code and confirm reset password and update user new password
+      // see this: link: https://stackoverflow.com/questions/68832547/how-to-build-a-custom-email-action-handler-in-flutter-for-firebase-authenticatio
+      if (!isError) {
+        promptDialog('An email has been sent to you . Please check your email',
+            'Confirmed', _dialogService);
+      }
+    });
   }
 
   /// update user email to verified once

@@ -41,7 +41,7 @@ class QuestionaireView extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: FAProgressBar(
                 maxValue: model.totalPages,
-                currentValue: model.stepAmount?.toInt() ?? 1,
+                currentValue: model.growthStep.toInt(),
                 progressColor: Theme.of(context).colorScheme.secondary,
                 backgroundColor: Colors.grey.shade300,
               ),

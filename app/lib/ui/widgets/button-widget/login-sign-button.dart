@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 class LoginOrSignUpButton extends StatelessWidget {
   const LoginOrSignUpButton({
     Key? key,
-    required this.model,
+    required this.title,
+    required this.onPress,
+    this.isBusy = false,
   }) : super(key: key);
-  final UserRegisterationViewModel model;
+  final String title;
+  final Function() onPress;
+  final bool isBusy;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,11 +29,11 @@ class LoginOrSignUpButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(32),
           ),
         ),
-        onPressed: () => model.submit(context),
-        child: model.viewState == ViewState.BUSY
-            ? CircularProgressIndicator()
+        onPressed: onPress,
+        child: isBusy?
+            CircularProgressIndicator()
             : Text(
-          model.authMode == AuthMode.LOGIN ? "Sign In" : "Sign Up",
+          title,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,

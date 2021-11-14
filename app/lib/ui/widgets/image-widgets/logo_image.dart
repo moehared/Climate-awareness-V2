@@ -12,8 +12,8 @@ class LogoImageAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isCircle) {
       return CircleAvatar(
+        backgroundImage: AssetImage(imageAsset),
         radius: 20,
-        child: Image.asset(imageAsset),
       );
     }
     return SizedBox(
