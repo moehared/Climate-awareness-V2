@@ -71,6 +71,7 @@ class ReusablePostCard extends StatelessWidget {
                 ),
                 child: post.imageUrl.isNotEmpty
                     ? Image.network(
+                        //post.imageUrl,
                         post.imageUrl,
                         width: double.infinity,
                         height: media.height * 0.4,
@@ -115,7 +116,7 @@ class ReusablePostCard extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.circular(32.0),
                   ),
                   padding:

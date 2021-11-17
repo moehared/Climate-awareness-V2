@@ -3,8 +3,7 @@ import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:flutter/material.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
-import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
-import 'package:app/domain/models/user_post_model.dart';
+
 
 class ForumView extends StatelessWidget {
   static const routeName = '/ForumView';
@@ -19,6 +18,7 @@ class ForumView extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: const Text('Forums'),
         ),
+
         body: BackgroundImage(
           backgroundImage: "images/space2.png",
           child: SafeArea(
@@ -27,7 +27,7 @@ class ForumView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                      CreateForumPost(model: model),
+                      CreateForumPost(model: model), 
                 ],
               ),
             ),

@@ -3,88 +3,91 @@ import 'package:app/domain/services/database_services/post_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 
-
-
-
-class ForumPostViewModel extends BaseViewModel{
+class ForumPostViewModel extends BaseViewModel {
   var _validUrlPath = false;
   var _validImagePath = false;
   var _uploadToFireBase = false;
+  final _imageUrlController = TextEditingController();
   var errorUrl = false;
   var mediaError = false;
+  var isUserUpload = false;
 
-  File ? file;
-
+  File? _image;
+ 
   final _userAuthService = locator<AuthService>();
   final _userPostService = locator<PostDatabaseService>();
 
+  final imagePicker = ImagePicker();
 
   final _formKey = GlobalKey<FormState>();
 
-  Future selectFile() async{
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false );
-    if(result == null)return;
-    final path = result.files.single.path!;
-    file = File(path);
-    if(file == null)return "Add a image";
-  }
-
-  Future uploadFile() async{
-    if (file == null) return;
-
-    final fileName = basename(file!.path);
-    final destination = 'Path To firebase/$fileName';
-  }
-
-
   UserPostModel _userPostModel = UserPostModel(
-    userId: "",
-    user: "",
-    category: "",
-    title: "",
-    description: "",
-    url: "",
-    imageUrl: "",
-    imagePath: "",
-    type: ""
-  );
+      postId: "",
+      userId: "",
+      category: "",
+      description: "",
+      url: "",
+      imageUrl: "",
+      imagePath: "",
+      type: "",
+      date: "");
+
+  File? get image => _image;
+
+  TextEditingController get imageController => _imageUrlController;
 
   set setUserPostObj(UserPostModel copy) {
     _userPostModel = copy;
   }
 
+  UserPostModel get userPostsModel => _userPostModel;
 
-  UserPostModel get userPostsModel =>  _userPostModel;
+  GlobalKey<FormState> get formkey => _formKey;
 
-    
+  void submit() async {
+    final isValid = _formKey.currentState!.validate();
+    final date = DateTime.now().toString();
+    var dateParse = DateTime.parse(date);
+    var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
 
-
- GlobalKey<FormState> get formkey => _formKey;
-
-  void submit(context) async {
-    if (!_formKey.currentState!.validate()) {
+//if not valid print and return else create the post
+    if (!isValid) {
+      print("Not valid formKEy");
       return;
     }
-    _formKey.currentState!.save();
- //   _userPostService.createNewPost(userPostModel)
+    //TODO: Clear forum once submitted, also give feedback either post failed or success
+    if(_image != null){
+    setUserPostObj = userPostsModel.copyWith(imagePath: _image?.path);  
+    }
+    if(_imageUrlController.text.isNotEmpty){
+          setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);  
+    }
+
+    _formKey.currentState?.save();
+    setUserPostObj = userPostsModel.copyWith(date: formattedDate);
+    setUserPostObj = userPostsModel.copyWith(userId: _userAuthService.currentUser.get()?.uid);
+    
+    _userPostService.createNewPost(userPostsModel);
   }
 
-
-
-
-
-
-
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      _image = File(image.path);
+      isUserUpload = true;
+      setUserPostObj = userPostsModel.copyWith(imagePath: image.path);
+      notifyListeners();
+    } on PlatformException catch (e) {
+      print("failed to pick image: $e");
+    }
+  }
 }
