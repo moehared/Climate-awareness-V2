@@ -38,8 +38,10 @@ class ReusablePostCard extends StatelessWidget {
               style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
               onPressed: () {},
               child: Text(
-                'edit',
-                style: Theme.of(context).textTheme.bodyText1,
+                'edit post',
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      backgroundColor: Colors.pink,
+                    ),
               ),
             ),
             // )
