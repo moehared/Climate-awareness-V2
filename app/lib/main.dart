@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: const Color(0xFF512da8),
         primaryColorDark: const Color(0xff140078),
@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        
       ),
       builder: (ctx, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

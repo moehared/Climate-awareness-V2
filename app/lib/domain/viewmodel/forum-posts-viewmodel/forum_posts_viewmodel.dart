@@ -1,6 +1,7 @@
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
 import 'package:app/domain/services/locator.dart';
+import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,17 +12,19 @@ import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 
-class ForumPostViewModel extends BaseViewModel {
+class AddPostViewModel extends BaseViewModel {
   var _validUrlPath = false;
+  final _navService = locator<NavigationService>();
   var _validImagePath = false;
   var _uploadToFireBase = false;
   final _imageUrlController = TextEditingController();
   var errorUrl = false;
   var mediaError = false;
   var isUserUpload = false;
-
+  final _imageURLFocusNode = FocusNode();
+  FocusNode get imageURLFocusNode => _imageURLFocusNode;
   File? _image;
- 
+
   final _userAuthService = locator<AuthService>();
   final _userPostService = locator<PostDatabaseService>();
 
@@ -56,7 +59,8 @@ class ForumPostViewModel extends BaseViewModel {
     final isValid = _formKey.currentState!.validate();
     final date = DateTime.now().toString();
     var dateParse = DateTime.parse(date);
-    var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
+    var formattedDate =
+        "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
 
 //if not valid print and return else create the post
     if (!isValid) {
@@ -64,18 +68,24 @@ class ForumPostViewModel extends BaseViewModel {
       return;
     }
     //TODO: Clear forum once submitted, also give feedback either post failed or success
-    if(_image != null){
-    setUserPostObj = userPostsModel.copyWith(imagePath: _image?.path);  
+    if (_image != null) {
+      setUserPostObj = userPostsModel.copyWith(imagePath: _image?.path);
     }
-    if(_imageUrlController.text.isNotEmpty){
-          setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);  
+    if (_imageUrlController.text.isNotEmpty) {
+      setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);
     }
 
     _formKey.currentState?.save();
     setUserPostObj = userPostsModel.copyWith(date: formattedDate);
-    setUserPostObj = userPostsModel.copyWith(userId: _userAuthService.currentUser.get()?.uid);
-    
+    setUserPostObj = userPostsModel.copyWith(
+        userId: _userAuthService.currentUser.get()?.uid);
     _userPostService.createNewPost(userPostsModel);
+    _navService.pop();
+  }
+
+  void onEditComplete() {
+    isUserUpload = false;
+    notifyListeners();
   }
 
   Future pickImage() async {

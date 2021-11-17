@@ -32,7 +32,7 @@ class _CommunityViewState extends State<CommunityView>
                   Icons.add,
                 ),
                 // add form widget
-                onPressed: () {},
+                onPressed: model.navigateToAddPostView,
               ),
             ],
           ),

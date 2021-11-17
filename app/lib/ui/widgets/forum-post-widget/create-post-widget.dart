@@ -8,15 +8,13 @@ import 'package:app/common/utils/input_validator.dart';
 import 'package:app/ui/widgets/reusable-widget/build_button.dart';
 import 'package:flutter/services.dart';
 
-
 class CreateForumPost extends StatelessWidget {
   const CreateForumPost({
     required this.model,
     Key? key,
   }) : super(key: key);
 
-  final ForumPostViewModel model;
-
+  final AddPostViewModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +36,16 @@ class CreateForumPost extends StatelessWidget {
             TextFormField(
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
-              decoration: userPostFormStyle.copyWith(hintText: "Enter a article URL"),
-              maxLines: null,
+              decoration: userPostFormStyle.copyWith(
+                  hintText: "Enter a article URL or Video URL"),
               onFieldSubmitted: (_) {},
               //validator: (url) {
               //   if (url!.isEmpty) {
-               //    return "Add a article url";
-               //  } else if (!url.isValidUrl()) {
-               //  return "Enter a Valid URL in the form of https://wwww.Example.com";
-               // }
-             // },
+              //    return "Add a article url";
+              //  } else if (!url.isValidUrl()) {
+              //  return "Enter a Valid URL in the form of https://wwww.Example.com";
+              // }
+              // },
               onSaved: (postUrl) {
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(url: postUrl);
@@ -94,8 +92,8 @@ class CreateForumPost extends StatelessWidget {
                 return null;
               },
               onSaved: (description) {
-                model.setUserPostObj = model.userPostsModel
-                    .copyWith(description: description);
+                model.setUserPostObj =
+                    model.userPostsModel.copyWith(description: description);
               },
             ),
             const SizedBox(
@@ -106,63 +104,65 @@ class CreateForumPost extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 // _image != null && _imageUrlController.text.isEmpty
-               if (model.isUserUpload)
-          
-                      Container(
-                        width: 100.0,
-                        height: 100.0,
-                        margin: EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: FileImage(model.image as File) 
-                              
-                           ),
-                        ),
-                      ),
-               
-                    // _image == null && _imageUrlController.text.isNotEmpty
-                    if (model.isUserUpload == false)
-                      Container(
-                        width: 100,
-                        height: 100,
-                        margin: EdgeInsets.only(top: 8, right: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.grey),
-                        ),
-                        child: model.imageController.text.isEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.all( 10.0),
-                                child: Text(
-                                    'Enter URL or upload image from your phone',style: Theme.of(context).textTheme.bodyText1,),
-                              )
-                            : Image.network(
-                                model.imageController.text,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
+                if (model.isUserUpload)
+                  Container(
+                    width: 100.0,
+                    height: 100.0,
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: FileImage(model.image as File)),
+                    ),
+                  ),
+
+                // _image == null && _imageUrlController.text.isNotEmpty
+                if (model.isUserUpload == false)
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 8, right: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey),
+                    ),
+                    child: model.imageController.text.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Enter URL or upload image from your phone',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          )
+                        : Image.network(
+                            model.imageController.text,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
 
                 Expanded(
                   child: TextFormField(
+                    focusNode: model.imageURLFocusNode,
                     controller: model.imageController,
                     style: TextStyle(color: Colors.white),
                     decoration: userPostFormStyle.copyWith(
-                    hintText: "Enter a Image URL"),
-                    maxLines: null,
+                        hintText: "Enter a Image URL"),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.text,
                     textAlign: TextAlign.center,
-                    onFieldSubmitted: (_) {},
-                      //  validator: (url) {
-                      //   if (url!.isEmpty) {
-                      //     return "Add a article url";
-                      //   } else if (!url.isValidUrl()) {
-                      //   return "Enter a Valid URL in the form of https://wwww.Example.com";
-                      //   }
-                      // },
+                    onFieldSubmitted: (_) {
+                      FocusScope.of(context).unfocus();
+                    },
+                    onEditingComplete: model.onEditComplete,
+                    //  validator: (url) {
+                    //   if (url!.isEmpty) {
+                    //     return "Add a article url";
+                    //   } else if (!url.isValidUrl()) {
+                    //   return "Enter a Valid URL in the form of https://wwww.Example.com";
+                    //   }
+                    // },
                     onSaved: (imageURL) {
-                      model.setUserPostObj = model.userPostsModel
-                          .copyWith(imageUrl: imageURL);
+                      model.setUserPostObj =
+                          model.userPostsModel.copyWith(imageUrl: imageURL);
                     },
                   ),
                 ),
@@ -171,7 +171,6 @@ class CreateForumPost extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-
             const SizedBox(height: 24),
             Align(
               alignment: Alignment.centerRight,
@@ -181,13 +180,13 @@ class CreateForumPost extends StatelessWidget {
                   onClicked: () => model.pickImage()),
             ),
             const SizedBox(height: 24),
-
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LoginOrSignUpButton(title: 'Create Post', onPress: model.submit,/* isBusy: widget.model.viewState == ViewState.BUSY,*/)
-            ),
-
-        
+                padding: const EdgeInsets.all(8.0),
+                child: LoginOrSignUpButton(
+                  title: 'Create Post',
+                  onPress: model
+                      .submit, /* isBusy: widget.model.viewState == ViewState.BUSY,*/
+                )),
           ],
         ),
       ),

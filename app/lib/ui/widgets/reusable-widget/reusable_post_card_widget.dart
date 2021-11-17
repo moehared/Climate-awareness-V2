@@ -27,25 +27,19 @@ class ReusablePostCard extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
               child: Text(
-                post.type,
+                post.category,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                 ),
               ),
             ),
-
             TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
               onPressed: () {},
               child: Text(
                 'edit',
-                style: TextStyle(
-                  fontSize: 18,
-                  // fontWeight: FontWeight.w900,
-                  fontFamily: 'Roboto-Regular',
-                  color: Theme.of(context).iconTheme.color,
-                ),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
             // )

@@ -1,3 +1,8 @@
+import 'package:app/domain/models/questionaire-model/concrete-objects/food.dart';
+import 'package:app/domain/models/questionaire-model/concrete-objects/goods_services.dart';
+import 'package:app/domain/models/questionaire-model/concrete-objects/transportation.dart';
+import 'package:app/domain/models/questionaire-model/concrete-objects/utilities.dart';
+import 'package:app/domain/models/questionaire-model/questionaire.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
@@ -16,6 +21,7 @@ import 'package:app/domain/viewmodel/filter-viewmodels/articles_viewmodel.dart';
 import 'package:app/domain/viewmodel/filter-viewmodels/media_viewmodel.dart';
 import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
+import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/food-viewmodel.dart';
@@ -58,6 +64,14 @@ void setUpLocatorService() {
 
   locator.registerLazySingleton<PostDatabaseService>(
       () => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
+  locator.registerLazySingleton<Questionaire>(() => Questionaire(
+        category: [
+          Utilities(),
+          Transportation(),
+          Food(),
+          GoodsServices(),
+        ],
+      ));
 
   // init factory view here
   locator.registerFactory<CommunityViewModel>(() => CommunityViewModel());
@@ -67,7 +81,7 @@ void setUpLocatorService() {
       () => ConfirmUserEmailViewModel());
 
   locator.registerFactory<TabViewModel>(() => TabViewModel());
-  locator.registerFactory<ForumPostViewModel>(() => ForumPostViewModel());
+  locator.registerFactory<AddPostViewModel>(() => AddPostViewModel());
   locator.registerFactory<ChatViewModel>(() => ChatViewModel());
   locator.registerFactory<LocationViewModel>(() => LocationViewModel());
   locator.registerFactory<ProfileViewModel>(() => ProfileViewModel());
@@ -81,5 +95,10 @@ void setUpLocatorService() {
       () => TransportationViewModel());
   locator
       .registerFactory<GoodsServicesViewModel>(() => GoodsServicesViewModel());
-  locator.registerFactory<ForgetPassWordViewModel>(() => ForgetPassWordViewModel());
+  locator.registerFactory<ForgetPassWordViewModel>(
+      () => ForgetPassWordViewModel());
+
+  locator.registerFactory<ForumViewModel>(
+    () => ForumViewModel(),
+  );
 }
