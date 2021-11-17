@@ -1,96 +1,115 @@
 import 'dart:convert';
 
-
 class UserPostModel {
+  final String postId;
   final String userId;
-  final String title;
   final String description;
   final String url;
   final String imageUrl;
   final String imagePath;
   final String type;
-  final String user;
   final String category; 
- // final String updatedDate;
-  String date;
-  
+  final String date;
   UserPostModel({
-    this.user ="",
+    required this.postId,
     required this.userId,
-    required this.category,
-    required this.title,
     required this.description,
     required this.url,
     required this.imageUrl,
     required this.imagePath,
     required this.type,
-    this.date ="",
+    required this.category,
+    required this.date,
   });
 
+
   UserPostModel copyWith({
-   String ? userId,
-   String  ? title,
-   String ? description,
-   String ? url,
-   String ? imageUrl,
-   String ? imagePath,
-   String ? type,
-   String ? user,
-   String ?category 
-  })
-  {
+    String? postId,
+    String? userId,
+    String? description,
+    String? url,
+    String? imageUrl,
+    String? imagePath,
+    String? type,
+    String? category,
+    String? date,
+  }) {
     return UserPostModel(
-    userId: userId ?? this.userId, 
-    category: category ?? this.category, 
-    user: user ?? this.user,
-    title: title ?? this.title,
-    description: description ?? this.description,
-    url: url ?? this.url, 
-    imageUrl: imageUrl ?? this.imageUrl,
-    imagePath: imagePath ?? this.imagePath,
-    type: type ?? this.type );
+      postId: postId ?? this.postId,
+      userId: userId ?? this.userId,
+      description: description ?? this.description,
+      url: url ?? this.url,
+      imageUrl: imageUrl ?? this.imageUrl,
+      imagePath: imagePath ?? this.imagePath,
+      type: type ?? this.type,
+      category: category ?? this.category,
+      date: date ?? this.date,
+    );
   }
 
-//Take saved values in local variable and return a map
-    Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
+      'postId': postId,
       'userId': userId,
-      'username': user,
-      'category': category,
-      'title': title,
       'description': description,
       'url': url,
       'imageUrl': imageUrl,
       'imagePath': imagePath,
       'type': type,
-      'dateCreated': date,
+      'category': category,
+      'date': date,
     };
   }
 
-// named constuctor: retrieve values and save it to local variables
-  factory UserPostModel.fromMap(Map<String, dynamic> map){
+  factory UserPostModel.fromMap(Map<String, dynamic> map) {
     return UserPostModel(
-      userId: map["userId"],
-      user: map["username"],
-      category: map["category"],
-      title: map["title"],
-      description: map["description"],
-      url: map["url"],
-      imageUrl: map["imageUrl"],
-      imagePath: map["imagePath"],
-      type: map["type"],
-      date: map["dateCreated"],
+      postId: map['postId'] ?? '',
+      userId: map['userId'] ?? '',
+      description: map['description'] ?? '',
+      url: map['url'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
+      imagePath: map['imagePath'] ?? '',
+      type: map['type'] ?? '',
+      category: map['category'] ?? '',
+      date: map['date'] ?? '',
     );
   }
 
+  String toJson() => json.encode(toMap());
 
+  factory UserPostModel.fromJson(String source) => UserPostModel.fromMap(json.decode(source));
 
+  @override
+  String toString() {
+    return 'UserPostModel(postId: $postId, userId: $userId, description: $description, url: $url, imageUrl: $imageUrl, imagePath: $imagePath, type: $type, category: $category, date: $date)';
+  }
 
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is UserPostModel &&
+      other.postId == postId &&
+      other.userId == userId &&
+      other.description == description &&
+      other.url == url &&
+      other.imageUrl == imageUrl &&
+      other.imagePath == imagePath &&
+      other.type == type &&
+      other.category == category &&
+      other.date == date;
+  }
 
-
-
-
-
-
-
+  @override
+  int get hashCode {
+    return postId.hashCode ^
+      userId.hashCode ^
+      description.hashCode ^
+      url.hashCode ^
+      imageUrl.hashCode ^
+      imagePath.hashCode ^
+      type.hashCode ^
+      category.hashCode ^
+      date.hashCode;
+  }
 }
