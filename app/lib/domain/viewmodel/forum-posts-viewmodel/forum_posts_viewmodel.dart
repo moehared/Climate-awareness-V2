@@ -69,7 +69,7 @@ class AddPostViewModel extends BaseViewModel {
     }
     //TODO: Clear forum once submitted, also give feedback either post failed or success
     if (_image != null) {
-      setUserPostObj = userPostsModel.copyWith(imagePath: _image?.path);
+      setUserPostObj = userPostsModel.copyWith(imagePath: _image!.path);
     }
     if (_imageUrlController.text.isNotEmpty) {
       setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);
