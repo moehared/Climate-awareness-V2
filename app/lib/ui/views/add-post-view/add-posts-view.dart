@@ -14,7 +14,7 @@ class AddPostView extends StatelessWidget {
       builder: (ctx, model, child) => Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('add post'),
+          title: const Text('Add Post'),
         ),
         body: BackgroundImage(
           backgroundImage: "images/space2.png",

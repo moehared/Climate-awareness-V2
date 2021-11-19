@@ -39,13 +39,20 @@ class CreateForumPost extends StatelessWidget {
               decoration: userPostFormStyle.copyWith(
                   hintText: "Enter a article URL or Video URL"),
               onFieldSubmitted: (_) {},
-              //validator: (url) {
-              //   if (url!.isEmpty) {
-              //    return "Add a article url";
-              //  } else if (!url.isValidUrl()) {
-              //  return "Enter a Valid URL in the form of https://wwww.Example.com";
-              // }
-              // },
+              validator:(url) {
+                url = url ?? "";
+                if(url.isEmpty){
+                  return "Enter a URL";
+                }
+                model.blacklistCheck(url);
+                if(model.blackListValid ==  true){
+                  return "URL contains illicit words";
+                }
+                model.checkArticleURL(url);
+                if(model.articleValid == false){
+                  return "Invalid URL";
+                }
+               },
               onSaved: (postUrl) {
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(url: postUrl);

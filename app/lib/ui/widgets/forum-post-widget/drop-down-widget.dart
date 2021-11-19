@@ -30,7 +30,7 @@ class _DropDownState extends State<DropDownMenuWidget> {
         });
           widget.onChanged(dropdownValue);
       },
-      items: <String>['Environment', 'Climate Awareness', 'Other', 'More']
+      items: <String>['Environment', 'Climate Awareness', 'Media', 'Article']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,

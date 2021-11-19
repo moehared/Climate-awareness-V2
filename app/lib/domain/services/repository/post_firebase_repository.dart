@@ -14,18 +14,18 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
     final docRef = firestore.collection(POST_COLLECTION).doc();
     final id = docRef.id;
 
-    //File file = new File(post.imagePath);
-    //String imageURL;
+    File file = new File(post.imagePath);
+    String imageURL;
     //gotta get the image FILE to get the download
 
-    // final imageRef = FirebaseStorage.instance
-    //     .ref()
-    //     .child('userPostImages')
-    //     .child(post.postId + '.jpg');
-    // await imageRef.putFile(file);
+     final imageRef = FirebaseStorage.instance
+         .ref()
+         .child('userPostImages')
+         .child(post.postId + '.jpg');
+     await imageRef.putFile(file);
 
-    // imageURL = await imageRef.getDownloadURL();
-     post = post.copyWith(postId: id);
+     imageURL = await imageRef.getDownloadURL();
+     post = post.copyWith(postId: id, imageUrl: imageURL);
      print("made it to PostFirebaseFireStore");
      docRef.set(post.toMap());
     // TODO: Fix Image path 
