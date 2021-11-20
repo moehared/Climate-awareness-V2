@@ -19,26 +19,6 @@ class UtilitiesView extends StatelessWidget {
                 style: TextStyle(fontFamily: 'Roboto-'),
               ),
             ),
-            Card(
-              margin: const EdgeInsets.all(15),
-              elevation: 1,
-              shape: const RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Title:ghsaghsaghsaghsgahghs',
-                    textAlign: TextAlign.center,
-                  ),
-                  Text('slider'),
-                  Text('button'),
-                ],
-              ),
-            ),
           ],
         ),
       ),
