@@ -1,5 +1,6 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
+import 'package:app/ui/widgets/reusable-widget/reusable_question_card.dart';
 import 'package:flutter/material.dart';
 
 class UtilitiesView extends StatelessWidget {
@@ -18,6 +19,13 @@ class UtilitiesView extends StatelessWidget {
                 'Utilies title',
                 style: TextStyle(fontFamily: 'Roboto-'),
               ),
+            ),
+            const SizedBox(height: 15),
+            ReusableQuetionCard(
+              defaultBtn: () {},
+              onSliderChange: (_) {},
+              value: 2,
+              questionTitle: 'This is where the question goes',
             ),
           ],
         ),
