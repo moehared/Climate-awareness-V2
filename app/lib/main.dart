@@ -27,11 +27,12 @@ class MyApp extends StatelessWidget {
           secondary: const Color(0xffc2185b),
         ),
         textTheme: TextTheme(
-          bodyText1: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        
+            bodyText1: TextStyle(
+              color: Colors.white,
+            ),
+            bodyText2: TextStyle(
+              fontFamily: 'Roboto-Bold',
+            )),
       ),
       builder: (ctx, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

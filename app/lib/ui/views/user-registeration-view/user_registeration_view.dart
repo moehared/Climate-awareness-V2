@@ -5,7 +5,7 @@ import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_mode
 import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:app/ui/widgets/button-widget/create-account-button.dart';
 import 'package:app/ui/widgets/button-widget/forget-password-button.dart';
-import 'package:app/ui/widgets/button-widget/login-sign-button.dart';
+import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:app/ui/widgets/form/create-form.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:app/ui/widgets/image-widgets/logo_image.dart';
@@ -42,7 +42,7 @@ class UserRegisterationFormView extends StatelessWidget {
                     model: model,
                   ),
                   const SizedBox(height: 10),
-                  LoginOrSignUpButton(
+                  RoundedLongButton(
                     title: model.authMode == AuthMode.LOGIN
                         ? "Sign In"
                         : "Sign Up",

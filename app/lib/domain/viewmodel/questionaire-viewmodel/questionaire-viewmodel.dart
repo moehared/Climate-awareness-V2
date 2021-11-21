@@ -1,6 +1,8 @@
+import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/ui/views/questionaire-view/question-views/food-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/goods-services-view.dart';
+import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/transportation-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/utilities-view.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ class QuestionaireViewModel extends BaseViewModel {
   int _selectedPage = 0;
 
   final List<Widget> _pages = [
+    QuickCarbonView(),
     UtilitiesView(),
     TransportationView(),
     FoodView(),
@@ -24,7 +27,7 @@ class QuestionaireViewModel extends BaseViewModel {
 // all methods here
 
   void setProgressAnim(int curPageIndex) {
-    _stepAmount = curPageIndex + 1;
+    _stepAmount = curPageIndex == 1 ? 2 : curPageIndex + 1;
     beginWidth = curPageIndex == 0 ? 1.0 : curPageIndex.toDouble();
     endWidth = _stepAmount! * curPageIndex;
     notifyListeners();
@@ -41,8 +44,11 @@ class QuestionaireViewModel extends BaseViewModel {
   void nextQuestionScreen() {
     if (_selectedPage < _pages.length - 1) {
       _selectedPage++;
-      _pageController.animateToPage(_selectedPage,
-          duration: Duration(microseconds: 250), curve: Curves.bounceInOut);
+      _pageController.animateToPage(
+        _selectedPage,
+        duration: Duration(microseconds: 250),
+        curve: Curves.bounceInOut,
+      );
     }
   }
 
