@@ -29,6 +29,7 @@ import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/transportation-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmodel.dart';
+import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';
 import 'package:app/domain/viewmodel/tab_viewmodel.dart/tab_viewmodel.dart';
 import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -101,8 +102,5 @@ void setUpLocatorService() {
       .registerFactory<GoodsServicesViewModel>(() => GoodsServicesViewModel());
   locator.registerFactory<ForgetPassWordViewModel>(
       () => ForgetPassWordViewModel());
-
-  locator.registerFactory<ForumViewModel>(
-    () => ForumViewModel(),
-  );
+  locator.registerFactory<QuickCarbonViewModel>(() => QuickCarbonViewModel());
 }

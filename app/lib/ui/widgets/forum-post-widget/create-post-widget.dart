@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'package:app/common/styles/textfield-form.dart';
-import 'package:app/ui/widgets/button-widget/login-sign-button.dart';
+import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
-import 'package:app/common/utils/input_validator.dart';
 import 'package:app/ui/widgets/reusable-widget/build_button.dart';
 import 'package:flutter/services.dart';
 
@@ -182,7 +181,7 @@ class CreateForumPost extends StatelessWidget {
             const SizedBox(height: 24),
             Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: LoginOrSignUpButton(
+                child: RoundedLongButton(
                   title: 'Create Post',
                   onPress: model
                       .submit, /* isBusy: widget.model.viewState == ViewState.BUSY,*/

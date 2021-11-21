@@ -22,9 +22,10 @@ class UtilitiesView extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             ReusableQuetionCard(
+              label: model.sliderValue.toString(),
               defaultBtn: () {},
-              onSliderChange: (_) {},
-              value: 2,
+              onSliderChange: (value) => model.onSliderChange(value),
+              value: model.sliderValue,
               questionTitle: 'This is where the question goes',
             ),
           ],

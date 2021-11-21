@@ -1,10 +1,8 @@
-import 'package:app/common/enums/view_state.dart';
-import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: file_names
-class LoginOrSignUpButton extends StatelessWidget {
-  const LoginOrSignUpButton({
+class RoundedLongButton extends StatelessWidget {
+  const RoundedLongButton({
     Key? key,
     required this.title,
     required this.onPress,
@@ -30,17 +28,17 @@ class LoginOrSignUpButton extends StatelessWidget {
           ),
         ),
         onPressed: onPress,
-        child: isBusy?
-            CircularProgressIndicator()
+        child: isBusy
+            ? CircularProgressIndicator()
             : Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-            fontFamily: "Roboto-Regular",
-            fontSize: 20,
-          ),
-        ),
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 20,
+                ),
+              ),
       ),
     );
   }
