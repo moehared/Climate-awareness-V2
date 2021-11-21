@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-
+typedef OnChangeCallback = void Function(dynamic value);
 class DropDownMenuWidget extends StatefulWidget {
+
+  final OnChangeCallback onChanged;
+
+  DropDownMenuWidget({ required this.onChanged});
+
   @override
   _DropDownState createState() => _DropDownState();
 
 
 }
-
-
 
 class _DropDownState extends State<DropDownMenuWidget> {
   String? dropdownValue;
@@ -16,7 +19,8 @@ class _DropDownState extends State<DropDownMenuWidget> {
   Widget build(BuildContext context) {
   return DropdownButton<String>(
       value: dropdownValue,
-      hint: Text('Select a catergory',
+      dropdownColor: Theme.of(context).colorScheme.secondary,
+      hint: Text('Select a category',
       style: TextStyle(color: Colors.white),
       ),
       icon: const Icon(Icons.arrow_drop_down),
@@ -24,18 +28,21 @@ class _DropDownState extends State<DropDownMenuWidget> {
         setState(() {
           dropdownValue = newValue!;
         });
+          widget.onChanged(dropdownValue);
       },
       items: <String>['Environment', 'Climate Awareness', 'Other', 'More']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value,style: TextStyle(color: Colors.black)),
+          child: Text(value,style: TextStyle(color: Colors.white)),
         );
       }).toList(),
     );
   
   }
 
-
-
 }
+
+
+
+

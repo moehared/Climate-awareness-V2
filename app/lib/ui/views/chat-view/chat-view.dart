@@ -14,6 +14,12 @@ class ChatView extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: const Text('Chat View'),
+          actions: [
+            IconButton(
+              onPressed: model.fetchQuestionaires,
+              icon: Icon(Icons.add),
+            )
+          ],
         ),
         body: BackgroundImage(
           backgroundImage: 'images/space2.png',

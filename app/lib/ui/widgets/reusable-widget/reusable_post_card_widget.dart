@@ -27,25 +27,21 @@ class ReusablePostCard extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
               child: Text(
-                post.type,
+                post.category,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                 ),
               ),
             ),
-
             TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
               onPressed: () {},
               child: Text(
-                'edit',
-                style: TextStyle(
-                  fontSize: 18,
-                  // fontWeight: FontWeight.w900,
-                  fontFamily: 'Roboto-Regular',
-                  color: Theme.of(context).iconTheme.color,
-                ),
+                'edit post',
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      backgroundColor: Colors.pink,
+                    ),
               ),
             ),
             // )
@@ -71,6 +67,7 @@ class ReusablePostCard extends StatelessWidget {
                 ),
                 child: post.imageUrl.isNotEmpty
                     ? Image.network(
+                        //post.imageUrl,
                         post.imageUrl,
                         width: double.infinity,
                         height: media.height * 0.4,
@@ -115,7 +112,7 @@ class ReusablePostCard extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.circular(32.0),
                   ),
                   padding:

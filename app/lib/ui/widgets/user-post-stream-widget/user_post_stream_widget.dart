@@ -1,4 +1,6 @@
+import 'package:app/common/constant.dart';
 import 'package:app/domain/models/user_post_model.dart';
+import 'package:app/domain/services/locator.dart';
 
 import 'package:app/ui/widgets/reusable-widget/reusable_post_card_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,10 +20,10 @@ class UserPostStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        // stream: user.firestore
-        //     // .collection(CommunityScreen.COMMUNITY_COLLECTION)
-        //     .orderBy('date', descending: true)
-        //     .snapshots(),
+        stream: firestore
+           .collection(POST_COLLECTION)
+            //.orderBy('date', descending: true)
+             .snapshots(),
         builder: (ctx, snapshot) {
       if (!snapshot.hasData) {
         return Center(

@@ -1,26 +1,23 @@
-import 'package:app/domain/services/repository/post_firebase_repository.dart';
-import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
+import 'dart:io';
+import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
-import 'package:path/path.dart';
-import 'package:async/async.dart';
-import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'package:app/common/utils/input_validator.dart';
-
+import 'package:app/ui/widgets/reusable-widget/build_button.dart';
+import 'package:flutter/services.dart';
 
 class CreateForumPost extends StatelessWidget {
-  CreateForumPost({
+  const CreateForumPost({
     required this.model,
     Key? key,
   }) : super(key: key);
 
- final  ForumPostViewModel model;
+  final AddPostViewModel model;
 
   @override
   Widget build(BuildContext context) {
- return Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Form(
         key: model.formkey,
@@ -28,35 +25,60 @@ class CreateForumPost extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Title",
-                  style:Theme.of(context).textTheme.bodyText1,),
+            Text(
+              "URL",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextFormField(
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.text,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
+              decoration: userPostFormStyle.copyWith(
+                  hintText: "Enter a article URL or Video URL"),
               onFieldSubmitted: (_) {},
-              validator: (titleName) {
-                if (titleName!.isEmpty) {
-                  return "Add a Title";
-                }
-                return null;
-              },
-              onSaved: (titleName) {
-                model.setUserPostObj = model.userPostsModel.
-                copyWith(title: titleName);
+              //validator: (url) {
+              //   if (url!.isEmpty) {
+              //    return "Add a article url";
+              //  } else if (!url.isValidUrl()) {
+              //  return "Enter a Valid URL in the form of https://wwww.Example.com";
+              // }
+              // },
+              onSaved: (postUrl) {
+                model.setUserPostObj =
+                    model.userPostsModel.copyWith(url: postUrl);
               },
             ),
-
-            Text("Select a Catergory",
-            style: TextStyle(fontSize: 20, color: Colors.white)
+            const SizedBox(
+              height: 10,
             ),
-            DropDownMenuWidget(),
-
-            Text("Description",
-            
-                  style: TextStyle(fontSize: 20, color: Colors.white,)
-                  ),
+            Text(
+              "Select a Catergory",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            DropDownMenuWidget(onChanged: (dropDownValue) {
+              debugPrint("Drop down value" + dropDownValue);
+              model.setUserPostObj =
+                  model.userPostsModel.copyWith(category: dropDownValue);
+            }),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Description",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
             TextFormField(
+              style: TextStyle(color: Colors.white),
+              decoration:
+                  userPostFormStyle.copyWith(hintText: "Enter a Description"),
               maxLines: null,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
@@ -68,54 +90,105 @@ class CreateForumPost extends StatelessWidget {
                 }
                 return null;
               },
-              onSaved: (description){
-                model.setUserPostObj = model.userPostsModel.
-                copyWith(description: description);
+              onSaved: (description) {
+                model.setUserPostObj =
+                    model.userPostsModel.copyWith(description: description);
               },
             ),
-            Text("URL",
-                  style: TextStyle(fontSize: 20, color: Colors.white,),),
-            TextFormField(
-              maxLines: null,
-              onFieldSubmitted: (_){},
-              validator: (url){
-                if(url!.isEmpty){
-                  return "Add a article url";
-                }
-                else if(!url.isValidUrl())
-                {
-                  return "Enter a Valid URL in the form of https://wwww.Example.com";
-                }
-              },
-              onSaved:(postUrl){
-                model.setUserPostObj = model.userPostsModel.
-                copyWith(url: postUrl);
-              },
+            const SizedBox(
+              height: 10,
             ),
-            ElevatedButton(onPressed: model.selectFile,
-  
-            child: const Text("Select image file")
-            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // _image != null && _imageUrlController.text.isEmpty
+                if (model.isUserUpload)
+                  Container(
+                    width: 100.0,
+                    height: 100.0,
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: FileImage(model.image as File)),
+                    ),
+                  ),
 
-            ElevatedButton(onPressed:(){},
-            child: const Text("Upload image file")
-            ),
+                // _image == null && _imageUrlController.text.isNotEmpty
+                if (model.isUserUpload == false)
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 8, right: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey),
+                    ),
+                    child: model.imageController.text.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Enter URL or upload image from your phone',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          )
+                        : Image.network(
+                            model.imageController.text,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
 
+                Expanded(
+                  child: TextFormField(
+                    focusNode: model.imageURLFocusNode,
+                    controller: model.imageController,
+                    style: TextStyle(color: Colors.white),
+                    decoration: userPostFormStyle.copyWith(
+                        hintText: "Enter a Image URL"),
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.text,
+                    textAlign: TextAlign.center,
+                    onFieldSubmitted: (_) {
+                      FocusScope.of(context).unfocus();
+                    },
+                    onEditingComplete: model.onEditComplete,
+                    //  validator: (url) {
+                    //   if (url!.isEmpty) {
+                    //     return "Add a article url";
+                    //   } else if (!url.isValidUrl()) {
+                    //   return "Enter a Valid URL in the form of https://wwww.Example.com";
+                    //   }
+                    // },
+                    onSaved: (imageURL) {
+                      model.setUserPostObj =
+                          model.userPostsModel.copyWith(imageUrl: imageURL);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const SizedBox(height: 24),
+            Align(
+              alignment: Alignment.centerRight,
+              child: BuildButton(
+                  title: "Upload From Gallery",
+                  icon: Icons.image_outlined,
+                  onClicked: () => model.pickImage()),
+            ),
+            const SizedBox(height: 24),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(onPressed:(){
-                model.submit(context);
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Posting")));
-              }, child: const Text("Post")),
-              )
+                padding: const EdgeInsets.all(8.0),
+                child: RoundedLongButton(
+                  title: 'Create Post',
+                  onPress: model
+                      .submit, /* isBusy: widget.model.viewState == ViewState.BUSY,*/
+                )),
           ],
-      ),
+        ),
       ),
     );
   }
-
-
-
-
 }
-
