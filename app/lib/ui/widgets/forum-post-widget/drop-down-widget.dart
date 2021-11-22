@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 class DropDownMenuWidget extends StatefulWidget {
+//TODO: pass in a array of strings that will be stored into items 
 
   final OnChangeCallback onChanged;
 

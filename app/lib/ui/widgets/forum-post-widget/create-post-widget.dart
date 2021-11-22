@@ -40,18 +40,19 @@ class CreateForumPost extends StatelessWidget {
                   hintText: "Enter a article URL or Video URL"),
               onFieldSubmitted: (_) {},
               validator:(url) {
-                url = url ?? "";
-                if(url.isEmpty){
+
+                if(url!.isEmpty){
                   return "Enter a URL";
                 }
                 model.blacklistCheck(url);
-                if(model.blackListValid ==  true){
+                if(model.blackListValid){
                   return "URL contains illicit words";
                 }
                 model.checkArticleURL(url);
-                if(model.articleValid == false){
-                  return "Invalid URL";
-                }
+                print("valid " + model.articleValid.toString());
+                if(!model.articleValid){
+                  return "URL is not valid";
+                } 
                },
               onSaved: (postUrl) {
                 model.setUserPostObj =
@@ -96,6 +97,10 @@ class CreateForumPost extends StatelessWidget {
                 if (description!.isEmpty) {
                   return "Add a Description";
                 }
+                 model.blacklistCheck(description);
+                if (model.blackListValid == true) {
+                  return "Description contains illicit words";
+                }
                 return null;
               },
               onSaved: (description) {
@@ -103,6 +108,7 @@ class CreateForumPost extends StatelessWidget {
                     model.userPostsModel.copyWith(description: description);
               },
             ),
+            
             const SizedBox(
               height: 10,
             ),

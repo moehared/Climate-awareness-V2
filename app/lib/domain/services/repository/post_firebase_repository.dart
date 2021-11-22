@@ -13,19 +13,26 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
   Future<void> create(UserPostModel post) async {
     final docRef = firestore.collection(POST_COLLECTION).doc();
     final id = docRef.id;
-
     File file = new File(post.imagePath);
     String imageURL;
     //gotta get the image FILE to get the download
+    //Image Path is only used by gallery, so we check if its empty so i does not conflict with url submission
+    print("made it to PostFirebaseFireStore line 20?");
+    if(post.imagePath.isEmpty){
+      print("Cannot handle both gallery and url store");
+    }
+    else{
+          final imageRef = FirebaseStorage.instance
+          .ref()
+          .child('userPostImages')
+          .child(id + '.jpg');
+      await imageRef.putFile(file);
+      imageURL = await imageRef.getDownloadURL();
+      post = post.copyWith(imageUrl: imageURL);
+    } 
 
-     final imageRef = FirebaseStorage.instance
-         .ref()
-         .child('userPostImages')
-         .child(post.postId + '.jpg');
-     await imageRef.putFile(file);
-
-     imageURL = await imageRef.getDownloadURL();
-     post = post.copyWith(postId: id, imageUrl: imageURL);
+    print("made it to PostFirebaseFireStore line 30");
+     post = post.copyWith(postId: id);
      print("made it to PostFirebaseFireStore");
      docRef.set(post.toMap());
     // TODO: Fix Image path 

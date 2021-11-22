@@ -10,7 +10,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/common/blacklist.dart';
 import 'package:http/http.dart' as http;
-
+//TODO: To seperate catergory and type create maybe another drop down widget
 class AddPostViewModel extends BaseViewModel {
   var _validUrlPath = false;
   final _navService = locator<NavigationService>();
@@ -18,8 +18,9 @@ class AddPostViewModel extends BaseViewModel {
   var _blackList = false;
 
   var urlPattern =
-      r"(https?|ftp)://([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?";
-  var youtubePattern = "(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)";
+      r"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+";
+  var youtubePattern =
+      r"(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)";
   final _imageUrlController = TextEditingController();
   var errorUrl = false;
   var mediaError = false;
@@ -100,28 +101,38 @@ class AddPostViewModel extends BaseViewModel {
     }
     notifyListeners();
   }
-  bool get blackListValid => _blackList;
 
+  bool get blackListValid => _blackList;
 
   //TODO: One validator is for http|https and another is for images .png , jpeg
 
-  void checkArticleURL(String userArticleUrl) async {
-    final response = await http.get(Uri.parse(userArticleUrl));
-    if (response == 200) {
-      notifyListeners();
-      _validUrlPath = true;
-    }
-    if(RegExp(urlPattern, caseSensitive: false).firstMatch(userArticleUrl) != null  || RegExp(youtubePattern,caseSensitive: false).firstMatch(userArticleUrl) != null){
-      notifyListeners();
-      _validUrlPath = true;
-    }
-    else{
-      notifyListeners();
+  void checkArticleURL(String userArticleUrl) {
+   
+    try {
+      final response = http.get(Uri.parse(userArticleUrl));
+        if (response == 200) {
+        _validUrlPath = true;
+      }
+    } on Exception catch (_) {
       _validUrlPath = false;
     }
-  }
-  bool get articleValid => _validUrlPath;
+    var isUrlValid =
+        (RegExp(urlPattern, caseSensitive: false).firstMatch(userArticleUrl) !=
+                null ||
+            RegExp(youtubePattern, caseSensitive: false)
+                    .firstMatch(userArticleUrl) !=
+                null);
 
+    if (isUrlValid) {
+      _validUrlPath = true;
+    } else {
+      _validUrlPath = false;
+    }
+    print(_validUrlPath);
+    print(articleValid);
+  }
+
+  bool get articleValid => _validUrlPath;
 
 //TODO: To validate images need to make machine learning
   Future pickImage() async {
