@@ -2,12 +2,13 @@
 FLUTTER_ROOT=/Users/mohamedbashir/flutter_sdk/flutter
 FLUTTER_APPLICATION_PATH=/Users/mohamedbashir/Documents/Capstone project/Climate-awareness-V2/app
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=lib/main.dart
+FLUTTER_TARGET=/Users/mohamedbashir/Documents/Capstone project/Climate-awareness-V2/app/lib/main.dart
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
 FLUTTER_BUILD_NUMBER=1
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
+DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ==
 DART_OBFUSCATION=false
-TRACK_WIDGET_CREATION=false
+TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=.packages
+PACKAGE_CONFIG=/Users/mohamedbashir/Documents/Capstone project/Climate-awareness-V2/app/.dart_tool/package_config.json
