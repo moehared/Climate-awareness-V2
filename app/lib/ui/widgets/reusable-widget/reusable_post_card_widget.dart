@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:app/domain/models/user_post_model.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import 'package:app/domain/models/user_post_model.dart';
 
 class ReusablePostCard extends StatelessWidget {
   final UserPostModel post;
