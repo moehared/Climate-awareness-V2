@@ -5,18 +5,22 @@ import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
-import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:app/domain/services/database_services/account_service.dart';
-
+import 'package:app/common/blacklist.dart';
+import 'package:http/http.dart' as http;
+//TODO: To seperate catergory and type create maybe another drop down widget
 class AddPostViewModel extends BaseViewModel {
   var _validUrlPath = false;
   final _navService = locator<NavigationService>();
   var _validImagePath = false;
-  var _uploadToFireBase = false;
+  var _blackList = false;
+
+  var urlPattern =
+      r"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+";
+  var youtubePattern =
+      r"(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)";
   final _imageUrlController = TextEditingController();
   var errorUrl = false;
   var mediaError = false;
@@ -88,6 +92,49 @@ class AddPostViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  //TODO: Scalability of thie blacklist, if moderators want to add to this black list
+  void blacklistCheck(String userInput) async {
+    for (var i = 0; i < blackList.length; i++) {
+      if (userInput.contains(blackList[i])) {
+        _blackList = true;
+      }
+    }
+    notifyListeners();
+  }
+
+  bool get blackListValid => _blackList;
+
+  //TODO: One validator is for http|https and another is for images .png , jpeg
+
+  void checkArticleURL(String userArticleUrl) {
+   
+    try {
+      final response = http.get(Uri.parse(userArticleUrl));
+        if (response == 200) {
+        _validUrlPath = true;
+      }
+    } on Exception catch (_) {
+      _validUrlPath = false;
+    }
+    var isUrlValid =
+        (RegExp(urlPattern, caseSensitive: false).firstMatch(userArticleUrl) !=
+                null ||
+            RegExp(youtubePattern, caseSensitive: false)
+                    .firstMatch(userArticleUrl) !=
+                null);
+
+    if (isUrlValid) {
+      _validUrlPath = true;
+    } else {
+      _validUrlPath = false;
+    }
+    print(_validUrlPath);
+    print(articleValid);
+  }
+
+  bool get articleValid => _validUrlPath;
+
+//TODO: To validate images need to make machine learning
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);

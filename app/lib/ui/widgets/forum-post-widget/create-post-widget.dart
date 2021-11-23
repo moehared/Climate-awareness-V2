@@ -38,13 +38,21 @@ class CreateForumPost extends StatelessWidget {
               decoration: userPostFormStyle.copyWith(
                   hintText: "Enter a article URL or Video URL"),
               onFieldSubmitted: (_) {},
-              //validator: (url) {
-              //   if (url!.isEmpty) {
-              //    return "Add a article url";
-              //  } else if (!url.isValidUrl()) {
-              //  return "Enter a Valid URL in the form of https://wwww.Example.com";
-              // }
-              // },
+              validator:(url) {
+
+                if(url!.isEmpty){
+                  return "Enter a URL";
+                }
+                model.blacklistCheck(url);
+                if(model.blackListValid){
+                  return "URL contains illicit words";
+                }
+                model.checkArticleURL(url);
+                print("valid " + model.articleValid.toString());
+                if(!model.articleValid){
+                  return "URL is not valid";
+                } 
+               },
               onSaved: (postUrl) {
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(url: postUrl);
@@ -88,6 +96,10 @@ class CreateForumPost extends StatelessWidget {
                 if (description!.isEmpty) {
                   return "Add a Description";
                 }
+                 model.blacklistCheck(description);
+                if (model.blackListValid == true) {
+                  return "Description contains illicit words";
+                }
                 return null;
               },
               onSaved: (description) {
@@ -95,6 +107,7 @@ class CreateForumPost extends StatelessWidget {
                     model.userPostsModel.copyWith(description: description);
               },
             ),
+            
             const SizedBox(
               height: 10,
             ),

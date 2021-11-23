@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReusablePostCard extends StatelessWidget {
   final UserPostModel post;
@@ -13,6 +15,19 @@ class ReusablePostCard extends StatelessWidget {
     required this.id,
     required this.uuid,
   });
+
+   Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +53,7 @@ class ReusablePostCard extends StatelessWidget {
               style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
               onPressed: () {},
               child: Text(
-                'edit post',
+                'Edit Post',
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       backgroundColor: Colors.pink,
                     ),
@@ -92,7 +107,7 @@ class ReusablePostCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 5),
                       child: Text(
-                        'post.desc',
+                        post.description,
                         style: TextStyle(
                           fontSize: 24.0,
                           color: Colors.white,
@@ -118,12 +133,15 @@ class ReusablePostCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                   child: TextButton(
-                    child: Text(
-                      'type here',
-                      // post.type == ARTICLE ? 'read' : 'watch',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {},
+                    child: 
+                    //   Text(
+                    //     post.category == "Article" || post.category == "Climate Awareness" || post.category == "Environment" ?  Text("Read") : Text("watch"),
+                    //   // post.type == ARTICLE ? 'read' : 'watch',
+                    //   style: TextStyle(color: Colors.white),
+                    // ),
+                    post.category == "Article" || post.category == "Climate Awareness" || post.category == "Environment" ?  
+                    Text("Read" , style: TextStyle(color: Colors.white) ) : Text("Watch", style: TextStyle(color: Colors.white)),
+                    onPressed: () =>  _launchInBrowser(post.url),
                   ),
                 ),
               ),
