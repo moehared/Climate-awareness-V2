@@ -103,4 +103,5 @@ void setUpLocatorService() {
   locator.registerFactory<ForgetPassWordViewModel>(
       () => ForgetPassWordViewModel());
   locator.registerFactory<QuickCarbonViewModel>(() => QuickCarbonViewModel());
+  locator.registerFactory<ForumViewModel>(() => ForumViewModel());
 }
