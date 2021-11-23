@@ -1,5 +1,7 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmodel.dart';
+import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
@@ -26,7 +28,7 @@ class QuestionaireView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: PageView(
-                physics: BouncingScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 controller: model.pageController,
                 onPageChanged: (i) {
                   model.setSelectedPageIndex = i;

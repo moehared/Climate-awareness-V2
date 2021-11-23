@@ -1,5 +1,6 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
+import 'package:app/ui/widgets/reusable-widget/reusable_question_card.dart';
 import 'package:flutter/material.dart';
 
 class UtilitiesView extends StatelessWidget {
@@ -19,25 +20,13 @@ class UtilitiesView extends StatelessWidget {
                 style: TextStyle(fontFamily: 'Roboto-'),
               ),
             ),
-            Card(
-              margin: const EdgeInsets.all(15),
-              elevation: 1,
-              shape: const RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Title:ghsaghsaghsaghsgahghs',
-                    textAlign: TextAlign.center,
-                  ),
-                  Text('slider'),
-                  Text('button'),
-                ],
-              ),
+            const SizedBox(height: 15),
+            ReusableQuetionCard(
+              label: model.sliderValue.toString(),
+              defaultBtn: () {},
+              onSliderChange: (value) => model.onSliderChange(value),
+              value: model.sliderValue,
+              questionTitle: 'This is where the question goes',
             ),
           ],
         ),

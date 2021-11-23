@@ -5,6 +5,7 @@ import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 
 import 'package:app/ui/views/forget-password-view/forget-password-view.dart';
 import 'package:app/ui/views/forum-view/forum-view.dart';
+import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
 
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:app/ui/views/user-registeration-view/user_registeration_view.dart';
@@ -21,6 +22,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ForumView());
       case QuestionaireView.routeName:
         return MaterialPageRoute(builder: (_) => QuestionaireView());
+             case QuickCarbonView.routeName:
+        return MaterialPageRoute(builder: (_) => QuickCarbonView());
       case ForgetPasswordView.routeName:
         return MaterialPageRoute(builder: (_) => ForgetPasswordView());
             case AddPostView.routeName:

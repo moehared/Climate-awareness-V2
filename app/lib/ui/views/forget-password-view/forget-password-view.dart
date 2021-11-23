@@ -2,7 +2,7 @@ import 'package:app/common/enums/view_state.dart';
 import 'package:app/common/styles/textfield-form.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
-import 'package:app/ui/widgets/button-widget/login-sign-button.dart';
+import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:app/ui/widgets/image-widgets/logo_image.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class ForgetPasswordView extends StatelessWidget {
                   ),
                 ),
               ),
-              LoginOrSignUpButton(
+              RoundedLongButton(
                 title: 'Reset password',
                 isBusy: model.viewState == ViewState.BUSY,
                 onPress: model.resetPassword,

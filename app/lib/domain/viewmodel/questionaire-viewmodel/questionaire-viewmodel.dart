@@ -1,4 +1,6 @@
+import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
+import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';
 import 'package:app/ui/views/questionaire-view/question-views/food-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/goods-services-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/transportation-view.dart';
@@ -9,7 +11,6 @@ class QuestionaireViewModel extends BaseViewModel {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final Map<String, dynamic> tipData = {};
   final _pageController = PageController();
-
   int _selectedPage = 0;
 
   final List<Widget> _pages = [
@@ -41,8 +42,11 @@ class QuestionaireViewModel extends BaseViewModel {
   void nextQuestionScreen() {
     if (_selectedPage < _pages.length - 1) {
       _selectedPage++;
-      _pageController.animateToPage(_selectedPage,
-          duration: Duration(microseconds: 250), curve: Curves.bounceInOut);
+      _pageController.animateToPage(
+        _selectedPage,
+        duration: Duration(microseconds: 250),
+        curve: Curves.bounceInOut,
+      );
     }
   }
 

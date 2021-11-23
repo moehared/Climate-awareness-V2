@@ -6,9 +6,9 @@ import 'package:app/domain/models/questionaire-model/questionaire.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
-
 import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
+import 'package:app/domain/services/network_service/questionaires_endpoint/questionaires_service.dart';
 import 'package:app/domain/services/repository/account_firebase_repository.dart';
 import 'package:app/domain/services/repository/post_firebase_repository.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
@@ -29,12 +29,14 @@ import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/transportation-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmodel.dart';
+import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';
 import 'package:app/domain/viewmodel/tab_viewmodel.dart/tab_viewmodel.dart';
 import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:xml2json/xml2json.dart';
 
 import 'dialog_service/dialog_service.dart';
 import 'navigation_service/navigation_service.dart';
@@ -46,10 +48,13 @@ import 'navigation_service/navigation_service.dart';
 final locator = GetIt.instance;
 final firestore = FirebaseFirestore.instance;
 final firebaseAuth = FirebaseAuth.instance;
+final xml2Json = Xml2Json();
 void setUpLocatorService() {
   // init singleton object here
   locator.registerLazySingleton<RepositoryInterface<UserModel>>(
       () => AccountFirebaseFireStoreRepo());
+  locator.registerLazySingleton<QuestionairesService>(
+      () => QuestionairesService());
   locator.registerLazySingleton<RepositoryInterface<UserPostModel>>(
       () => PostFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(
@@ -97,8 +102,5 @@ void setUpLocatorService() {
       .registerFactory<GoodsServicesViewModel>(() => GoodsServicesViewModel());
   locator.registerFactory<ForgetPassWordViewModel>(
       () => ForgetPassWordViewModel());
-
-  locator.registerFactory<ForumViewModel>(
-    () => ForumViewModel(),
-  );
+  locator.registerFactory<QuickCarbonViewModel>(() => QuickCarbonViewModel());
 }

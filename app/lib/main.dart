@@ -30,6 +30,9 @@ class MyApp extends StatelessWidget {
           bodyText1: TextStyle(
             color: Colors.white,
           ),
+          bodyText2: TextStyle(
+            fontFamily: 'Roboto-Bold',
+          ),
         ),
       ),
       builder: (ctx, widget) => Navigator(
