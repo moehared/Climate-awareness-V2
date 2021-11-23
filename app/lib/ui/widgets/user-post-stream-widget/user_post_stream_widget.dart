@@ -33,6 +33,9 @@ class UserPostStream extends StatelessWidget {
               ),
             );
           }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
           final post = snapshot.data!.docs;
           List<Widget> cardWidget = [];
           var id;
