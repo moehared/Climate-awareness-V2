@@ -17,13 +17,12 @@ class ReusablePostCard extends StatelessWidget {
     required this.uuid,
   });
 
-   Future<void> _launchInBrowser(String url) async {
+  Future<void> _launchInBrowser(String url) async {
     if (await canLaunch(url)) {
       await launch(
         url,
-        forceSafariVC: false,
-        forceWebView: false,
-        headers: <String, String>{'my_header_key': 'my_header_value'},
+        forceWebView: true,
+        forceSafariVC: true,
       );
     } else {
       throw 'Could not launch $url';
@@ -134,15 +133,12 @@ class ReusablePostCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                   child: TextButton(
-                    child: 
-                    //   Text(
-                    //     post.category == "Article" || post.category == "Climate Awareness" || post.category == "Environment" ?  Text("Read") : Text("watch"),
-                    //   // post.type == ARTICLE ? 'read' : 'watch',
-                    //   style: TextStyle(color: Colors.white),
-                    // ),
-                    post.category == "Article" || post.category == "Climate Awareness" || post.category == "Environment" ?  
-                    Text("Read" , style: TextStyle(color: Colors.white) ) : Text("Watch", style: TextStyle(color: Colors.white)),
-                    onPressed: () =>  _launchInBrowser(post.url),
+                    child: post.category == "Article" ||
+                            post.category == "Climate Awareness" ||
+                            post.category == "Environment"
+                        ? Text("Read", style: TextStyle(color: Colors.white))
+                        : Text("Watch", style: TextStyle(color: Colors.white)),
+                    onPressed: () => _launchInBrowser(post.url),
                   ),
                 ),
               ),

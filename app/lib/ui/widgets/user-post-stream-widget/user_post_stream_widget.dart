@@ -20,10 +20,10 @@ class UserPostStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<QuerySnapshot<Map<String, Object?>>>(
         stream: firestore
             .collection(POST_COLLECTION)
-            //.orderBy('date', descending: true)
+            .orderBy('date', descending: true)
             .snapshots(),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
@@ -37,56 +37,37 @@ class UserPostStream extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Loading();
           }
-          final post = snapshot.data!.docs;
+
+          final post = filterByArticle
+              ? snapshot.data!.docs.where((element) {
+                  return !element.data().containsValue('Media');
+                }).toList()
+              : filterByMedia
+                  ? snapshot.data!.docs.where((element) {
+                      return element.data().containsValue('Media');
+                    }).toList()
+                  : snapshot.data!.docs;
+
           List<Widget> cardWidget = [];
-          var id;
           UserPostModel userData;
           for (var p in post) {
-            final data = p.data() as Map<String, dynamic>;
-            id = p.id;
+            final data = p.data();
             userData = UserPostModel.fromMap(data);
-            if (filterByArticle == true && filterByMedia == false) {
-              if (userData.category == "Article" ||
-                  userData.category == "Environment" ||
-                  userData.category == "Climate Awareness") {
-                cardWidget.add(
-                  ReusablePostCard(
-                    post: userData,
-                    id: id,
-                    uuid: userData.userId,
-                  ),
-                );
-              }
-            } else if (filterByArticle == false && filterByMedia == true) {
-              if (userData.category == "Media") {
-                cardWidget.add(
-                  ReusablePostCard(
-                    post: userData,
-                    id: id,
-                    uuid: userData.userId,
-                  ),
-                );
-              }
-            } else {
-              cardWidget.add(
-                ReusablePostCard(
-                  post: userData,
-                  id: id,
-                  uuid: userData.userId,
-                ),
-              );
-            }
+            cardWidget.add(
+              ReusablePostCard(
+                post: userData,
+                id: userData.postId,
+                uuid: userData.userId,
+              ),
+            );
           }
-          return Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              // reverse: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: cardWidget.length,
-              itemBuilder: (_, index) {
-                return cardWidget[index];
-              },
-            ),
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            itemCount: post.length,
+            itemBuilder: (_, index) {
+              return cardWidget[index];
+            },
           );
         });
   }
