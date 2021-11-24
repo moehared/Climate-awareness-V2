@@ -48,19 +48,14 @@ class UserPostStream extends StatelessWidget {
                     }).toList()
                   : snapshot.data!.docs;
 
-          List<Widget> cardWidget = [];
-          UserPostModel userData;
-          for (var p in post) {
-            final data = p.data();
-            userData = UserPostModel.fromMap(data);
-            cardWidget.add(
-              ReusablePostCard(
-                post: userData,
-                id: userData.postId,
-                uuid: userData.userId,
-              ),
+          List<Widget> cardWidget = post.map<Widget>((e) {
+            final userData = UserPostModel.fromMap(e.data());
+            return ReusablePostCard(
+              post: userData,
+              id: userData.postId,
+              uuid: userData.userId,
             );
-          }
+          }).toList();
           return ListView.builder(
             scrollDirection: Axis.vertical,
             physics: BouncingScrollPhysics(),
