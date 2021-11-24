@@ -37,7 +37,7 @@ class UserPostStream extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Loading();
           }
-
+          // filtered each post
           final post = filterByArticle
               ? snapshot.data!.docs.where((element) {
                   return !element.data().containsValue('Media');
