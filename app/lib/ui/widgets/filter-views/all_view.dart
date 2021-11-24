@@ -1,5 +1,3 @@
-import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
-import 'package:app/domain/viewmodel/filter-viewmodels/all_viewmodel.dart';
 import 'package:app/ui/widgets/user-post-stream-widget/user_post_stream_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -8,15 +6,15 @@ class AllViews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BuildViewModel<AllViewModel>(
-      builder: (ctx, model, child) => Column(
-        children: [
-          UserPostStream(
+    return ScrollbarTheme(
+        data: Theme.of(context).scrollbarTheme,
+        child: Scrollbar(
+          child: UserPostStream(
             filterByArticle: false,
             filterByMedia: false,
           ),
-        ],
-      ),
+        ),
+      
     );
   }
 }

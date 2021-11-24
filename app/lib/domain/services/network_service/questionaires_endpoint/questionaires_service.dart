@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:app/common/constant.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,8 +14,8 @@ class QuestionairesService {
       Uri uri = Uri.parse(url);
       response = await http.get(uri, headers: {
         "accept": "application/xml",
-        "app_id": API_ID,
-        'app_key': API_KEY,
+        // "app_id": API_ID,
+        // 'app_key': API_KEY,
       });
       if (response.statusCode > 400) {
         print('status code == ${response.statusCode}');

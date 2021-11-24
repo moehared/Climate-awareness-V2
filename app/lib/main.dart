@@ -26,6 +26,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: const Color(0xffc2185b),
         ),
+        scrollbarTheme: ScrollbarThemeData(
+          thumbColor: MaterialStateProperty.all(Colors.white),
+          radius: const Radius.circular(32),
+          
+        ),
         textTheme: TextTheme(
           bodyText1: TextStyle(
             color: Colors.white,
