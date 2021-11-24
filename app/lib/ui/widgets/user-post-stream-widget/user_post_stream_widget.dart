@@ -1,6 +1,7 @@
 import 'package:app/common/constant.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/locator.dart';
+import 'package:app/ui/widgets/loading_widget.dart';
 
 import 'package:app/ui/widgets/reusable-widget/reusable_post_card_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +35,7 @@ class UserPostStream extends StatelessWidget {
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Loading();
           }
           final post = snapshot.data!.docs;
           List<Widget> cardWidget = [];
