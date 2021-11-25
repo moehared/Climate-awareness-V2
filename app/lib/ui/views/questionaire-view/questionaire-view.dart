@@ -1,9 +1,13 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmodel.dart';
-import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+
+import 'question-views/food-view.dart';
+import 'question-views/utilities-view.dart';
+import 'question-views/goods-services-view.dart';
+import 'question-views/transportation-view.dart';
 
 class QuestionaireView extends StatelessWidget {
   static const routeName = '/QuestionaireView';
@@ -20,7 +24,7 @@ class QuestionaireView extends StatelessWidget {
               ? null
               : IconButton(
                   icon: (Icon(Icons.arrow_back)),
-                  onPressed: model.previousQuestionScreen,
+                  onPressed: QuestionaireViewModel.previousQuestionScreen,
                 ),
         ),
         body: Stack(
@@ -35,7 +39,7 @@ class QuestionaireView extends StatelessWidget {
                   model.setProgressAnim(i);
                 },
                 children: [
-                  ...model.pages,
+                  ...model.pages
                 ],
               ),
             ),

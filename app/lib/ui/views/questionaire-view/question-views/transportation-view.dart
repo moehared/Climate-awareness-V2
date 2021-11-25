@@ -3,7 +3,13 @@ import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/
 import 'package:flutter/material.dart';
 
 class TransportationView extends StatelessWidget {
-  const TransportationView({Key? key}) : super(key: key);
+  const TransportationView({
+    Key? key,
+    required this.next,
+    required this.prev,
+  }) : super(key: key);
+  final Function() next;
+  final Function() prev;
 
   @override
   Widget build(BuildContext context) {

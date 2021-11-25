@@ -396,14 +396,14 @@ PODS:
   - Firebase/Storage (8.9.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.9.0)
-  - firebase_auth (3.1.4):
+  - firebase_auth (3.2.0):
     - Firebase/Auth (= 8.9.0)
     - firebase_core
     - Flutter
   - firebase_core (1.10.0):
     - Firebase/CoreOnly (= 8.9.0)
     - Flutter
-  - firebase_database (8.0.1):
+  - firebase_database (8.1.0):
     - Firebase/Database (= 8.9.0)
     - firebase_core
     - Flutter
@@ -445,6 +445,13 @@ PODS:
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
+  - flutter_inappwebview (0.0.1):
+    - Flutter
+    - flutter_inappwebview/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview/Core (0.0.1):
+    - Flutter
+    - OrderedSet (~> 5.0)
   - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -497,13 +504,16 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - OrderedSet (5.0.0)
   - PromisesObjC (2.0.0)
   - SDWebImage (5.12.1):
     - SDWebImage/Core (= 5.12.1)
   - SDWebImage/Core (5.12.1)
-  - shared_preferences (0.0.1):
+  - shared_preferences_ios (0.0.1):
     - Flutter
   - SwiftyGif (5.4.0)
+  - url_launcher (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -513,8 +523,10 @@ DEPENDENCIES:
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
-  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 SPEC REPOS:
   trunk:
@@ -536,6 +548,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - OrderedSet
     - PromisesObjC
     - SDWebImage
     - SwiftyGif
@@ -555,10 +568,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_inappwebview:
+    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
-  shared_preferences:
-    :path: ".symlinks/plugins/shared_preferences/ios"
+  shared_preferences_ios:
+    :path: ".symlinks/plugins/shared_preferences_ios/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -568,9 +585,9 @@ SPEC CHECKSUMS:
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
-  firebase_auth: 2a69325f0b823434a668915415b17e8a3a5713b0
+  firebase_auth: 0d56cc4d105ff70d1547a7fcb10ee574ad05adf5
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
-  firebase_database: f1184809b51adca4b266ea75e3e6aeb6254e473e
+  firebase_database: 9d21bb9c9b1037eb33e7b99bc7a34927dcd8cc71
   firebase_storage: a3bbe618ef41930ae31da8f4691d37e4ed84f14d
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
@@ -579,6 +596,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 15ae9648476436efed698a909e44c4737498f9b4
   FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
@@ -587,10 +605,12 @@ SPEC CHECKSUMS:
   image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
-  shared_preferences: 5033afbb22d372e15aff8ff766df9021b845f273
+  shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
   SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
+  url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
 
 PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
 

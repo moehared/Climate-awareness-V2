@@ -3,7 +3,13 @@ import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/
 import 'package:flutter/material.dart';
 
 class FoodView extends StatelessWidget {
-  const FoodView({Key? key}) : super(key: key);
+  const FoodView({
+    Key? key,
+  required this.next,
+    required this.prev,
+  }) : super(key: key);
+  final Function() next;
+  final Function() prev;
 
   @override
   Widget build(BuildContext context) {

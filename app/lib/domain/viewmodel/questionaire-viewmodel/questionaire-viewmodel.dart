@@ -10,14 +10,26 @@ import 'package:flutter/material.dart';
 class QuestionaireViewModel extends BaseViewModel {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final Map<String, dynamic> tipData = {};
-  final _pageController = PageController();
-  int _selectedPage = 0;
+  static final _pageController = PageController();
+  static int _selectedPage = 0;
 
-  final List<Widget> _pages = [
-    UtilitiesView(),
-    TransportationView(),
-    FoodView(),
-    GoodsServicesView(),
+  static final List<Widget> _pages = [
+    UtilitiesView(
+      next: nextQuestionScreen,
+      prev: previousQuestionScreen,
+    ),
+    TransportationView(
+      next: nextQuestionScreen,
+      prev: previousQuestionScreen,
+    ),
+    FoodView(
+      next: nextQuestionScreen,
+      prev: previousQuestionScreen,
+    ),
+    GoodsServicesView(
+      next: nextQuestionScreen,
+      prev: previousQuestionScreen,
+    ),
   ];
 
   double? _stepAmount, beginWidth, endWidth;
@@ -31,7 +43,7 @@ class QuestionaireViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void previousQuestionScreen() {
+  static void previousQuestionScreen() {
     if (_selectedPage > 0) {
       _selectedPage--;
       _pageController.animateToPage(_selectedPage,
@@ -39,7 +51,7 @@ class QuestionaireViewModel extends BaseViewModel {
     }
   }
 
-  void nextQuestionScreen() {
+  static void nextQuestionScreen() {
     if (_selectedPage < _pages.length - 1) {
       _selectedPage++;
       _pageController.animateToPage(
