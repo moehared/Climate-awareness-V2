@@ -3,7 +3,13 @@ import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/
 import 'package:flutter/material.dart';
 
 class GoodsServicesView extends StatelessWidget {
-  const GoodsServicesView({Key? key}) : super(key: key);
+  const GoodsServicesView({
+    Key? key,
+    required this.next,
+    required this.prev,
+  }) : super(key: key);
+  final Function() next;
+  final Function() prev;
 
   @override
   Widget build(BuildContext context) {

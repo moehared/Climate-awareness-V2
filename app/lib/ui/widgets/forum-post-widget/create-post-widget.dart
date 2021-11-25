@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:app/common/styles/textfield-form.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:flutter/material.dart';
-import 'package:app/ui/widgets/forum-post-widget/drop-down-widget.dart';
+import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
 import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
 import 'package:app/ui/widgets/reusable-widget/build_button.dart';
 import 'package:flutter/services.dart';
 
-class CreateForumPost extends StatelessWidget {
-  const CreateForumPost({
+class CreateUserPost extends StatelessWidget {
+  const CreateUserPost({
     required this.model,
     Key? key,
   }) : super(key: key);
@@ -38,21 +38,20 @@ class CreateForumPost extends StatelessWidget {
               decoration: userPostFormStyle.copyWith(
                   hintText: "Enter a article URL or Video URL"),
               onFieldSubmitted: (_) {},
-              validator:(url) {
-
-                if(url!.isEmpty){
+              validator: (url) {
+                if (url!.isEmpty) {
                   return "Enter a URL";
                 }
                 model.blacklistCheck(url);
-                if(model.blackListValid){
+                if (model.blackListValid) {
                   return "URL contains illicit words";
                 }
                 model.checkArticleURL(url);
                 print("valid " + model.articleValid.toString());
-                if(!model.articleValid){
+                if (!model.articleValid) {
                   return "URL is not valid";
-                } 
-               },
+                }
+              },
               onSaved: (postUrl) {
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(url: postUrl);
@@ -68,11 +67,16 @@ class CreateForumPost extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            DropDownMenuWidget(onChanged: (dropDownValue) {
-              debugPrint("Drop down value" + dropDownValue);
-              model.setUserPostObj =
-                  model.userPostsModel.copyWith(category: dropDownValue);
-            }),
+            DropDownMenuWidget(
+              onChanged: (dropDownValue) {
+                debugPrint("Drop down value" + dropDownValue!);
+                model.setUserPostObj =
+                    model.userPostsModel.copyWith(category: dropDownValue);
+              },
+              hintText: 'Select Category',
+              items: model.categoryList,
+              dropdownColor: Theme.of(context).colorScheme.secondary,
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -96,7 +100,7 @@ class CreateForumPost extends StatelessWidget {
                 if (description!.isEmpty) {
                   return "Add a Description";
                 }
-                 model.blacklistCheck(description);
+                model.blacklistCheck(description);
                 if (model.blackListValid == true) {
                   return "Description contains illicit words";
                 }
@@ -107,7 +111,6 @@ class CreateForumPost extends StatelessWidget {
                     model.userPostsModel.copyWith(description: description);
               },
             ),
-            
             const SizedBox(
               height: 10,
             ),
@@ -193,12 +196,13 @@ class CreateForumPost extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RoundedLongButton(
-                  title: 'Create Post',
-                  onPress: model
-                      .submit, /* isBusy: widget.model.viewState == ViewState.BUSY,*/
-                )),
+              padding: const EdgeInsets.all(8.0),
+              child: RoundedLongButton(
+                title: 'Create Post',
+                onPress: model
+                    .submit, /* isBusy: widget.model.viewState == ViewState.BUSY,*/
+              ),
+            ),
           ],
         ),
       ),

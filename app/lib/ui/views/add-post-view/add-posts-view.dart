@@ -24,7 +24,7 @@ class AddPostView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CreateForumPost(model: model),
+                  CreateUserPost(model: model),
                 ],
               ),
             ),

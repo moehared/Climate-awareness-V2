@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/common/blacklist.dart';
 import 'package:http/http.dart' as http;
+
 //TODO: To seperate catergory and type create maybe another drop down widget
 class AddPostViewModel extends BaseViewModel {
   var _validUrlPath = false;
@@ -50,6 +51,9 @@ class AddPostViewModel extends BaseViewModel {
   File? get image => _image;
 
   TextEditingController get imageController => _imageUrlController;
+
+  List<String> get categoryList =>
+      ['Environment', 'Climate Awareness', 'Media', 'Article'];
 
   set setUserPostObj(UserPostModel copy) {
     _userPostModel = copy;
@@ -107,10 +111,9 @@ class AddPostViewModel extends BaseViewModel {
   //TODO: One validator is for http|https and another is for images .png , jpeg
 
   void checkArticleURL(String userArticleUrl) {
-   
     try {
       final response = http.get(Uri.parse(userArticleUrl));
-        if (response == 200) {
+      if (response == 200) {
         _validUrlPath = true;
       }
     } on Exception catch (_) {
