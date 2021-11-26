@@ -1,5 +1,5 @@
 import 'package:app/common/enums/view_state.dart';
-import 'package:app/domain/dialog_manager/prompt_dialog.dart';
+import 'package:app/common/utils/prompt_dialog.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
