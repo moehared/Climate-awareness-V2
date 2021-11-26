@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/common/utils/optional.dart';
-import 'package:app/domain/dialog_manager/prompt_dialog.dart';
+import 'package:app/common/utils/prompt_dialog.dart';
 import 'package:app/domain/error_exceptions/firebase_auth_exception.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/database_services/account_service.dart';

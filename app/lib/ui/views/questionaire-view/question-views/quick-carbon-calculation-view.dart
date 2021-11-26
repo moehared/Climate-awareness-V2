@@ -13,7 +13,7 @@ class QuickCarbonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<QuickCarbonViewModel>(
-      onModelReady: (model) => model.initState(),
+      onModelReady: (model) => model.initState(context),
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Quick carbon estimate'),
@@ -34,9 +34,13 @@ class QuickCarbonView extends StatelessWidget {
                 '1. Where do you live?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              TextFieldWidget(
-                controller: model.textController,
-                hintText: 'Enter your city or zip code',
+              CompositedTransformTarget(
+                link: model.layerLink,
+                child: TextFieldWidget(
+                  focusNode: model.textFocusNode,
+                  controller: model.textController,
+                  hintText: 'Enter your city or zip code',
+                ),
               ),
               FittedBox(
                 child: TitleAndHelpButton(
