@@ -1,6 +1,8 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
 import 'package:app/ui/views/profile-view/profile-view.dart';
+import 'package:app/ui/widgets/button-widget/elevated-button.dart';
+import 'package:app/ui/widgets/button-widget/text-button.dart';
 import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
 import 'package:app/ui/widgets/form/text-field-widget.dart';
 import 'package:app/ui/widgets/slider-widget/slider_widget.dart';
@@ -63,6 +65,7 @@ class QuestionairesInput extends StatelessWidget {
             Expanded(
               flex: 2,
               child: TextFieldWidget(
+                onChanged: (_) {},
                 controller: model.controller,
                 hintText: '\$92/month',
               ),
@@ -96,6 +99,7 @@ class QuestionairesInput extends StatelessWidget {
             Expanded(
               flex: 2,
               child: TextFieldWidget(
+                onChanged: (_) {},
                 controller: model.controller,
                 hintText: '\$290 /month',
               ),
@@ -129,6 +133,7 @@ class QuestionairesInput extends StatelessWidget {
             Expanded(
               flex: 2,
               child: TextFieldWidget(
+                onChanged: (_) {},
                 controller: model.controller,
                 hintText: '\$480 /month',
               ),
@@ -161,6 +166,7 @@ class QuestionairesInput extends StatelessWidget {
           children: [
             Expanded(
               child: TextFieldWidget(
+                onChanged: (_) {},
                 controller: model.controller,
                 hintText: '\$1850 /ft²',
               ),
@@ -193,20 +199,15 @@ class QuestionairesInput extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  primary: Theme.of(context).colorScheme.secondary,
-                ),
-                onPressed: prev,
-                child: LabelTitleWidget(title: 'Previous'),
+              TextButtonWidget(
+                onPress: prev,
+                label: 'Previous',
+                includeBorder: true,
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).colorScheme.secondary,
-                ),
-                onPressed: next,
-                child: Text('Next'),
-              ),
+              ElevatedButtonWidget(
+                label: 'Next',
+                onPress: next,
+              )
             ],
           ),
         )

@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class BuildOverlayWidget extends StatelessWidget {
   const BuildOverlayWidget({
     required this.hideOverlay,
+    required this.information,
     Key? key,
   }) : super(key: key);
   final Function() hideOverlay;
+  final String information;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,16 +21,8 @@ class BuildOverlayWidget extends StatelessWidget {
         type: MaterialType.card,
         child: Container(
           width: double.infinity,
-          height: 200,
-          child: ListView.builder(
-            itemBuilder: (ctx, index) => ListTile(
-              title: Text('${index + 1}'),
-              onTap: () {
-                hideOverlay();
-              },
-            ),
-            itemCount: 5,
-          ),
+          height: 100,
+          child: Text(information),
         ),
       ),
     );

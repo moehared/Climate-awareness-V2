@@ -17,7 +17,7 @@ class BuildViewModel<T extends BaseViewModel> extends StatefulWidget {
     this.child,
   }) : super(key: key);
 
-/// [builder] is must that must be used when creating views
+  /// [builder] is must that must be used when creating views
   final Widget Function(BuildContext context, T model, Widget? child) builder;
 
   /// call [onModelReady] when you to initial or fetch data before initializing the views

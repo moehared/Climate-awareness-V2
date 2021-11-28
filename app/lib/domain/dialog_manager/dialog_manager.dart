@@ -34,19 +34,22 @@ class _DiaglogManagerState extends State<DiaglogManager> {
         context: context,
         builder: (ctx) => CupertinoAlertDialog(
           title: Text(dialogRequest.title),
-          content: Text(dialogRequest.description),
+          content: dialogRequest.description.isNotEmpty
+              ? Text(dialogRequest.description)
+              : null,
           actions: [
+            if (dialogRequest.cancelText != null)
+              CupertinoButton(
+                onPressed: () => _dialogService
+                    .dialogComplete(DialogResponse(confirmed: false)),
+                child: Text(dialogRequest.cancelText ?? "Cancel"),
+              ),
             CupertinoButton(
               onPressed: () {
                 _dialogService.dialogComplete(DialogResponse(confirmed: true));
                 Navigator.of(context).pop();
               },
               child: Text(dialogRequest.buttonTitle),
-            ),
-            CupertinoButton(
-              onPressed: () => _dialogService
-                  .dialogComplete(DialogResponse(confirmed: false)),
-              child: Text(dialogRequest.cancelText ?? "Cancel"),
             ),
           ],
         ),
@@ -57,24 +60,28 @@ class _DiaglogManagerState extends State<DiaglogManager> {
           builder: (ctx) {
             return AlertDialog(
               title: Text(dialogRequest.title),
-              content: Text(dialogRequest.description),
+              content: dialogRequest.description.isNotEmpty
+                  ? Text(dialogRequest.description)
+                  : null,
               actions: [
-                TextButton(
-                  onPressed: () {
-                    _dialogService
-                        .dialogComplete(DialogResponse(confirmed: true));
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(dialogRequest.buttonTitle),
-                ),
+                if (dialogRequest.cancelText != null)
+                  TextButton(
+                    onPressed: () {
+                      _dialogService.dialogComplete(
+                        DialogResponse(confirmed: false),
+                      );
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(dialogRequest.cancelText ?? "Cancel"),
+                  ),
                 TextButton(
                   onPressed: () {
                     _dialogService.dialogComplete(
-                      DialogResponse(confirmed: false),
+                      DialogResponse(confirmed: true),
                     );
                     Navigator.of(context).pop();
                   },
-                  child: Text(dialogRequest.cancelText ?? "Cancel"),
+                  child: Text(dialogRequest.buttonTitle),
                 ),
               ],
             );

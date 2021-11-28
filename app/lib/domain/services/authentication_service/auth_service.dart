@@ -80,7 +80,10 @@ class AuthService {
       } else if (e.message!.contains('email doesnt exist')) {
         errorMessage = 'this email does not exist';
       }
-      promptDialog(errorMessage, errorMessage, locator<DiaglogService>());
+      promptDialog(
+        message: errorMessage,
+        dialogService: locator<DiaglogService>(),
+      );
       throw (true);
     } catch (e) {
       throw ("error occured while authenticating: $e");
@@ -114,17 +117,18 @@ class AuthService {
         .sendPasswordResetEmail(email: userEmailAddress)
         .catchError((e) {
       isError = true;
+
       return promptDialog(
-        'An error occurred while reseting password. Please check your email and try again.',
-        'Could not reset password',
-        _dialogService,
+        message:
+            'An error occurred while reseting password. Please check your email and try again.',
+        dialogService: _dialogService,
       );
     }).then((_) {
       // TODO: get the action code and confirm reset password and update user new password
       // see this: link: https://stackoverflow.com/questions/68832547/how-to-build-a-custom-email-action-handler-in-flutter-for-firebase-authenticatio
       if (!isError) {
-        promptDialog('An email has been sent to you . Please check your email',
-            'Confirmed', _dialogService);
+        promptDialog(message: 'An email has been sent to you . Please check your email',dialogService: 
+        _dialogService);
       }
     });
   }
@@ -136,7 +140,7 @@ class AuthService {
     UserModel user =
         await _accountService.fetchUser(currentUser.get()!.uid).onError((e, s) {
       return Future.error(
-        promptDialog(e.toString(), 'Data does not exist', _dialogService),
+        promptDialog(message: 'Data does not exist',dialogService:  _dialogService),
       );
     });
     if (isUserEmailVerified() && !user.isEmailVerified) {
