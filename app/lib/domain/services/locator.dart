@@ -8,7 +8,7 @@ import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
-import 'package:app/domain/services/network_service/questionaires_endpoint/questionaires_service.dart';
+import 'package:app/domain/services/network_service/questionaires_endpoint/network_service.dart';
 import 'package:app/domain/services/repository/account_firebase_repository.dart';
 import 'package:app/domain/services/repository/post_firebase_repository.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
@@ -50,8 +50,8 @@ void setUpLocatorService() {
   // init singleton object here
   locator.registerLazySingleton<RepositoryInterface<UserModel>>(
       () => AccountFirebaseFireStoreRepo());
-  locator.registerLazySingleton<QuestionairesService>(
-      () => QuestionairesService());
+  locator.registerLazySingleton<NetworkService>(
+      () => NetworkService());
   locator.registerLazySingleton<RepositoryInterface<UserPostModel>>(
       () => PostFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(

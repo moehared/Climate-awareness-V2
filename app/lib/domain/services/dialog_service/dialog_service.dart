@@ -13,9 +13,9 @@ class DiaglogService {
 
   Future<DialogResponse> showDialog({
     required String title,
-    required String desc,
+    String desc = '',
     String buttonTitle = "Ok",
-    String buttonCancel = "Cancel",
+    String buttonCancel = '',
   }) {
     _completer = Completer();
     _showDialogListener!(DialogRequest(

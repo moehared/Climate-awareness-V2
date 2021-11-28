@@ -137,8 +137,8 @@ class UserRegisterationViewModel extends BaseViewModel {
       if (!_authService.isUserEmailVerified()) {
         setViewState(ViewState.IDLE);
         print('sign in button tapped inside user == null ');
-        promptDialog('an Email has been sent to you. Please check your email',
-            'You are not verify yet', _dialogService);
+        promptDialog(message: 'an Email has been sent to you. Please check your email',
+            title: 'You are not verify yet', dialogService: _dialogService);
       } else {
         _navService.navigateAndReplce(CommunityView.routeName);
       }

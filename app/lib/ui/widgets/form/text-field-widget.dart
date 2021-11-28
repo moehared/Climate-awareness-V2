@@ -6,11 +6,15 @@ class TextFieldWidget extends StatelessWidget {
     Key? key,
     required this.controller,
     required this.hintText,
+    required this.onChanged,
+    this.onSumbitted,
     this.focusNode,
   }) : super(key: key);
   final TextEditingController controller;
   final FocusNode? focusNode;
   final String hintText;
+  final Function(String?)? onChanged;
+  final Function(String)? onSumbitted;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,6 +25,8 @@ class TextFieldWidget extends StatelessWidget {
       child: TextField(
         controller: controller,
         focusNode: focusNode,
+        onChanged: onChanged,
+        onSubmitted: onSumbitted,
         textAlign: TextAlign.center,
         decoration: kTextFieldform.copyWith(
           enabledBorder: OutlineInputBorder(

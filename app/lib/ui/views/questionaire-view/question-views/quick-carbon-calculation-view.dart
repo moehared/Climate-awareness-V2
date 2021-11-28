@@ -1,7 +1,10 @@
 import 'package:app/common/styles/textfield-form.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';
+import 'package:app/ui/widgets/button-widget/elevated-button.dart';
+import 'package:app/ui/widgets/button-widget/text-button.dart';
 import 'package:app/ui/widgets/form/text-field-widget.dart';
+import 'package:app/ui/widgets/overlay-widget/prediction-places.dart';
 import 'package:app/ui/widgets/slider-widget/slider_widget.dart';
 import 'package:app/ui/widgets/text-widgets/text-and-row-widget.dart';
 import 'package:flutter/material.dart';
@@ -34,18 +37,23 @@ class QuickCarbonView extends StatelessWidget {
                 '1. Where do you live?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              CompositedTransformTarget(
-                link: model.layerLink,
-                child: TextFieldWidget(
-                  focusNode: model.textFocusNode,
-                  controller: model.textController,
-                  hintText: 'Enter your city or zip code',
+              TextFieldWidget(
+                onChanged: (city) => model.fetchPlaces(city),
+                focusNode: model.textFocusNode,
+                controller: model.textController,
+                hintText: 'Enter your city or zip code',
+              ),
+              Visibility(
+                visible: model.placeList.isNotEmpty,
+                child: PredictionPlaceWidget(
+                  onSelected: (city) => model.onSelectedCity(city),
+                  predictionPlace: model.placeList,
                 ),
               ),
               FittedBox(
                 child: TitleAndHelpButton(
                   label: '2. How many people live in your household?',
-                  helpButton: () {},
+                  helpButton: model.showHousePeopleInfo,
                 ),
               ),
               SliderWidget(
@@ -58,7 +66,7 @@ class QuickCarbonView extends StatelessWidget {
               FittedBox(
                 child: TitleAndHelpButton(
                   label: '3. What is your gross annual household income?',
-                  helpButton: () {},
+                  helpButton: model.showHouseHoldIncomeInfo,
                 ),
               ),
               SliderWidget(
@@ -78,22 +86,15 @@ class QuickCarbonView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    tapTargetSize: MaterialTapTargetSize.padded,
-                    primary: Theme.of(context).colorScheme.secondary,
-                  ),
-                  onPressed: () {},
-                  child: Text('Calculate Carbon'),
+                ElevatedButtonWidget(
+                  label: 'Calculate Carbon',
+                  onPress: model.quickCarbonEstimate,
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    tapTargetSize: MaterialTapTargetSize.padded,
-                    primary: Theme.of(context).colorScheme.secondary,
-                  ),
-                  onPressed: model.refineEstimate,
-                  child: Text('Refine Your Estimate'),
-                )
+                TextButtonWidget(
+                  onPress: model.refineEstimate,
+                  label: 'Refine Your Estimate',
+                  includeBorder: true,
+                ),
               ],
             ),
           ),
