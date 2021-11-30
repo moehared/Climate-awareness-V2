@@ -41,7 +41,7 @@ class QuickCarbonView extends StatelessWidget {
                 onChanged: (city) => model.fetchPlaces(city),
                 focusNode: model.textFocusNode,
                 controller: model.textController,
-                hintText: 'Enter your city or zip code',
+                hintText: 'Enter your city',
               ),
               Visibility(
                 visible: model.placeList.isNotEmpty,
@@ -57,11 +57,11 @@ class QuickCarbonView extends StatelessWidget {
                 ),
               ),
               SliderWidget(
-                value: 0,
-                onChange: (_) {},
+                value: model.houseHoldSize,
+                onChange: (val) => model.onHouseHoldSizeValueChange(val),
                 step: 5,
                 max: 5,
-                label: '',
+                label: model.getHouseHoldSizeLabel(model.houseHoldSize.toInt()),
               ),
               FittedBox(
                 child: TitleAndHelpButton(
@@ -70,11 +70,11 @@ class QuickCarbonView extends StatelessWidget {
                 ),
               ),
               SliderWidget(
-                value: 0,
-                onChange: (_) {},
-                step: 5,
-                max: 5,
-                label: '',
+                value: model.houseHoldIncome,
+                onChange: (val) => model.onHouseHoldIncomeValueChange(val),
+                step: 10,
+                max: 10,
+                label: model.getHouseHoldIncomeLabel(model.houseHoldIncome.toInt()),
               ),
             ],
           ),

@@ -15,12 +15,28 @@ class QuickCarbonViewModel extends BaseViewModel {
   final _dialogService = locator<DiaglogService>();
   final _navService = locator<NavigationService>();
   final _networkService = locator<NetworkService>();
+  var _houseHoldSizeValue = 0.0;
+  var _houseHoldIncomeValue = 0.0;
   List<SuggestionPlace> _placeList = [];
   TextEditingController get textController => _textController;
   FocusNode get textFocusNode => _textFocusNode;
   List<SuggestionPlace> get placeList => _placeList;
 
-  void quickCarbonEstimate() {}
+  double get houseHoldSize => _houseHoldSizeValue;
+  double get houseHoldIncome => _houseHoldIncomeValue;
+
+  Future quickCarbonEstimate() async {
+    print('city: ${_textController.text}');
+    print('house hold size: ${houseHoldSize.toInt()}');
+    print('house hold income: ${houseHoldIncome.toInt()}');
+    if (_textController.text.isNotEmpty) {
+      await _networkService.defaultCarbonFootPrintCalculator(
+        city: _textController.text,
+        income: houseHoldIncome.toInt().toString(),
+        size: houseHoldSize.toInt().toString(),
+      );
+    }
+  }
 
   void refineEstimate() {
     _navService.navigateTo(QuestionaireView.routeName);
@@ -80,5 +96,63 @@ class QuickCarbonViewModel extends BaseViewModel {
       dialogService: _dialogService,
       title: HOUSE_HOLD_INCOME,
     );
+  }
+
+  void onHouseHoldSizeValueChange(double val) {
+    this._houseHoldSizeValue = val;
+    notifyListeners();
+  }
+
+  void onHouseHoldIncomeValueChange(double val) {
+    this._houseHoldIncomeValue = val;
+    notifyListeners();
+  }
+
+  String getHouseHoldSizeLabel(int people) {
+    switch (people) {
+      case 0:
+        return 'Average (2.5 persons)';
+      case 1:
+        return '1 People';
+      case 2:
+        return '2 people';
+      case 3:
+        return '3 People';
+      case 4:
+        return '4 people';
+      case 5:
+        return '5 or more people';
+      default:
+        return '';
+    }
+  }
+
+  String getHouseHoldIncomeLabel(int people) {
+    switch (people) {
+      case 1:
+        return 'Average (\$60,000)';
+      case 2:
+        return 'Less than \$10,000';
+      case 3:
+        return '\$10,000 to \$19,999';
+      case 4:
+        return '\$20,000 to \$29,999';
+      case 5:
+        return '\$30,000 to \$39,999';
+      case 6:
+        return '\$40,000 to \$49,999';
+      case 7:
+        return '\$50,000 to \$59,999';
+      case 8:
+        return '\$60,000 to \$79,999';
+      case 9:
+        return '\$80,000 to \$99,999';
+      case 10:
+        return '\$100,000 to \$119,999';
+      case 11:
+        return '\$120,000 or more';
+      default:
+        return '';
+    }
   }
 }

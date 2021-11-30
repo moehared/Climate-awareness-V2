@@ -1,4 +1,4 @@
-
+import 'package:app/common/constant.dart';
 import 'package:app/ui/widgets/user-post-stream-widget/user_post_stream_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +10,12 @@ class MediaView extends StatelessWidget {
     return ScrollbarTheme(
       data: Theme.of(context).scrollbarTheme,
       child: Scrollbar(
-        child: UserPostStream(
-          filterByArticle: false,
-          filterByMedia: true,
+        child: PageStorage(
+          bucket: bucketStorage,
+          child: UserPostStream(
+            filterByArticle: false,
+            filterByMedia: true,
+          ),
         ),
       ),
     );

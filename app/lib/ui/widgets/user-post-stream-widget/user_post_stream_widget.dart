@@ -57,6 +57,7 @@ class UserPostStream extends StatelessWidget {
             );
           }).toList();
           return ListView.builder(
+            key: PageStorageKey('user-post'),
             scrollDirection: Axis.vertical,
             physics: BouncingScrollPhysics(),
             itemCount: post.length,

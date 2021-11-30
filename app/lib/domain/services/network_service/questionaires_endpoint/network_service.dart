@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/common/constant.dart';
-import 'package:app/common/utils/prompt_dialog.dart';
 import 'package:app/domain/models/suggestion_place.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
@@ -15,6 +14,9 @@ const url =
 
 const placesEndPoint =
     'https://maps.googleapis.com/maps/api/place/autocomplete/json?';
+
+const defaultCarbonEndPoint =
+    'https://apis.berkeley.edu/coolclimate/footprint-defaults';
 
 class NetworkService {
   final _dialogService = locator<DiaglogService>();
@@ -75,6 +77,31 @@ class NetworkService {
       return places;
     } catch (e) {
       throw (e);
+    }
+  }
+
+  Future defaultCarbonFootPrintCalculator({
+    required String city,
+    required String income,
+    required String size,
+  }) async {
+    late final http.Response response;
+    final defaultURL =
+        '$defaultCarbonEndPoint?input_location_mode=2&input_location=$city&input_income=$income&input_size=$size';
+
+    try {
+      final url = Uri.parse(defaultURL);
+      response = await http.get(url, headers: {
+        "accept": "application/xml",
+        "app_id": API_ID,
+        'app_key': API_KEY,
+      });
+      print('response is ${response.body}');
+      // if (response.statusCode == 200) {
+
+      // }
+    } catch (e) {
+      throw ('error occurred $e');
     }
   }
 }

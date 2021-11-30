@@ -1,3 +1,4 @@
+import 'package:app/common/utils/on_edit_complete.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
 import 'package:app/ui/views/profile-view/profile-view.dart';
@@ -66,7 +67,11 @@ class QuestionairesInput extends StatelessWidget {
               flex: 2,
               child: TextFieldWidget(
                 onChanged: (_) {},
-                controller: model.controller,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                controller: model.electrictyController,
+                onEditComplete: () =>
+                    onEditComplete(context, model.heatingFocusNode),
                 hintText: '\$92/month',
               ),
             ),
@@ -100,8 +105,13 @@ class QuestionairesInput extends StatelessWidget {
               flex: 2,
               child: TextFieldWidget(
                 onChanged: (_) {},
-                controller: model.controller,
+                focusNode: model.heatingFocusNode,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                controller: model.heatingController,
                 hintText: '\$290 /month',
+                onEditComplete: () =>
+                    onEditComplete(context, model.naturalGasFocusNode),
               ),
             ),
             Expanded(
@@ -134,8 +144,13 @@ class QuestionairesInput extends StatelessWidget {
               flex: 2,
               child: TextFieldWidget(
                 onChanged: (_) {},
-                controller: model.controller,
+                focusNode: model.naturalGasFocusNode,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                controller: model.naturalGasController,
                 hintText: '\$480 /month',
+                onEditComplete: () =>
+                    onEditComplete(context, model.livingSpaceFocusNode),
               ),
             ),
             Expanded(
@@ -167,8 +182,10 @@ class QuestionairesInput extends StatelessWidget {
             Expanded(
               child: TextFieldWidget(
                 onChanged: (_) {},
-                controller: model.controller,
-                hintText: '\$1850 /ft²',
+                focusNode: model.livingSpaceFocusNode,
+                keyboardType: TextInputType.number,
+                controller: model.livingSpaceController,
+                hintText: '1850 /ft²',
               ),
             ),
             Container(
@@ -188,11 +205,11 @@ class QuestionairesInput extends StatelessWidget {
           helpButton: () {},
         ),
         SliderWidget(
-          value: 1,
-          onChange: (val) {},
+          value: model.waterSliderValue,
+          onChange: (val) => model.onWaterValueChange(val),
           step: 5,
           max: 5,
-          label: '1-person household: 148 liters/day',
+          label: model.waterValueLabel(model.waterSliderValue.toInt()),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
