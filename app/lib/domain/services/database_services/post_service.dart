@@ -13,4 +13,9 @@ class PostDatabaseService {
     //print(userPostModel.toMap().toString());
   }
 
+  void getEditUserPost(){
+
+
+  }
+
 }

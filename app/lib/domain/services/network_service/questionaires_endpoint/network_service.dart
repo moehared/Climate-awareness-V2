@@ -18,6 +18,9 @@ const placesEndPoint =
 const defaultCarbonEndPoint =
     'https://apis.berkeley.edu/coolclimate/footprint-defaults';
 
+const alternativeEndPoint = 
+    'https://coolclimate.berkeley.edu/calculators/household-staging/api.php';
+
 class NetworkService {
   final _dialogService = locator<DiaglogService>();
   Future getCarbonApi() async {
@@ -87,7 +90,8 @@ class NetworkService {
   }) async {
     late final http.Response response;
     final defaultURL =
-        '$defaultCarbonEndPoint?input_location_mode=2&input_location=$city&input_income=$income&input_size=$size';
+        //'$defaultCarbonEndPoint?input_location_mode=2&input_location=$city&input_income=$income&input_size=$size';
+        '$alternativeEndPoint?input_location_mode=1&input_location=$city&input_income=$income&input_size=$size&input_location_country=CA&op=get_defaults_and_results';
 
     try {
       final url = Uri.parse(defaultURL);

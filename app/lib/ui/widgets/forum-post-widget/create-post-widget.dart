@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/domain/viewmodel/add-posts-viewmodel/add-post-view-model.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
-import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
+
 import 'package:app/ui/widgets/reusable-widget/build_button.dart';
 import 'package:flutter/services.dart';
+import 'package:app/ui/widgets/drop-down-widget/drop-down-forum-field-widget.dart';
 
 class CreateUserPost extends StatelessWidget {
   const CreateUserPost({
@@ -67,16 +69,31 @@ class CreateUserPost extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            DropDownMenuWidget(
-              onChanged: (dropDownValue) {
+            
+            FormFieldDropDownWidget(
+               onChanged: (dropDownValue) {
                 debugPrint("Drop down value" + dropDownValue!);
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(category: dropDownValue);
-              },
-              hintText: 'Select Category',
-              items: model.categoryList,
-              dropdownColor: Theme.of(context).colorScheme.secondary,
+               },
+               errorMessage: 'Please select a category',
+               hint:   model.userPostsModel.category.isEmpty
+                    ? 'Select Category'
+                    : model.userPostsModel.category,
+             
+               items: model.categoryList,
+         //     color: Theme.of(context).colorScheme.secondary,
             ),
+            // DropDownMenuWidget(
+            //   onChanged: (dropDownValue) {
+            //     debugPrint("Drop down value" + dropDownValue!);
+            //     model.setUserPostObj =
+            //         model.userPostsModel.copyWith(category: dropDownValue);
+            //   },
+            //   hintText: model.userPostsModel.category.isEmpty ? 'Select Category' : model.userPostsModel.category,
+            //   items: model.categoryList,
+            //   dropdownColor: Theme.of(context).colorScheme.secondary,
+            // ),
             const SizedBox(
               height: 10,
             ),
@@ -140,10 +157,13 @@ class CreateUserPost extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(width: 1, color: Colors.grey),
                     ),
-                    child: model.imageController.text.isEmpty
+                    child: model.imageController.text.isEmpty &&
+                            model.imageValid == false &&
+                            model.imageUpload == false 
                         ? Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Text(
+                            child: 
+                            Text(
                               'Enter URL or upload image from your phone',
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
@@ -168,13 +188,21 @@ class CreateUserPost extends StatelessWidget {
                       FocusScope.of(context).unfocus();
                     },
                     onEditingComplete: model.onEditComplete,
-                    //  validator: (url) {
-                    //   if (url!.isEmpty) {
-                    //     return "Add a article url";
-                    //   } else if (!url.isValidUrl()) {
-                    //   return "Enter a Valid URL in the form of https://wwww.Example.com";
-                    //   }
-                    // },
+
+                    validator: (url) {
+                      if (url!.isEmpty) {
+                        return "Enter a Image URL";
+                      }
+                      model.blacklistCheck(url);
+                      if (model.blackListValid) {
+                        return "Image URL contains illicit words";
+                      }
+                      model.checkImageURL(url);
+                      print("valid " + model.imageValid.toString());
+                      if (!model.imageValid) {
+                        return "Image URL is not valid";
+                      }
+                    },
                     onSaved: (imageURL) {
                       model.setUserPostObj =
                           model.userPostsModel.copyWith(imageUrl: imageURL);
