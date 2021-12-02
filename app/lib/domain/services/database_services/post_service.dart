@@ -7,15 +7,21 @@ class PostDatabaseService {
   final PostFirebaseFireStoreRepo repository;
   PostDatabaseService(this.repository);
 
-
-  void createNewPost(UserPostModel userPostModel) async{
+  void createNewPost(UserPostModel userPostModel) async {
     repository.create(userPostModel);
     //print(userPostModel.toMap().toString());
   }
 
-  void getEditUserPost(){
-
-
+  void delete(String postId) async {
+    return await repository.delete(postId);
   }
 
+  
+  Future<UserPostModel> fetchPostData(String postId) async {
+    try {
+      return await repository.read(postId);
+    } catch (e) {
+      return Future.error('Post Data does not exist');
+    }
+  }
 }

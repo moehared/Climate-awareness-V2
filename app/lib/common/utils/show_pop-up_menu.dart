@@ -5,6 +5,5 @@ void showPopUpMenu({required BuildContext context ,required Widget child}) {
   showModalBottomSheet(
     context: context,
     builder: (ctx) => child,
-    
   );
 }

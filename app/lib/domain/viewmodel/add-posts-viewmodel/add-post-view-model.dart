@@ -72,7 +72,7 @@ class AddPostViewModel extends BaseViewModel {
 
 //if not valid print and return else create the post
     if (!isValid) {
-      print("Not valid formKEy");
+      print("Not valid formKey");
       return;
     }
     //TODO: Clear forum once submitted, also give feedback either post failed or success
@@ -183,10 +183,19 @@ class AddPostViewModel extends BaseViewModel {
   }
   bool get imageUpload => isUserUpload;
 
-  void initState() {
+  void initState()  {
     // check if post id is null: return;
     // if the post id is not null , populate userModel object with the object user wants to edit.
     // notify
+    //I dont know how to the arg that is passed to this function sooo 
+    // if()
+
+    // if(_userAuthService.currentUser.get()?.uid != _userPostService.fetchPostData(postId).userId  || _userPostService.fetchPostData(postId).postId == null){
+    //   return null;
+    // }
+    // else{
+
+    // }
   }
 
 
