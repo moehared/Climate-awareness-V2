@@ -14,6 +14,7 @@ class NavigationService {
   }
 
   Future navigateTo(String routeName, {Object? argument}) {
+    print('arg is : $argument');
     return argument == null 
         ? _navKey.get().currentState!.pushNamed(routeName)
         : _navKey.get().currentState!.pushNamed(routeName, arguments: argument);

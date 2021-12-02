@@ -16,7 +16,7 @@ class UserMenuPopUp extends StatelessWidget {
     required this.uuid,
     required this.command,
   });
-  final ProfileViewModel command;
+  final dynamic command;
   @override
   Widget build(BuildContext context) {
     return isEdit == true && id != 0 && uuid.isNotEmpty

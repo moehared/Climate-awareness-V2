@@ -9,6 +9,7 @@ import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calcu
 
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:app/ui/views/user-registeration-view/user_registeration_view.dart';
+import 'package:app/ui/widgets/youtube-player-widget/youtube-player.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -28,6 +29,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ForgetPasswordView());
             case AddPostView.routeName:
         return MaterialPageRoute(builder: (_) => AddPostView());
+            case PlayYoutubeVideo.routeName:
+        return MaterialPageRoute(builder: (_) => PlayYoutubeVideo(youtubeData: settings.arguments as YoutubeData,));
       // case CommunityView.routeName:
       //   return MaterialPageRoute(builder: (_) => CommunityView());
       //   case ChatView.routeName:
