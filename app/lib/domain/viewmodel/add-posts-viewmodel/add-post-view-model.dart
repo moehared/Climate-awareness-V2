@@ -19,7 +19,7 @@ class AddPostViewModel extends BaseViewModel {
   final _navService = locator<NavigationService>();
   var _validImagePath = false;
   var _blackList = false;
-
+  String _postId = "";
 
   final _imageUrlController = TextEditingController();
   var errorUrl = false;
@@ -135,16 +135,10 @@ class AddPostViewModel extends BaseViewModel {
     print(articleValid);
   }
 
-
-
-
-
-
   bool get articleValid => _validUrlPath;
 
   void checkImageURL(String userImageUrl) {
     try {
-      
       final response = http.get(Uri.parse(userImageUrl));
       if (response == 200) {
         _validUrlPath = true;
@@ -181,15 +175,16 @@ class AddPostViewModel extends BaseViewModel {
       print("failed to pick image: $e");
     }
   }
+
   bool get imageUpload => isUserUpload;
 
-  void initState()  {
+  void initState() {
+    
     // check if post id is null: return;
     // if the post id is not null , populate userModel object with the object user wants to edit.
     // notify
-    //I dont know how to the arg that is passed to this function sooo 
+    //I dont know how to the arg that is passed to this function sooo
     // if()
-
     // if(_userAuthService.currentUser.get()?.uid != _userPostService.fetchPostData(postId).userId  || _userPostService.fetchPostData(postId).postId == null){
     //   return null;
     // }
@@ -197,10 +192,4 @@ class AddPostViewModel extends BaseViewModel {
 
     // }
   }
-
-
-
-
-
-
 }

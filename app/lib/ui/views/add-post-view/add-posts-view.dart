@@ -4,13 +4,14 @@ import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:flutter/material.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 
-
 class AddPostView extends StatelessWidget {
   static const routeName = '/AddPostView';
-  const AddPostView({Key? key}) : super(key: key);
 
+  const AddPostView({Key? key }) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)!.settings);
     return BuildViewModel<AddPostViewModel>(
       onModelReady: (model) => model.initState(),
       builder: (ctx, model, child) => Scaffold(

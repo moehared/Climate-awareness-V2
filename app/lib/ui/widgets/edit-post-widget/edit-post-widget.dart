@@ -45,6 +45,7 @@ class ShowEditPostMenu extends StatelessWidget {
                 if (locator<AuthService>().currentUser.get()?.uid != userID) {
                   //Todo: do a pop up here or a sliding window notification
                   print('You do not have access to this post');
+                  return;
                 } else {
                   locator<PostDatabaseService>().delete(postId);
                   locator<NavigationService>()
