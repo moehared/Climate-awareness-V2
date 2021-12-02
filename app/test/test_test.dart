@@ -44,7 +44,7 @@ void main() {
       when(firebaseAuth.signInWithEmailAndPassword(
               email: user.email, password: user.password))
           .thenAnswer((_) => Future<UserCredential>.value(firebaseUser));
-          
+
       expect(
         await firebaseAuth.signInWithEmailAndPassword(
           email: user.email,
@@ -54,4 +54,4 @@ void main() {
       );
     });
   });
-
+}
