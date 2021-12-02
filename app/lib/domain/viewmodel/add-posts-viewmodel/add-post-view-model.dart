@@ -1,3 +1,4 @@
+import 'package:app/common/utils/regex-patterns.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
 import 'package:app/domain/services/locator.dart';
@@ -14,14 +15,12 @@ import 'package:http/http.dart' as http;
 //TODO: To seperate catergory and type create maybe another drop down widget
 class AddPostViewModel extends BaseViewModel {
   var _validUrlPath = false;
+  var _validImageUrlPath = false;
   final _navService = locator<NavigationService>();
   var _validImagePath = false;
   var _blackList = false;
 
-  var urlPattern =
-      r"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+";
-  var youtubePattern =
-      r"(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)";
+
   final _imageUrlController = TextEditingController();
   var errorUrl = false;
   var mediaError = false;
@@ -57,6 +56,7 @@ class AddPostViewModel extends BaseViewModel {
 
   set setUserPostObj(UserPostModel copy) {
     _userPostModel = copy;
+    notifyListeners();
   }
 
   UserPostModel get userPostsModel => _userPostModel;
@@ -135,7 +135,38 @@ class AddPostViewModel extends BaseViewModel {
     print(articleValid);
   }
 
+
+
+
+
+
   bool get articleValid => _validUrlPath;
+
+  void checkImageURL(String userImageUrl) {
+    try {
+      
+      final response = http.get(Uri.parse(userImageUrl));
+      if (response == 200) {
+        _validUrlPath = true;
+      }
+    } on Exception catch (_) {
+      _validUrlPath = false;
+    }
+    print(_validImageUrlPath);
+    var isUrlValid =
+        (RegExp(imagePattern, caseSensitive: false).firstMatch(userImageUrl) !=
+            null);
+
+    if (isUrlValid) {
+      _validImageUrlPath = true;
+    } else {
+      _validImageUrlPath = false;
+    }
+    print(_validImageUrlPath);
+    print(imageValid);
+  }
+
+  bool get imageValid => _validImageUrlPath;
 
 //TODO: To validate images need to make machine learning
   Future pickImage() async {
@@ -150,4 +181,17 @@ class AddPostViewModel extends BaseViewModel {
       print("failed to pick image: $e");
     }
   }
+  bool get imageUpload => isUserUpload;
+
+  void initState() {
+    // check if post id is null: return;
+    // if the post id is not null , populate userModel object with the object user wants to edit.
+    // notify
+  }
+
+
+
+
+
+
 }

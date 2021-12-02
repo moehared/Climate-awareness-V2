@@ -18,6 +18,7 @@ class UserPostStream extends StatelessWidget {
   final bool filterByMedia;
   final user;
 
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, Object?>>>(
@@ -54,6 +55,7 @@ class UserPostStream extends StatelessWidget {
               post: userData,
               id: userData.postId,
               uuid: userData.userId,
+              
             );
           }).toList();
           return ListView.builder(

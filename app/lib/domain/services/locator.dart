@@ -12,12 +12,12 @@ import 'package:app/domain/services/network_service/questionaires_endpoint/netwo
 import 'package:app/domain/services/repository/account_firebase_repository.dart';
 import 'package:app/domain/services/repository/post_firebase_repository.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
+import 'package:app/domain/viewmodel/add-posts-viewmodel/add-post-view-model.dart';
 import 'package:app/domain/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 import 'package:app/domain/viewmodel/confirm_user_email_viewmodel/confirm_user_email_viewmodel.dart';
 
 import 'package:app/domain/viewmodel/community_viewmodel/community_viewmodel.dart';
 import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
-import 'package:app/domain/viewmodel/forum-posts-viewmodel/forum_posts_viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';

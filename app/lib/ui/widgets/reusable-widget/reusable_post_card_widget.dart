@@ -1,5 +1,12 @@
 import 'dart:io';
 
+import 'package:app/common/utils/regex-patterns.dart';
+import 'package:app/common/utils/show_pop-up_menu.dart';
+import 'package:app/domain/services/locator.dart';
+import 'package:app/domain/services/navigation_service/navigation_service.dart';
+import 'package:app/ui/widgets/edit-post-widget/edit-post-widget.dart';
+import 'package:app/ui/widgets/user-setting-menu/user_setting_menu.dart';
+import 'package:app/ui/widgets/youtube-player-widget/youtube-player.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -11,13 +18,17 @@ class ReusablePostCard extends StatelessWidget {
   final String id;
   final String uuid;
 
+
   const ReusablePostCard({
     required this.post,
     required this.id,
     required this.uuid,
   });
 
+
+  
   Future<void> _launchInBrowser(String url) async {
+    //todo: check if the url is a youtube or article and based this either launch url or play video
     if (await canLaunch(url)) {
       await launch(
         url,
@@ -27,6 +38,12 @@ class ReusablePostCard extends StatelessWidget {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  void playYoutubeVideo(){
+    final navigationServices = locator<NavigationService>();
+    navigationServices.navigateTo(PlayYoutubeVideo.routeName,argument: YoutubeData(title: post.description,videoId: post.url));
+    
   }
 
   @override
@@ -51,7 +68,7 @@ class ReusablePostCard extends StatelessWidget {
             ),
             TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
-              onPressed: () {},
+              onPressed: () => showPopUpMenu(child: ShowEditPostMenu(postId: post.postId,userID:post.userId,),context: context),
               child: Text(
                 'Edit Post',
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -138,7 +155,7 @@ class ReusablePostCard extends StatelessWidget {
                             post.category == "Environment"
                         ? Text("Read", style: TextStyle(color: Colors.white))
                         : Text("Watch", style: TextStyle(color: Colors.white)),
-                    onPressed: () => _launchInBrowser(post.url),
+                    onPressed: () => checkYoutubeURL(post.url) ? playYoutubeVideo() : _launchInBrowser(post.url),
                   ),
                 ),
               ),
