@@ -30,7 +30,7 @@
 .pub-cache/
 .pub/
 /build/
-lib/common/constant.dart
+lib/common/config.dart 
 lib/common/blacklist.dart
 # Web related
 lib/generated_plugin_registrant.dart

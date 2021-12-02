@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app/common/config.dart';
 import 'package:app/common/constant.dart';
 import 'package:app/domain/models/suggestion_place.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';

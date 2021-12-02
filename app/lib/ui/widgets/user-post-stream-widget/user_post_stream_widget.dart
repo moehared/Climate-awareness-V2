@@ -1,3 +1,4 @@
+import 'package:app/common/config.dart';
 import 'package:app/common/constant.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/locator.dart';
