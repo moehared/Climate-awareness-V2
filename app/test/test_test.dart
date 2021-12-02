@@ -41,11 +41,10 @@
 //     test('user logged in', () async {
 //       // Use Mockito to return a successful response when it calls the
 //       // provided http.Client.
-  
 //       when(firebaseAuth.signInWithEmailAndPassword(
 //               email: user.email, password: user.password))
 //           .thenAnswer((_) => Future<UserCredential>.value(firebaseUser));
-
+          
 //       expect(
 //         await firebaseAuth.signInWithEmailAndPassword(
 //           email: user.email,
@@ -85,56 +84,56 @@
 //   // );
 //   // locator<AuthService>().signIn(user3);
 //   // expect(_loggedInUser(user3), true);
-//   void setuserObj() {
-//     user = UserModel(
-//       userId: '22',
-//       firstName: 'Anupras',
-//       lastName: 'Test',
-//       password: 'Tested123!',
-//       email: 'tested@testing.com',
-//       phoneNumber: '13067999999',
-//       dateCreated: '11/04/2021',
-//     );
-//   }
-//   try {
-//   UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-//     email: "barry.allen@example.com",
-//     password: "SuperSecretPassword!"
-//   );
-// } on FirebaseAuthException catch (e) {
-//   if (e.code == 'user-not-found') {
-//     print('No user found for that email.');
-//   } else if (e.code == 'wrong-password') {
-//     print('Wrong password provided for that user.');
-//   }
-// }
-// try {
-//   UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-//     email: "barry.allen@example.com",
-//     password: "SuperSecretPassword!"
-//   );
-// } on FirebaseAuthException catch (e) {
-//   if (e.code == 'weak-password') {
-//     print('The password provided is too weak.');
-//   } else if (e.code == 'email-already-in-use') {
-//     print('The account already exists for that email.');
-//   }
-// } catch (e) {
-//   print(e);
-// }
-// User? user = FirebaseAuth.instance.currentUser;
+// //   Future setuserObj() async {
+// //     user = UserModel(
+// //       userId: '22',
+// //       firstName: 'Anupras',
+// //       lastName: 'Test',
+// //       password: 'Tested123!',
+// //       email: 'tested@testing.com',
+// //       phoneNumber: '13067999999',
+// //       dateCreated: '11/04/2021',
+// //     );
+// //   }
+// //   try {
+// //   UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+// //     email: "barry.allen@example.com",
+// //     password: "SuperSecretPassword!"
+// //   );
+// // } on FirebaseAuthException catch (e) {
+// //   if (e.code == 'user-not-found') {
+// //     print('No user found for that email.');
+// //   } else if (e.code == 'wrong-password') {
+// //     print('Wrong password provided for that user.');
+// //   }
+// // }
+// // try {
+// //   UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+// //     email: "barry.allen@example.com",
+// //     password: "SuperSecretPassword!"
+// //   );
+// // } on FirebaseAuthException catch (e) {
+// //   if (e.code == 'weak-password') {
+// //     print('The password provided is too weak.');
+// //   } else if (e.code == 'email-already-in-use') {
+// //     print('The account already exists for that email.');
+// //   }
+// // } catch (e) {
+// //   print(e);
+// // }
+// // User? user = FirebaseAuth.instance.currentUser;
 
-// if (user != null && !user.emailVerified) {
-//   var actionCodeSettings = ActionCodeSettings(
-//       url: 'https://www.example.com/?email=${user.email}',
-//       dynamicLinkDomain: 'example.page.link',
-//       androidPackageName: 'com.example.android',
-//       androidInstallApp: true,
-//       androidMinimumVersion: '12',
-//       iOSBundleId: 'com.example.ios',
-//       handleCodeInApp: true,
-//   );
+// // if (user != null && !user.emailVerified) {
+// //   var actionCodeSettings = ActionCodeSettings(
+// //       url: 'https://www.example.com/?email=${user.email}',
+// //       dynamicLinkDomain: 'example.page.link',
+// //       androidPackageName: 'com.example.android',
+// //       androidInstallApp: true,
+// //       androidMinimumVersion: '12',
+// //       iOSBundleId: 'com.example.ios',
+// //       handleCodeInApp: true,
+// //   );
 
-//   await user.sendEmailVerification(actionCodeSettings);
-// }
+// //   await user.sendEmailVerification(actionCodeSettings);
+// // }
 // }
