@@ -1,4 +1,4 @@
-import 'package:app/domain/models/suggestion_place.dart';
+import 'package:app/domain/models/place-model/suggestion_place.dart';
 import 'package:flutter/material.dart';
 
 class PredictionPlaceWidget extends StatelessWidget {
@@ -8,7 +8,7 @@ class PredictionPlaceWidget extends StatelessWidget {
     required this.onSelected,
   }) : super(key: key);
   final List<SuggestionPlace> predictionPlace;
-  final Function(String?) onSelected;
+  final Function(SuggestionPlace?) onSelected;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +29,7 @@ class PredictionPlaceWidget extends StatelessWidget {
                 ),
                 child: ListTile(
                   title: Text(predictionPlace[index].name),
-                  onTap: () => onSelected(predictionPlace[index].name),
+                  onTap: () => onSelected(predictionPlace[index]),
                 ),
               ),
               itemCount: predictionPlace.length,

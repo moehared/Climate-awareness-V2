@@ -38,18 +38,18 @@ class QuickCarbonView extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               TextFieldWidget(
-                onChanged: (city) => model.fetchPlaces(city),
+                onChanged: (_) {},
                 focusNode: model.textFocusNode,
                 controller: model.textController,
-                hintText: 'Enter your city',
+                hintText: 'Enter a postal code in the city you live',
               ),
-              Visibility(
-                visible: model.placeList.isNotEmpty,
-                child: PredictionPlaceWidget(
-                  onSelected: (city) => model.onSelectedCity(city),
-                  predictionPlace: model.placeList,
-                ),
-              ),
+              // Visibility(
+              //   visible: model.placeList.isNotEmpty,
+              //   child: PredictionPlaceWidget(
+              //     onSelected: (city) => model.onSelectedCity(city),
+              //     predictionPlace: model.placeList,
+              //   ),
+              // ),
               FittedBox(
                 child: TitleAndHelpButton(
                   label: '2. How many people live in your household?',
@@ -74,29 +74,27 @@ class QuickCarbonView extends StatelessWidget {
                 onChange: (val) => model.onHouseHoldIncomeValueChange(val),
                 step: 10,
                 max: 10,
-                label: model.getHouseHoldIncomeLabel(model.houseHoldIncome.toInt()),
+                label: model
+                    .getHouseHoldIncomeLabel(model.houseHoldIncome.toInt()),
               ),
             ],
           ),
         ),
-        floatingActionButton: Visibility(
-          visible: model.textFocusNode.hasFocus == false,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButtonWidget(
-                  label: 'Calculate Carbon',
-                  onPress: model.quickCarbonEstimate,
-                ),
-                TextButtonWidget(
-                  onPress: model.refineEstimate,
-                  label: 'Refine Your Estimate',
-                  includeBorder: true,
-                ),
-              ],
-            ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButtonWidget(
+                label: 'Calculate Carbon',
+                onPress: model.quickCarbonEstimate,
+              ),
+              TextButtonWidget(
+                onPress: model.refineEstimate,
+                label: 'Refine Your Estimate',
+                includeBorder: true,
+              ),
+            ],
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
+import 'package:app/ui/widgets/chart-widget/result-chart.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:app/ui/widgets/reusable-widget/reusable_card.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,11 @@ import 'package:focused_menu/modals.dart';
 
 class ProfileView extends StatelessWidget {
   static const routeName = '/ProfileView';
-  const ProfileView({Key? key}) : super(key: key);
-
+  const ProfileView({
+    Key? key,
+    this.carbonScore,
+  }) : super(key: key);
+  final double? carbonScore;
   @override
   Widget build(BuildContext context) {
     var tipData = [];
@@ -58,15 +62,27 @@ class ProfileView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 20),
-                  child: Text(
-                    'Carbon Footprint Score',
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Medium',
-                      color: Colors.white,
-                    ),
+                  child: RichText(
+                    text: TextSpan(
+                        text: 'Carbon Footprint Score: ',
+                        style: TextStyle(
+                          fontFamily: 'Roboto-Medium',
+                          color: Colors.white,
+                        ),
+                        children: [
+                          TextSpan(
+                            text:
+                                '${carbonScore?.toStringAsFixed(2) ?? '0.00'} tons CO2eq/month',
+                            style: TextStyle(
+                              fontFamily: 'Roboto-Bold',
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ]),
                   ),
                 ),
-                // ResultChart(res ?? 0),
+                // ResultChart(carbonScore ?? 0),
                 Divider(color: Colors.black26),
                 TitleAndButtonRow(
                   title: 'Personalized Tips',
