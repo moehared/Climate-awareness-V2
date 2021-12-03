@@ -34,6 +34,9 @@ class AccountFirebaseFireStoreRepo implements RepositoryInterface<UserModel> {
 
   @override
   Future<void> update(UserModel user) async {
-    firestore.collection(USER_COLLECTION).doc(user.userId).set(user.toMap());
+    await firestore
+        .collection(USER_COLLECTION)
+        .doc(user.userId)
+        .set(user.toMap());
   }
 }

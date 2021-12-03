@@ -18,15 +18,12 @@ class ReusablePostCard extends StatelessWidget {
   final String id;
   final String uuid;
 
-
   const ReusablePostCard({
     required this.post,
     required this.id,
     required this.uuid,
   });
 
-
-  
   Future<void> _launchInBrowser(String url) async {
     //todo: check if the url is a youtube or article and based this either launch url or play video
     if (await canLaunch(url)) {
@@ -40,10 +37,10 @@ class ReusablePostCard extends StatelessWidget {
     }
   }
 
-  void playYoutubeVideo(){
+  void playYoutubeVideo() {
     final navigationServices = locator<NavigationService>();
-    navigationServices.navigateTo(PlayYoutubeVideo.routeName,argument: YoutubeData(title: post.description,videoId: post.url));
-    
+    navigationServices.navigateTo(PlayYoutubeVideo.routeName,
+        argument: YoutubeData(title: post.description, videoId: post.url));
   }
 
   @override
@@ -68,7 +65,13 @@ class ReusablePostCard extends StatelessWidget {
             ),
             TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
-              onPressed: () => showPopUpMenu(child: ShowEditPostMenu(postId: post.postId,userID:post.userId,),context: context),
+              onPressed: () => showPopUpMenu(
+                  child: ShowEditPostMenu(
+                    postId: post.postId,
+                    userID: post.userId,
+                  ),
+                  context: context),
+              //ToDo this should only appear with posts that belong to the user
               child: Text(
                 'Edit Post',
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -155,7 +158,9 @@ class ReusablePostCard extends StatelessWidget {
                             post.category == "Environment"
                         ? Text("Read", style: TextStyle(color: Colors.white))
                         : Text("Watch", style: TextStyle(color: Colors.white)),
-                    onPressed: () => checkYoutubeURL(post.url) ? playYoutubeVideo() : _launchInBrowser(post.url),
+                    onPressed: () => checkYoutubeURL(post.url)
+                        ? playYoutubeVideo()
+                        : _launchInBrowser(post.url),
                   ),
                 ),
               ),
