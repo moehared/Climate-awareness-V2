@@ -40,7 +40,7 @@ class QuickCarbonViewModel extends BaseViewModel {
       size: houseHoldSize.toInt().toString(),
     );
 //TODO: find another to pass info to the profile.maybe save user local device
-
+// TODO: re-direct user to the profile tab
     _navService.navigateTo(ProfileView.routeName, argument: result);
   }
 
