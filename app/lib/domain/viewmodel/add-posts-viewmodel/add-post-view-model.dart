@@ -5,6 +5,7 @@ import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
+import 'package:app/ui/views/add-post-view/addPost.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -19,22 +20,27 @@ class AddPostViewModel extends BaseViewModel {
   final _navService = locator<NavigationService>();
   var _validImagePath = false;
   var _blackList = false;
+  String _postId = "";
 
+  var isEdit = false;
 
   final _imageUrlController = TextEditingController();
+  final _urlController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _categoryController = TextEditingController();
   var errorUrl = false;
   var mediaError = false;
   var isUserUpload = false;
   final _imageURLFocusNode = FocusNode();
   FocusNode get imageURLFocusNode => _imageURLFocusNode;
   File? _image;
+  String dropDownValue = 'Select Category';
+  final imagePicker = ImagePicker();
 
   final _userAuthService = locator<AuthService>();
   final _userPostService = locator<PostDatabaseService>();
-
-  final imagePicker = ImagePicker();
-
   final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formkey => _formKey;
 
   UserPostModel _userPostModel = UserPostModel(
       postId: "",
@@ -50,6 +56,9 @@ class AddPostViewModel extends BaseViewModel {
   File? get image => _image;
 
   TextEditingController get imageController => _imageUrlController;
+  TextEditingController get urlController => _urlController;
+  TextEditingController get descriptionContoller => _descriptionController;
+  TextEditingController get categoryController => _categoryController;
 
   List<String> get categoryList =>
       ['Environment', 'Climate Awareness', 'Media', 'Article'];
@@ -60,36 +69,6 @@ class AddPostViewModel extends BaseViewModel {
   }
 
   UserPostModel get userPostsModel => _userPostModel;
-
-  GlobalKey<FormState> get formkey => _formKey;
-
-  void submit() async {
-    final isValid = _formKey.currentState!.validate();
-    final date = DateTime.now().toString();
-    var dateParse = DateTime.parse(date);
-    var formattedDate =
-        "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
-
-//if not valid print and return else create the post
-    if (!isValid) {
-      print("Not valid formKey");
-      return;
-    }
-    //TODO: Clear forum once submitted, also give feedback either post failed or success
-    if (_image != null) {
-      setUserPostObj = userPostsModel.copyWith(imagePath: _image!.path);
-    }
-    if (_imageUrlController.text.isNotEmpty) {
-      setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);
-    }
-
-    _formKey.currentState?.save();
-    setUserPostObj = userPostsModel.copyWith(date: formattedDate);
-    setUserPostObj = userPostsModel.copyWith(
-        userId: _userAuthService.currentUser.get()?.uid);
-    _userPostService.createNewPost(userPostsModel);
-    _navService.pop();
-  }
 
   void onEditComplete() {
     isUserUpload = false;
@@ -135,16 +114,10 @@ class AddPostViewModel extends BaseViewModel {
     print(articleValid);
   }
 
-
-
-
-
-
   bool get articleValid => _validUrlPath;
 
   void checkImageURL(String userImageUrl) {
     try {
-      
       final response = http.get(Uri.parse(userImageUrl));
       if (response == 200) {
         _validUrlPath = true;
@@ -181,26 +154,70 @@ class AddPostViewModel extends BaseViewModel {
       print("failed to pick image: $e");
     }
   }
+
   bool get imageUpload => isUserUpload;
 
-  void initState()  {
-    // check if post id is null: return;
-    // if the post id is not null , populate userModel object with the object user wants to edit.
-    // notify
-    //I dont know how to the arg that is passed to this function sooo 
-    // if()
+  void initState(AddPostData addPostData) async {
+    if (addPostData.postId.isEmpty) {
+      print('add post data id is null');
+      return;
+    }
+    //   UserPostModel editPost =
+    // await _userPostService.fetchPostData(addPostData.postId);
+    _userPostModel = await _userPostService.fetchPostData(addPostData.postId);
+    print('post id == ${_userPostModel.postId}');
 
-    // if(_userAuthService.currentUser.get()?.uid != _userPostService.fetchPostData(postId).userId  || _userPostService.fetchPostData(postId).postId == null){
-    //   return null;
-    // }
-    // else{
+    notifyListeners();
+    print('post id in add post view model ${addPostData.postId}');
+    print(
+        'Some data from database about post ${_userPostModel.url} and ${_userPostModel.description}');
 
-    // }
+    _urlController.text = _userPostModel.url;
+    _descriptionController.text = _userPostModel.description;
+    _imageUrlController.text = _userPostModel.imageUrl;
+    // dropDownValue = editPost.category;
   }
 
+  Future<void> updatePost() async {
+    //     final isValid = _formKey.currentState!.validate();
+    //   if(!isValid) return ;
+    final date = DateTime.now().toString();
+    var dateParse = DateTime.parse(date);
+    var formattedDate =
+        "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
+    _formKey.currentState?.save();
+    _userPostModel = _userPostModel.copyWith(date: formattedDate);
 
+    _userPostService.updatePost(_userPostModel);
+    _navService.pop();
+    _navService.pop();
+  }
 
+  void submit() async {
+    final isValid = _formKey.currentState!.validate();
+    final date = DateTime.now().toString();
+    var dateParse = DateTime.parse(date);
+    var formattedDate =
+        "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
 
+//if not valid print and return else create the post
+    if (!isValid) {
+      print("Not valid formKey");
+      return;
+    }
+    //TODO: Clear forum once submitted, also give feedback either post failed or success
+    if (_image != null) {
+      setUserPostObj = userPostsModel.copyWith(imagePath: _image!.path);
+    }
+    if (_imageUrlController.text.isNotEmpty) {
+      setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);
+    }
 
-
+    _formKey.currentState?.save();
+    setUserPostObj = userPostsModel.copyWith(date: formattedDate);
+    setUserPostObj = userPostsModel.copyWith(
+        userId: _userAuthService.currentUser.get()?.uid);
+    _userPostService.createNewPost(userPostsModel);
+    _navService.pop();
+  }
 }

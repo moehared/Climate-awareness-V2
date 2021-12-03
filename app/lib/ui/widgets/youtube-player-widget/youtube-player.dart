@@ -10,6 +10,7 @@ class YoutubeData {
 
 class PlayYoutubeVideo extends StatelessWidget {
   static const routeName = '/PlayYoutubeVideo';
+  
   const PlayYoutubeVideo({
     Key? key,
     required this.youtubeData,

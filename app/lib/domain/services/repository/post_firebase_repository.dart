@@ -43,14 +43,6 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
   }
 
   @override
-  Future<void> delete(String postId) async {
-    
-    await firestore.collection(POST_COLLECTION).doc(postId).delete();
-    // TODO: implement delete
-    //throw UnimplementedError();
-  }
-
-  @override
   Future<UserPostModel> read(String postId) async {
     final doc = await firestore.collection(POST_COLLECTION).doc(postId).get();
     final data = Optional.ofNullable(doc.data());
@@ -62,9 +54,19 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
 
   @override
   Future<void> update(UserPostModel post) async {
-    firestore.collection(POST_COLLECTION).doc(post.userId).set(post.toMap());
+    print('post data map: ${post.toMap()}');
+    await firestore
+        .collection(POST_COLLECTION)
+        .doc(post.postId)
+        .set(post.toMap());
     // TODO: implement update
     //throw UnimplementedError();
-    
+  }
+
+  @override
+  Future<void> delete(String postId) async {
+    await firestore.collection(POST_COLLECTION).doc(postId).delete();
+    // TODO: implement delete
+    //throw UnimplementedError();
   }
 }

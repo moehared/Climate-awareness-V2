@@ -3,6 +3,7 @@ import 'package:app/domain/services/database_services/post_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/ui/views/add-post-view/add-posts-view.dart';
+import 'package:app/ui/views/add-post-view/addPost.dart';
 import 'package:app/ui/views/community-view/community_view.dart';
 import 'package:app/ui/widgets/user-setting-menu/build_tiles.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class ShowEditPostMenu extends StatelessWidget {
               iconData: Icons.edit,
               label: 'Edit Post',
               onTap: () {
-                locator<NavigationService>()
-                    .navigateTo(AddPostView.routeName, argument: postId);
+                locator<NavigationService>().navigateTo(AddPostView.routeName,
+                    argument: AddPostData(postId));
               },
             ),
           ),
@@ -45,6 +46,7 @@ class ShowEditPostMenu extends StatelessWidget {
                 if (locator<AuthService>().currentUser.get()?.uid != userID) {
                   //Todo: do a pop up here or a sliding window notification
                   print('You do not have access to this post');
+                  return;
                 } else {
                   locator<PostDatabaseService>().delete(postId);
                   locator<NavigationService>()

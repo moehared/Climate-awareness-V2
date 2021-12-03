@@ -4,24 +4,27 @@ import 'package:app/domain/services/repository/repo_interface.dart';
 import 'package:flutter/foundation.dart';
 
 class PostDatabaseService {
-  final PostFirebaseFireStoreRepo repository;
-  PostDatabaseService(this.repository);
+  final PostFirebaseFireStoreRepo _repository;
+  PostDatabaseService(this._repository);
 
   void createNewPost(UserPostModel userPostModel) async {
-    repository.create(userPostModel);
+    _repository.create(userPostModel);
     //print(userPostModel.toMap().toString());
   }
 
   void delete(String postId) async {
-    return await repository.delete(postId);
+    return await _repository.delete(postId);
   }
 
-  
   Future<UserPostModel> fetchPostData(String postId) async {
     try {
-      return await repository.read(postId);
+      return await _repository.read(postId);
     } catch (e) {
       return Future.error('Post Data does not exist');
     }
+  }
+
+  Future<void> updatePost(UserPostModel post) async {
+    await _repository.update(post);
   }
 }
