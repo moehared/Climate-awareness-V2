@@ -1,11 +1,12 @@
 import 'package:app/common/constant.dart';
 import 'package:app/common/utils/prompt_dialog.dart';
-import 'package:app/domain/models/suggestion_place.dart';
+import 'package:app/domain/models/place-model/suggestion_place.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/services/network_service/questionaires_endpoint/network_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
+import 'package:app/ui/views/profile-view/profile-view.dart';
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:flutter/material.dart';
 
@@ -26,16 +27,19 @@ class QuickCarbonViewModel extends BaseViewModel {
   double get houseHoldIncome => _houseHoldIncomeValue;
 
   Future quickCarbonEstimate() async {
+    if (_textController.text.isEmpty) return;
     print('city: ${_textController.text}');
     print('house hold size: ${houseHoldSize.toInt()}');
     print('house hold income: ${houseHoldIncome.toInt()}');
-    if (_textController.text.isNotEmpty) {
-      await _networkService.defaultCarbonFootPrintCalculator(
-        city: _textController.text,
-        income: houseHoldIncome.toInt().toString(),
-        size: houseHoldSize.toInt().toString(),
-      );
-    }
+    print('postal code: ${_textController.text.trim()}');
+    final result =
+        await _networkService.defaultCarbonFootPrintCalculatorByPostalCode(
+      postalCode: _textController.text,
+      income: houseHoldIncome.toInt().toString(),
+      size: houseHoldSize.toInt().toString(),
+    );
+//TODO: find another to pass info to the profile.maybe save user local device
+    _navService.navigateAndReplce(ProfileView.routeName, argument: result);
   }
 
   void refineEstimate() {
@@ -51,33 +55,37 @@ class QuickCarbonViewModel extends BaseViewModel {
     _textController.dispose();
   }
 
-  Future fetchPlaces(city) async {
-    try {
-      _placeList = await _networkService.fetchPlaces(city);
-      notifyListeners();
-    } catch (e) {
-      if (e.toString().contains('ZERO_RESULTS')) {
-        this._textFocusNode.unfocus();
-        promptDialog(
-          message: "we could not find the city '$city' You have entered",
-          dialogService: _dialogService,
-          title: 'No city found',
-        );
+  void fetchPlaces(city) {}
 
-        // return;
-      } else {
-        promptDialog(
-          message: 'Could not Fetch city',
-          dialogService: _dialogService,
-          title: 'Something went wrong!',
-        );
-      }
-    }
-  }
+  // Future fetchPlaces(city) async {
+  //   try {
+  //     _placeList = await _networkService.fetchPlaces(city);
+  //     notifyListeners();
+  //   } catch (e) {
+  //     if (e.toString().contains('ZERO_RESULTS')) {
+  //       this._textFocusNode.unfocus();
+  //       promptDialog(
+  //         message: "we could not find the city '$city' You have entered",
+  //         dialogService: _dialogService,
+  //         title: 'No city found',
+  //       );
 
-  void onSelectedCity(city) {
-    this._textController.text = city;
+  //       // return;
+  //     } else {
+  //       promptDialog(
+  //         message: 'Could not Fetch city',
+  //         dialogService: _dialogService,
+  //         title: 'Something went wrong!',
+  //       );
+  //     }
+  //   }
+  // }
+
+  Future<void> onSelectedCity(SuggestionPlace? city) async {
+    if (city == null) return;
+    this._textController.text = city.name;
     this._textFocusNode.unfocus();
+    // await this._networkService.getPlaceDetails(city.placeID);
     this._placeList = [];
     notifyListeners();
   }
