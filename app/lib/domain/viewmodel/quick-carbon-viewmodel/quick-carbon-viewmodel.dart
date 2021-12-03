@@ -8,6 +8,7 @@ import 'package:app/domain/services/network_service/questionaires_endpoint/netwo
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/ui/views/profile-view/profile-view.dart';
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
+import 'package:app/ui/views/tab-views/tab-views.dart';
 import 'package:flutter/material.dart';
 
 class QuickCarbonViewModel extends BaseViewModel {
@@ -39,7 +40,8 @@ class QuickCarbonViewModel extends BaseViewModel {
       size: houseHoldSize.toInt().toString(),
     );
 //TODO: find another to pass info to the profile.maybe save user local device
-    _navService.navigateAndReplce(ProfileView.routeName, argument: result);
+
+    _navService.navigateTo(ProfileView.routeName, argument: result);
   }
 
   void refineEstimate() {
