@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:app/common/styles/textfield-form.dart';
 import 'package:app/domain/viewmodel/add-posts-viewmodel/add-post-view-model.dart';
+import 'package:app/ui/views/add-post-view/addPost.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
@@ -35,6 +36,7 @@ class CreateUserPost extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
+              controller: model.urlController,
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               decoration: userPostFormStyle.copyWith(
@@ -69,31 +71,19 @@ class CreateUserPost extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            
             FormFieldDropDownWidget(
-               onChanged: (dropDownValue) {
+              onChanged: (dropDownValue) {
                 debugPrint("Drop down value" + dropDownValue!);
+
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(category: dropDownValue);
-               },
-               errorMessage: 'Please select a category',
-               hint:   model.userPostsModel.category.isEmpty
-                    ? 'Select Category'
-                    : model.userPostsModel.category,
-             
-               items: model.categoryList,
-         //     color: Theme.of(context).colorScheme.secondary,
+              },
+              errorMessage: 'Please select a category',
+              hint: model.userPostsModel.category.isEmpty
+                  ? 'Select Category'
+                  : model.userPostsModel.category,
+              items: model.categoryList,
             ),
-            // DropDownMenuWidget(
-            //   onChanged: (dropDownValue) {
-            //     debugPrint("Drop down value" + dropDownValue!);
-            //     model.setUserPostObj =
-            //         model.userPostsModel.copyWith(category: dropDownValue);
-            //   },
-            //   hintText: model.userPostsModel.category.isEmpty ? 'Select Category' : model.userPostsModel.category,
-            //   items: model.categoryList,
-            //   dropdownColor: Theme.of(context).colorScheme.secondary,
-            // ),
             const SizedBox(
               height: 10,
             ),
@@ -105,6 +95,7 @@ class CreateUserPost extends StatelessWidget {
               height: 5,
             ),
             TextFormField(
+              controller: model.descriptionContoller,
               style: TextStyle(color: Colors.white),
               decoration:
                   userPostFormStyle.copyWith(hintText: "Enter a Description"),
@@ -159,11 +150,10 @@ class CreateUserPost extends StatelessWidget {
                     ),
                     child: model.imageController.text.isEmpty &&
                             model.imageValid == false &&
-                            model.imageUpload == false 
+                            model.imageUpload == false
                         ? Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: 
-                            Text(
+                            child: Text(
                               'Enter URL or upload image from your phone',
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
@@ -188,7 +178,6 @@ class CreateUserPost extends StatelessWidget {
                       FocusScope.of(context).unfocus();
                     },
                     onEditingComplete: model.onEditComplete,
-
                     validator: (url) {
                       if (url!.isEmpty) {
                         return "Enter a Image URL";
@@ -226,9 +215,13 @@ class CreateUserPost extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RoundedLongButton(
-                title: 'Create Post',
-                onPress: model
-                    .submit, /* isBusy: widget.model.viewState == ViewState.BUSY,*/
+                title: model.userPostsModel.postId.isEmpty
+                    ? 'Create Post'
+                    : 'Update',
+                onPress: model.userPostsModel.postId.isEmpty
+                    ? model.submit
+                    : model
+                        .updatePost, /* isBusy: widget.model.viewState == ViewState.BUSY,*/
               ),
             ),
           ],

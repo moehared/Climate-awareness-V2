@@ -54,7 +54,11 @@ class PostFirebaseFireStoreRepo implements RepositoryInterface<UserPostModel> {
 
   @override
   Future<void> update(UserPostModel post) async {
-    firestore.collection(POST_COLLECTION).doc(post.userId).set(post.toMap());
+    print('post data map: ${post.toMap()}');
+    await firestore
+        .collection(POST_COLLECTION)
+        .doc(post.postId)
+        .set(post.toMap());
     // TODO: implement update
     //throw UnimplementedError();
   }
