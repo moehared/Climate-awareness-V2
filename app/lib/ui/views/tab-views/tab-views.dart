@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 
 class TabViews extends StatelessWidget {
   static const String routeName = '/TabViews';
-  const TabViews({Key? key}) : super(key: key);
-
+  const TabViews({
+    Key? key,
+    this.directedIndexPage = -1,
+  }) : super(key: key);
+  final int directedIndexPage;
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<TabViewModel>(
-      onModelReady: (model) => model.init(),
+      onModelReady: (model) => model.init(directedIndexPage),
       builder: (ctx, model, child) => SafeArea(
         child: Scaffold(
           body: model.pages[model.selectedPageIndex]['page'],

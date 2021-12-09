@@ -3,13 +3,12 @@ import 'package:app/domain/services/database_services/post_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/ui/views/add-post-view/add-posts-view.dart';
-import 'package:app/ui/views/add-post-view/addPost.dart';
 import 'package:app/ui/views/community-view/community_view.dart';
 import 'package:app/ui/widgets/user-setting-menu/build_tiles.dart';
 import 'package:flutter/material.dart';
 
-class ShowEditPostMenu extends StatelessWidget {
-  const ShowEditPostMenu({
+class ShowEditPostPopUpMenu extends StatelessWidget {
+  const ShowEditPostPopUpMenu({
     Key? key,
     required this.postId,
     required this.userID,
@@ -31,7 +30,7 @@ class ShowEditPostMenu extends StatelessWidget {
               label: 'Edit Post',
               onTap: () {
                 locator<NavigationService>().navigateTo(AddPostView.routeName,
-                    argument: AddPostData(postId));
+                    argument: postId);
               },
             ),
           ),

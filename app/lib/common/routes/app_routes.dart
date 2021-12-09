@@ -1,7 +1,5 @@
 import 'package:app/domain/services/authentication_service/auth_service_wrapper.dart';
-import 'package:app/domain/viewmodel/chat_viewmodel/chat_viewmodel.dart';
 import 'package:app/ui/views/add-post-view/add-posts-view.dart';
-import 'package:app/ui/views/add-post-view/addPost.dart';
 import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 
 import 'package:app/ui/views/forget-password-view/forget-password-view.dart';
@@ -10,6 +8,7 @@ import 'package:app/ui/views/profile-view/profile-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
 
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
+import 'package:app/ui/views/tab-views/tab-views.dart';
 import 'package:app/ui/views/user-registeration-view/user_registeration_view.dart';
 import 'package:app/ui/widgets/youtube-player-widget/youtube-player.dart';
 import 'package:flutter/material.dart';
@@ -31,25 +30,20 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ForgetPasswordView());
       case AddPostView.routeName:
         return MaterialPageRoute(
-            builder: (_) => AddPostView(
-                  addPostData: settings.arguments as AddPostData,
-                ));
+          builder: (_) => AddPostView(
+            postId: settings.arguments as String,
+          ),
+        );
       case PlayYoutubeVideo.routeName:
         return MaterialPageRoute(
           builder: (_) => PlayYoutubeVideo(
             youtubeData: settings.arguments as YoutubeData,
           ),
         );
-      // case CommunityView.routeName:
-      //   return MaterialPageRoute(builder: (_) => CommunityView());
-      //   case ChatView.routeName:
-      //   return MaterialPageRoute(builder: (_) => ChatView());
-      //   case LocationView.routeName:
-      //   return MaterialPageRoute(builder: (_) => LocationView());
-      case ProfileView.routeName:
+      case TabViews.routeName:
         return MaterialPageRoute(
-          builder: (_) => ProfileView(
-            carbonScore: settings.arguments as double,
+          builder: (_) => TabViews(
+            directedIndexPage: settings.arguments as int,
           ),
         );
       default:

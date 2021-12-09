@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/authentication_service/auth_service_wrapper.dart';
+import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
@@ -16,7 +18,8 @@ class ProfileViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   final _navService = locator<NavigationService>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final _userAccountDb = locator<AccountDatabaseService>();
+  UserModel? user;
   // all getters
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
@@ -31,13 +34,18 @@ class ProfileViewModel extends BaseViewModel {
   void showPopUpMenu(model) {
     showModalBottomSheet(
       context: _scaffoldKey.currentState!.context,
-      builder: (ctx) => UserMenuPopUp(
-        isEdit: false,
-        id: '',
-        uuid: '',
+      builder: (ctx) => ProfileMenuPopUp(
         command: model,
       ),
     );
+  }
+
+//TODO: save user carbon footprint locally. so we avoid making too many calls to our DB
+  void initState() async {
+    // user = await _userAccountDb
+    //     .fetchUserModel(_authService.currentUser.get()!.uid);
+    // notifyListeners();
+    // debugPrint('user is updated in profile viewmodel ${user?.c02Score}');
   }
 
   void navigateToQuestionaireView() {

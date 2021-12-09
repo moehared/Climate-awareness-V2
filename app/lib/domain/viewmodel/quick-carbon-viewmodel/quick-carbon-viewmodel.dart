@@ -1,12 +1,14 @@
 import 'package:app/common/constant.dart';
+import 'package:app/common/enums/view_state.dart';
 import 'package:app/common/utils/prompt_dialog.dart';
 import 'package:app/domain/models/place-model/suggestion_place.dart';
+import 'package:app/domain/services/authentication_service/auth_service.dart';
+import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/services/network_service/questionaires_endpoint/network_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
-import 'package:app/ui/views/profile-view/profile-view.dart';
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:app/ui/views/tab-views/tab-views.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,8 @@ class QuickCarbonViewModel extends BaseViewModel {
   final _dialogService = locator<DiaglogService>();
   final _navService = locator<NavigationService>();
   final _networkService = locator<NetworkService>();
+  final _authService = locator<AuthService>();
+  final _userAccountService = locator<AccountDatabaseService>();
   var _houseHoldSizeValue = 0.0;
   var _houseHoldIncomeValue = 0.0;
   List<SuggestionPlace> _placeList = [];
@@ -29,19 +33,37 @@ class QuickCarbonViewModel extends BaseViewModel {
 
   Future quickCarbonEstimate() async {
     if (_textController.text.isEmpty) return;
-    print('city: ${_textController.text}');
-    print('house hold size: ${houseHoldSize.toInt()}');
-    print('house hold income: ${houseHoldIncome.toInt()}');
-    print('postal code: ${_textController.text.trim()}');
-    final result =
-        await _networkService.defaultCarbonFootPrintCalculatorByPostalCode(
-      postalCode: _textController.text,
-      income: houseHoldIncome.toInt().toString(),
-      size: houseHoldSize.toInt().toString(),
-    );
+    setViewState(ViewState.BUSY);
+    debugPrint('city: ${_textController.text}');
+    debugPrint('house hold size: ${houseHoldSize.toInt()}');
+    debugPrint('house hold income: ${houseHoldIncome.toInt()}');
+    debugPrint('postal code: ${_textController.text.trim()}');
+    try {
+      final result =
+          await _networkService.defaultCarbonFootPrintCalculatorByPostalCode(
+        postalCode: _textController.text,
+        income: houseHoldIncome.toInt().toString(),
+        size: houseHoldSize.toInt().toString(),
+      );
+      // fetch current user info
+      //TODO: Save user carbon footprint locally
+      // var userModel = await _userAccountService
+      //     .fetchUserModel(_authService.currentUser.get()!.uid);
+
+      // userModel = userModel.copyWith(c02Score: result);
+      // // update current user carbon footprint
+      // await _userAccountService.updateUser(userModel);
+      setViewState(ViewState.IDLE);
 //TODO: find another to pass info to the profile.maybe save user local device
 // TODO: re-direct user to the profile tab
-    _navService.navigateTo(ProfileView.routeName, argument: result);
+      final directSelectedPageIndex = 4;
+      _navService.navigateAndReplce(
+        TabViews.routeName,
+        argument: directSelectedPageIndex,
+      );
+    } catch (e) {
+      throw ('error occured while calculating carbon footprint $e');
+    }
   }
 
   void refineEstimate() {

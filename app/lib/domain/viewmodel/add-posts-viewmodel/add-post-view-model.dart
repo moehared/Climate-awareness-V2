@@ -1,3 +1,4 @@
+import 'package:app/common/utils/date_format.dart';
 import 'package:app/common/utils/regex-patterns.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
@@ -5,13 +6,13 @@ import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
-import 'package:app/ui/views/add-post-view/addPost.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/common/blacklist.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 //TODO: To seperate catergory and type create maybe another drop down widget
 class AddPostViewModel extends BaseViewModel {
@@ -22,7 +23,9 @@ class AddPostViewModel extends BaseViewModel {
   var _blackList = false;
   String _postId = "";
 
-  var isEdit = false;
+  var _isEdit = false;
+
+  bool get isEdit => _isEdit;
 
   final _imageUrlController = TextEditingController();
   final _urlController = TextEditingController();
@@ -142,6 +145,7 @@ class AddPostViewModel extends BaseViewModel {
   bool get imageValid => _validImageUrlPath;
 
 //TODO: To validate images need to make machine learning
+// TODO: need to also validate image url
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -157,55 +161,39 @@ class AddPostViewModel extends BaseViewModel {
 
   bool get imageUpload => isUserUpload;
 
-  void initState(AddPostData addPostData) async {
-    if (addPostData.postId.isEmpty) {
+  void initState(String postId) async {
+    if (postId.isEmpty) {
       print('add post data id is null');
       return;
     }
-    //   UserPostModel editPost =
-    // await _userPostService.fetchPostData(addPostData.postId);
-    _userPostModel = await _userPostService.fetchPostData(addPostData.postId);
-    print('post id == ${_userPostModel.postId}');
-
+    _userPostModel = await _userPostService.fetchPostData(postId);
     notifyListeners();
-    print('post id in add post view model ${addPostData.postId}');
-    print(
-        'Some data from database about post ${_userPostModel.url} and ${_userPostModel.description}');
-
     _urlController.text = _userPostModel.url;
     _descriptionController.text = _userPostModel.description;
     _imageUrlController.text = _userPostModel.imageUrl;
-    // dropDownValue = editPost.category;
   }
 
   Future<void> updatePost() async {
-    //     final isValid = _formKey.currentState!.validate();
-    //   if(!isValid) return ;
-    final date = DateTime.now().toString();
-    var dateParse = DateTime.parse(date);
-    var formattedDate =
-        "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
+    if (!_formKey.currentState!.validate()) return;
+    String date = getCurrentDateFormat();
     _formKey.currentState?.save();
-    _userPostModel = _userPostModel.copyWith(date: formattedDate);
-
+    _userPostModel = _userPostModel.copyWith(date: date);
     _userPostService.updatePost(_userPostModel);
+    // pop edit screen
     _navService.pop();
+    // pop edit pop up menu bottom sheet modal
     _navService.pop();
   }
 
   void submit() async {
     final isValid = _formKey.currentState!.validate();
-    final date = DateTime.now().toString();
-    var dateParse = DateTime.parse(date);
-    var formattedDate =
-        "${dateParse.day}-${dateParse.month}-${dateParse.year}-${dateParse.hour}-${dateParse.minute}-${dateParse.second}";
+    final date = getCurrentDateFormat();
 
 //if not valid print and return else create the post
     if (!isValid) {
       print("Not valid formKey");
       return;
     }
-    //TODO: Clear forum once submitted, also give feedback either post failed or success
     if (_image != null) {
       setUserPostObj = userPostsModel.copyWith(imagePath: _image!.path);
     }
@@ -214,10 +202,15 @@ class AddPostViewModel extends BaseViewModel {
     }
 
     _formKey.currentState?.save();
-    setUserPostObj = userPostsModel.copyWith(date: formattedDate);
+    setUserPostObj = userPostsModel.copyWith(date: date);
     setUserPostObj = userPostsModel.copyWith(
         userId: _userAuthService.currentUser.get()?.uid);
     _userPostService.createNewPost(userPostsModel);
     _navService.pop();
+  }
+
+  void eventEmitted(bool edit) {
+    this._isEdit = edit;
+    notifyListeners();
   }
 }

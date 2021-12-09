@@ -19,9 +19,9 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var tipData = [];
-    File? _image;
 
     return BuildViewModel<ProfileViewModel>(
+      onModelReady: (model) => model.initState(),
       builder: (ctx, model, child) => Scaffold(
         key: model.scaffoldKey,
         appBar: AppBar(
@@ -72,7 +72,7 @@ class ProfileView extends StatelessWidget {
                         children: [
                           TextSpan(
                             text:
-                                '${carbonScore?.toStringAsFixed(2) ?? '0.00'} tons CO2eq/month',
+                                '${model.user?.c02Score?.toStringAsFixed(2)} tons CO2eq/month',
                             style: TextStyle(
                               fontFamily: 'Roboto-Bold',
                               color: Colors.white,

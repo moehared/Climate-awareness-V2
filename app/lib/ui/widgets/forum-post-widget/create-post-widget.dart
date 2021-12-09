@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:app/common/styles/textfield-form.dart';
 import 'package:app/domain/viewmodel/add-posts-viewmodel/add-post-view-model.dart';
-import 'package:app/ui/views/add-post-view/addPost.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
@@ -36,12 +35,14 @@ class CreateUserPost extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
+              onChanged: (_) {
+                model.eventEmitted(true);
+              },
               controller: model.urlController,
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               decoration: userPostFormStyle.copyWith(
                   hintText: "Enter a article URL or Video URL"),
-              onFieldSubmitted: (_) {},
               validator: (url) {
                 if (url!.isEmpty) {
                   return "Enter a URL";
@@ -73,11 +74,11 @@ class CreateUserPost extends StatelessWidget {
             ),
             FormFieldDropDownWidget(
               onChanged: (dropDownValue) {
-                debugPrint("Drop down value" + dropDownValue!);
-
+                model.eventEmitted(true);
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(category: dropDownValue);
               },
+              editMode: model.isEdit,
               errorMessage: 'Please select a category',
               hint: model.userPostsModel.category.isEmpty
                   ? 'Select Category'
@@ -100,10 +101,12 @@ class CreateUserPost extends StatelessWidget {
               decoration:
                   userPostFormStyle.copyWith(hintText: "Enter a Description"),
               maxLines: null,
+              onChanged: (_) {
+                model.eventEmitted(true);
+              },
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
               textAlign: TextAlign.center,
-              onFieldSubmitted: (_) {},
               validator: (description) {
                 if (description!.isEmpty) {
                   return "Add a Description";
@@ -166,6 +169,9 @@ class CreateUserPost extends StatelessWidget {
 
                 Expanded(
                   child: TextFormField(
+                    onChanged: (_) {
+                      model.eventEmitted(true);
+                    },
                     focusNode: model.imageURLFocusNode,
                     controller: model.imageController,
                     style: TextStyle(color: Colors.white),

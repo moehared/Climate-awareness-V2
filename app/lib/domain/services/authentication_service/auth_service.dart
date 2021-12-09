@@ -11,7 +11,7 @@ import 'package:app/domain/services/locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  late final Stream<User?> _authState;
+  // late final Stream<User?> _authState;
   final _dialogService = locator<DiaglogService>();
   User? _currentUser;
   final FirebaseAuth _firebaseAuth;
@@ -19,11 +19,11 @@ class AuthService {
   Optional<UserCredential?> _userCredential = Optional.empty(null);
 
   AuthService(this._firebaseAuth) {
-    _authState = _firebaseAuth.authStateChanges();
+    // _authState = _firebaseAuth.authStateChanges();
     _currentUser = _firebaseAuth.currentUser;
   }
 
-  Stream<User?> get authState => _authState;
+  // Stream<User?> get authState => _authState;
   Optional<User?> get currentUser => Optional.ofNullable(_currentUser);
 
   Future<void> _authenticate(
@@ -138,7 +138,7 @@ class AuthService {
     await currentUser.get()!.reload();
     if (!isUserEmailVerified()) return;
     UserModel user =
-        await _accountService.fetchUser(currentUser.get()!.uid).onError((e, s) {
+        await _accountService.fetchUserModel(currentUser.get()!.uid).onError((e, s) {
       return Future.error(
         promptDialog(message: 'Data does not exist',dialogService:  _dialogService),
       );

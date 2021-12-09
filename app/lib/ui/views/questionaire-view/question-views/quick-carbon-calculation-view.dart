@@ -1,3 +1,4 @@
+import 'package:app/common/enums/view_state.dart';
 import 'package:app/common/styles/textfield-form.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';
@@ -85,14 +86,16 @@ class QuickCarbonView extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButtonWidget(
+               ElevatedButtonWidget(
                 label: 'Calculate Carbon',
                 onPress: model.quickCarbonEstimate,
+                isBusy: model.viewState == ViewState.BUSY,
               ),
               TextButtonWidget(
                 onPress: model.refineEstimate,
                 label: 'Refine Your Estimate',
                 includeBorder: true,
+                
               ),
             ],
           ),

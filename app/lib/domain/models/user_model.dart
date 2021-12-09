@@ -7,7 +7,7 @@ class UserModel {
   final String password;
   final bool isEmailVerified;
   final bool isPhoneVerified;
-  final double c02Score;
+  final double? c02Score;
   final String email;
   final String phoneNumber;
   final String dateCreated;

@@ -1,3 +1,4 @@
+import 'package:app/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 class ElevatedButtonWidget extends StatelessWidget {
@@ -5,9 +6,11 @@ class ElevatedButtonWidget extends StatelessWidget {
     Key? key,
     required this.label,
     required this.onPress,
+    this.isBusy = false,
   }) : super(key: key);
   final String label;
   final Function() onPress;
+  final bool isBusy;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -16,7 +19,7 @@ class ElevatedButtonWidget extends StatelessWidget {
         primary: Theme.of(context).colorScheme.secondary,
       ),
       onPressed: onPress,
-      child: Text(label),
+      child: isBusy ? Loading() : Text(label),
     );
   }
 }

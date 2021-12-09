@@ -9,6 +9,7 @@ class FormFieldDropDownWidget extends StatelessWidget {
     required this.errorMessage,
     required this.items,
     this.backgroundColor,
+    this.editMode = false,
     this.selectedColor = Colors.black,
   }) : super(key: key);
   final Function(String?)? onChanged;
@@ -18,6 +19,7 @@ class FormFieldDropDownWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? selectedColor;
   final String errorMessage;
+  final bool editMode;
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
@@ -25,7 +27,15 @@ class FormFieldDropDownWidget extends StatelessWidget {
       decoration: kTextFieldform,
       dropdownColor: backgroundColor,
       onChanged: onChanged,
-      validator: (value) => value == null ? errorMessage : null,
+      validator: (value) {
+        // if user edits any of the forums then we dont validate e.g user original category
+        if (editMode) {
+          return null;
+        } else if (value == null) {
+          return errorMessage;
+        }
+        return null;
+      },
       items: items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,

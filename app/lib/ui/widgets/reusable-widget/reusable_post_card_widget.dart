@@ -66,7 +66,7 @@ class ReusablePostCard extends StatelessWidget {
             TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
               onPressed: () => showPopUpMenu(
-                  child: ShowEditPostMenu(
+                  child: ShowEditPostPopUpMenu(
                     postId: post.postId,
                     userID: post.userId,
                   ),
