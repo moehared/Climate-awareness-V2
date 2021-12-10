@@ -1,7 +1,7 @@
 import 'package:app/common/config.dart';
-import 'package:app/common/constant.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/locator.dart';
+import 'package:app/ui/widgets/error_widget/error_text_widget.dart';
 import 'package:app/ui/widgets/loading_widget.dart';
 
 import 'package:app/ui/widgets/reusable-widget/reusable_post_card_widget.dart';
@@ -19,7 +19,6 @@ class UserPostStream extends StatelessWidget {
   final bool filterByMedia;
   final user;
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, Object?>>>(
@@ -29,15 +28,10 @@ class UserPostStream extends StatelessWidget {
             .snapshots(),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
-            return Center(
-              child: Text(
-                'No Data exists',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            );
+            return ErrorTextWidget(errorMsg: 'No Data exists');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Loading();
+            return Center(child: Loading());
           }
           // filtered each post
           final post = filterByArticle
@@ -56,9 +50,13 @@ class UserPostStream extends StatelessWidget {
               post: userData,
               id: userData.postId,
               uuid: userData.userId,
-              
             );
           }).toList();
+          if (cardWidget.isEmpty) {
+            return ErrorTextWidget(
+              errorMsg: 'Nothing To see.',
+            );
+          }
           return ListView.builder(
             key: PageStorageKey('user-post'),
             scrollDirection: Axis.vertical,

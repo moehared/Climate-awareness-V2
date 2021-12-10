@@ -78,9 +78,7 @@ class QuickCarbonViewModel extends BaseViewModel {
     _textFocusNode.dispose();
     _textController.dispose();
   }
-
-  void fetchPlaces(city) {}
-
+// TODO: fetch city places 
   // Future fetchPlaces(city) async {
   //   try {
   //     _placeList = await _networkService.fetchPlaces(city);

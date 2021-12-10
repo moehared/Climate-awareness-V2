@@ -163,14 +163,13 @@ class AddPostViewModel extends BaseViewModel {
 
   void initState(String postId) async {
     if (postId.isEmpty) {
-      print('add post data id is null');
       return;
     }
     _userPostModel = await _userPostService.fetchPostData(postId);
-    notifyListeners();
     _urlController.text = _userPostModel.url;
     _descriptionController.text = _userPostModel.description;
     _imageUrlController.text = _userPostModel.imageUrl;
+    notifyListeners();
   }
 
   Future<void> updatePost() async {
@@ -186,22 +185,16 @@ class AddPostViewModel extends BaseViewModel {
   }
 
   void submit() async {
-    final isValid = _formKey.currentState!.validate();
-    final date = getCurrentDateFormat();
-
-//if not valid print and return else create the post
-    if (!isValid) {
-      print("Not valid formKey");
+    if (!_formKey.currentState!.validate() ||
+        _image == null ||
+        _imageUrlController.text.isEmpty) {
       return;
-    }
-    if (_image != null) {
-      setUserPostObj = userPostsModel.copyWith(imagePath: _image!.path);
-    }
-    if (_imageUrlController.text.isNotEmpty) {
-      setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);
     }
 
     _formKey.currentState?.save();
+    final date = getCurrentDateFormat();
+    setUserPostObj = userPostsModel.copyWith(imagePath: _image!.path);
+    setUserPostObj = userPostsModel.copyWith(imageUrl: imageController.text);
     setUserPostObj = userPostsModel.copyWith(date: date);
     setUserPostObj = userPostsModel.copyWith(
         userId: _userAuthService.currentUser.get()?.uid);

@@ -9,7 +9,7 @@ class RoundedLongButton extends StatelessWidget {
     this.isBusy = false,
   }) : super(key: key);
   final String title;
-  final Function() onPress;
+  final Function()? onPress;
   final bool isBusy;
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,9 @@ class RoundedLongButton extends StatelessWidget {
           primary: Theme.of(context).colorScheme.secondary,
           tapTargetSize: MaterialTapTargetSize.padded,
           shape: RoundedRectangleBorder(
+            side: onPress == null
+                ? BorderSide(color: Colors.grey)
+                : BorderSide.none,
             borderRadius: BorderRadius.circular(32),
           ),
         ),

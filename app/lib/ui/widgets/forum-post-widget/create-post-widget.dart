@@ -226,8 +226,11 @@ class CreateUserPost extends StatelessWidget {
                     : 'Update',
                 onPress: model.userPostsModel.postId.isEmpty
                     ? model.submit
-                    : model
-                        .updatePost, /* isBusy: widget.model.viewState == ViewState.BUSY,*/
+                    : !model.isEdit
+                        ? null
+                        : model.updatePost,
+
+                /* isBusy: widget.model.viewState == ViewState.BUSY,*/
               ),
             ),
           ],
