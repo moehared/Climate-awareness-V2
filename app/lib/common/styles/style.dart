@@ -49,3 +49,9 @@ const kTextTitleStyle = TextStyle(
   fontStyle: FontStyle.italic,
   color: Colors.white,
 );
+
+final kSimpleOrAdvanceContainerStyle = BoxDecoration(
+  border: Border.all(
+    color: Colors.grey,
+  ),
+);

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:app/common/enums/view_state.dart';
-import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/common/styles/style.dart';
 import 'package:app/common/utils/input_validator.dart';
 import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:flutter/material.dart';

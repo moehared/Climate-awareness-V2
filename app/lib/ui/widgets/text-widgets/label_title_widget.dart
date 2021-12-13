@@ -9,9 +9,12 @@ class LabelTitleWidget extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: TextStyle(fontFamily: 'Roboto-Bold'),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Text(
+        title,
+        style: TextStyle(fontFamily: 'Roboto-Bold'),
+      ),
     );
   }
 }

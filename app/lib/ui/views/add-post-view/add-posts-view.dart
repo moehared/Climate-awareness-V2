@@ -19,6 +19,7 @@ class AddPostView extends StatelessWidget {
       builder: (ctx, model, child) => Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           title: Text(
               model.userPostsModel.postId.isEmpty ? 'Add Post' : 'edit post'),
         ),

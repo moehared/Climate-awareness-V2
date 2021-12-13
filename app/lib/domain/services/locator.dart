@@ -23,7 +23,7 @@ import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart'
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/food-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/goods-services-viewmodel.dart';
-import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/transportation-viewmodel.dart';
+import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/transportation-view/transportation-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmodel.dart';
 import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';

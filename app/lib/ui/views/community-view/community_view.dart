@@ -24,6 +24,7 @@ class _CommunityViewState extends State<CommunityView>
       builder: (ctx, model, child) => SafeArea(
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
             automaticallyImplyLeading: false,
             brightness: Brightness.light,
             title: Text('Community'),

@@ -11,7 +11,7 @@ class DropDownMenuWidget extends StatelessWidget {
   final Function(String?)? onChanged;
   final String hintText;
   final Color color;
-  final List<String> items;
+  final List<String>? items;
   final Color? dropdownColor;
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class DropDownMenuWidget extends StatelessWidget {
           ),
           icon: const Icon(Icons.arrow_drop_down),
           onChanged: onChanged,
-          items: items.map<DropdownMenuItem<String>>((String value) {
+          items: items?.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(

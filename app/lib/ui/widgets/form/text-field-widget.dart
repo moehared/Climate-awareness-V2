@@ -1,4 +1,4 @@
-import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/common/styles/style.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
@@ -12,6 +12,7 @@ class TextFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.onEditComplete,
+    this.addHorizontalPadding = true,
   }) : super(key: key);
   final TextEditingController controller;
   final FocusNode? focusNode;
@@ -21,11 +22,12 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final Function()? onEditComplete;
+  final bool addHorizontalPadding;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
+      padding: EdgeInsets.symmetric(
+        horizontal: addHorizontalPadding ? 20 : 0,
         vertical: 10,
       ),
       child: TextField(
@@ -41,6 +43,12 @@ class TextFieldWidget extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.grey,
+              width: 1,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.green.shade700,
               width: 1,
             ),
           ),

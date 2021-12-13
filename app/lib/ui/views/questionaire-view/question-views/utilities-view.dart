@@ -1,11 +1,11 @@
+import 'package:app/common/styles/style.dart';
 import 'package:app/common/utils/on_edit_complete.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
-import 'package:app/ui/views/profile-view/profile-view.dart';
-import 'package:app/ui/widgets/button-widget/elevated-button.dart';
-import 'package:app/ui/widgets/button-widget/text-button.dart';
-import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
-import 'package:app/ui/widgets/form/text-field-widget.dart';
+
+import 'package:app/ui/widgets/reusable-widget/nextor_prev_question_widget.dart';
+import 'package:app/ui/widgets/reusable-widget/questionaire_input_widget.dart';
+import 'package:app/ui/widgets/reusable-widget/row_with_textfield_and_child.dart';
 import 'package:app/ui/widgets/slider-widget/slider_widget.dart';
 import 'package:app/ui/widgets/text-widgets/label_title_widget.dart';
 import 'package:app/ui/widgets/text-widgets/text-and-row-widget.dart';
@@ -32,203 +32,87 @@ class UtilitiesView extends StatelessWidget {
                   LabelTitleWidget(title: 'HOW MUCH DO YOU USE IN YOUR HOME?'),
             ),
             QuestionairesInput(
-              model: model,
-              prev: prev,
-              next: next,
-            )
+              categoryLabel: 'Electricity',
+              costTypeItems: ['\$', 'kWh'],
+              costTypeValue: '\$',
+              controller: model.electrictyController,
+              occurrenceValue: "/ mo",
+              onChanged: (item) {},
+              onPerMonthlyDropdownChanged: (item) {},
+              textfieldHintlabel: '\$92/month',
+              keyboardType: TextInputType.number,
+              rightIconButton: () {},
+              rightIconData: Icons.help,
+              onEditComplete: () => onEditComplete(ctx, model.heatingFocusNode),
+            ),
+            QuestionairesInput(
+              categoryLabel: 'Heating Oil & Other Fuels',
+              costTypeItems: ['\$', 'gal'],
+              costTypeValue: '\$',
+              controller: model.heatingController,
+              occurrenceValue: "/ mo",
+              onChanged: (item) {},
+              onPerMonthlyDropdownChanged: (item) {},
+              textfieldHintlabel: '\$290/month',
+              focusNode: model.heatingFocusNode,
+              keyboardType: TextInputType.number,
+              rightIconButton: () {},
+              rightIconData: Icons.help,
+              onEditComplete: () =>
+                  onEditComplete(ctx, model.naturalGasFocusNode),
+            ),
+            QuestionairesInput(
+              categoryLabel: 'Natural Gas',
+              costTypeItems: ['\$', 'therms', 'ft³'],
+              costTypeValue: '\$',
+              controller: model.naturalGasController,
+              occurrenceValue: "/ mo",
+              onChanged: (item) {},
+              onPerMonthlyDropdownChanged: (item) {},
+              textfieldHintlabel: '\$480/month',
+              focusNode: model.naturalGasFocusNode,
+              keyboardType: TextInputType.number,
+              rightIconButton: () {},
+              onEditComplete: () =>
+                  onEditComplete(ctx, model.livingSpaceFocusNode),
+            ),
+            TitleAndHelpButton(
+              label: 'Living space area',
+              leftIconButton: null,
+              rightIconButton: () {},
+            ),
+            RowWithTextFieldAndChild(
+              hintText: '1850 /ft²',
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: Text('ft²'),
+              ),
+              controller: model.livingSpaceController,
+              focusNode: model.livingSpaceFocusNode,
+              onChanged: (item) {},
+            ),
+            TitleAndHelpButton(
+              label: 'Water Usage',
+              leftIconButton: null,
+              rightIconButton: () {},
+            ),
+            SliderWidget(
+              value: model.waterSliderValue,
+              onChange: (val) => model.onWaterValueChange(val),
+              step: 5,
+              max: 5,
+              label: model.waterValueLabel(model.waterSliderValue.toInt()),
+            ),
+            NextOrPrevQuestionWidget(prev: prev, next: next)
           ],
         ),
       ),
-    );
-  }
-}
-
-class QuestionairesInput extends StatelessWidget {
-  const QuestionairesInput({
-    Key? key,
-    required this.next,
-    required this.prev,
-    required this.model,
-  }) : super(key: key);
-  final Function() next;
-  final Function() prev;
-  final UtilitiesViewModel model;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TitleAndHelpButton(
-          label: 'Electricity',
-          helpButton: () {},
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: TextFieldWidget(
-                onChanged: (_) {},
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                controller: model.electrictyController,
-                onEditComplete: () =>
-                    onEditComplete(context, model.heatingFocusNode),
-                hintText: '\$92/month',
-              ),
-            ),
-            Expanded(
-              child: FittedBox(
-                child: DropDownMenuWidget(
-                  onChanged: (item) {},
-                  hintText: '\$',
-                  items: ['\$', 'kWh'],
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            FittedBox(
-              child: DropDownMenuWidget(
-                onChanged: (item) {},
-                hintText: "\/ mo",
-                items: ['yr', 'mo'],
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        TitleAndHelpButton(
-          label: 'Heating Oil & Other Fuels',
-          helpButton: () {},
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: TextFieldWidget(
-                onChanged: (_) {},
-                focusNode: model.heatingFocusNode,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                controller: model.heatingController,
-                hintText: '\$290 /month',
-                onEditComplete: () =>
-                    onEditComplete(context, model.naturalGasFocusNode),
-              ),
-            ),
-            Expanded(
-              child: FittedBox(
-                child: DropDownMenuWidget(
-                  onChanged: (item) {},
-                  hintText: '\$',
-                  items: ['\$', 'gal'],
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            FittedBox(
-              child: DropDownMenuWidget(
-                onChanged: (item) {},
-                hintText: "\/ mo",
-                items: ['yr', 'mo'],
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        TitleAndHelpButton(
-          label: 'Natural Gas',
-          helpButton: () {},
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: TextFieldWidget(
-                onChanged: (_) {},
-                focusNode: model.naturalGasFocusNode,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                controller: model.naturalGasController,
-                hintText: '\$480 /month',
-                onEditComplete: () =>
-                    onEditComplete(context, model.livingSpaceFocusNode),
-              ),
-            ),
-            Expanded(
-              child: FittedBox(
-                child: DropDownMenuWidget(
-                  onChanged: (item) {},
-                  hintText: '\$',
-                  items: ['\$', 'therms', 'ft³'],
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            FittedBox(
-              child: DropDownMenuWidget(
-                onChanged: (item) {},
-                hintText: "\/ mo",
-                items: ['yr', 'mo'],
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        TitleAndHelpButton(
-          label: 'Living space area',
-          helpButton: () {},
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: TextFieldWidget(
-                onChanged: (_) {},
-                focusNode: model.livingSpaceFocusNode,
-                keyboardType: TextInputType.number,
-                controller: model.livingSpaceController,
-                hintText: '1850 /ft²',
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: Text('ft²'),
-            ),
-          ],
-        ),
-        TitleAndHelpButton(
-          label: 'Water Usage',
-          helpButton: () {},
-        ),
-        SliderWidget(
-          value: model.waterSliderValue,
-          onChange: (val) => model.onWaterValueChange(val),
-          step: 5,
-          max: 5,
-          label: model.waterValueLabel(model.waterSliderValue.toInt()),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButtonWidget(
-                onPress: prev,
-                label: 'Previous',
-                includeBorder: true,
-              ),
-              ElevatedButtonWidget(
-                label: 'Next',
-                onPress: next,
-              )
-            ],
-          ),
-        )
-      ],
     );
   }
 }

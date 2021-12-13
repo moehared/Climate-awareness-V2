@@ -24,6 +24,6 @@ class CommunityViewModel extends BaseViewModel {
   }
 
   void navigateToAddPostView() {
-    _navService.navigateTo(AddPostView.routeName);
+    _navService.navigateTo(AddPostView.routeName,argument: '');
   }
 }

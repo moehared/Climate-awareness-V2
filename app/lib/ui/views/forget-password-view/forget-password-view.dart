@@ -1,5 +1,5 @@
 import 'package:app/common/enums/view_state.dart';
-import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/common/styles/style.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
@@ -16,6 +16,7 @@ class ForgetPasswordView extends StatelessWidget {
     return BuildViewModel<ForgetPassWordViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
+                      backgroundColor: Theme.of(context).primaryColor,
           title: Text('Forget Password'),
         ),
         body: BackgroundImage(

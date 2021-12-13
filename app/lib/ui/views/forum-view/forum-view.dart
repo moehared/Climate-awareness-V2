@@ -1,4 +1,4 @@
-import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/common/styles/style.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
@@ -13,6 +13,7 @@ class ForumView extends StatelessWidget {
     return BuildViewModel<ForumViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
+                      backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           title: Text('Forum View'),
         ),

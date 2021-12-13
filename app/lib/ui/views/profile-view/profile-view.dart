@@ -25,6 +25,7 @@ class ProfileView extends StatelessWidget {
       builder: (ctx, model, child) => Scaffold(
         key: model.scaffoldKey,
         appBar: AppBar(
+                      backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           brightness: Brightness.light,
           title: Text('Profile'),
@@ -84,7 +85,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 // ResultChart(carbonScore ?? 0),
                 Divider(color: Colors.black26),
-                TitleAndButtonRow(
+                TitleAndButton(
                   title: 'Personalized Tips',
                   viewAll: () {},
                 ),
@@ -122,7 +123,7 @@ class ProfileView extends StatelessWidget {
                   ),
                 SizedBox(height: 5),
                 Divider(color: Colors.black26),
-                TitleAndButtonRow(
+                TitleAndButton(
                   title: 'Achievement',
                   viewAll: () {},
                 ),
@@ -139,11 +140,11 @@ class ProfileView extends StatelessWidget {
   }
 }
 
-class TitleAndButtonRow extends StatelessWidget {
+class TitleAndButton extends StatelessWidget {
   final String title;
   final Function viewAll;
 
-  const TitleAndButtonRow({
+  const TitleAndButton({
     Key? key,
     required this.title,
     required this.viewAll,

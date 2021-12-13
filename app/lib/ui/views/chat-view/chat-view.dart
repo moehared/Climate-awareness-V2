@@ -12,6 +12,7 @@ class ChatView extends StatelessWidget {
     return BuildViewModel<ChatViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           title: const Text('Chat View'),
           actions: [

@@ -16,6 +16,7 @@ class ConfirmEmailView extends StatelessWidget {
         builder: (ctx, model, child) {
       return Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           title: Text('verification '),
         ),

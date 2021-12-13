@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/common/styles/style.dart';
 import 'package:app/domain/viewmodel/add-posts-viewmodel/add-post-view-model.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:flutter/material.dart';

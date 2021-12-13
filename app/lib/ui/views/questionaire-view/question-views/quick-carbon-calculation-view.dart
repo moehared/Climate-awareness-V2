@@ -1,5 +1,5 @@
 import 'package:app/common/enums/view_state.dart';
-import 'package:app/common/styles/textfield-form.dart';
+import 'package:app/common/styles/style.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';
 import 'package:app/ui/widgets/button-widget/elevated-button.dart';
@@ -20,6 +20,7 @@ class QuickCarbonView extends StatelessWidget {
       onModelReady: (model) => model.initState(context),
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
+                      backgroundColor: Theme.of(context).primaryColor,
           title: Text('Quick carbon estimate'),
         ),
         body: SingleChildScrollView(
@@ -54,7 +55,8 @@ class QuickCarbonView extends StatelessWidget {
               FittedBox(
                 child: TitleAndHelpButton(
                   label: '2. How many people live in your household?',
-                  helpButton: model.showHousePeopleInfo,
+                  leftIconButton: null,
+                  rightIconButton: model.showHousePeopleInfo,
                 ),
               ),
               SliderWidget(
@@ -67,7 +69,8 @@ class QuickCarbonView extends StatelessWidget {
               FittedBox(
                 child: TitleAndHelpButton(
                   label: '3. What is your gross annual household income?',
-                  helpButton: model.showHouseHoldIncomeInfo,
+                  leftIconButton: null,
+                  rightIconButton: model.showHouseHoldIncomeInfo,
                 ),
               ),
               SliderWidget(
