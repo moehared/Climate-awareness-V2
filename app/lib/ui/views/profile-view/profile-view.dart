@@ -25,7 +25,8 @@ class ProfileView extends StatelessWidget {
       builder: (ctx, model, child) => Scaffold(
         key: model.scaffoldKey,
         appBar: AppBar(
-                      backgroundColor: Theme.of(context).primaryColor,
+          elevation: 0,
+          backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           brightness: Brightness.light,
           title: Text('Profile'),

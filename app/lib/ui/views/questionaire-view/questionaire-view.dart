@@ -4,8 +4,6 @@ import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmod
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
-
-
 class QuestionaireView extends StatelessWidget {
   static const routeName = '/QuestionaireView';
   const QuestionaireView({Key? key}) : super(key: key);
@@ -16,7 +14,8 @@ class QuestionaireView extends StatelessWidget {
       builder: (ctx, model, child) => Scaffold(
         key: model.scaffold,
         appBar: AppBar(
-                      backgroundColor: Theme.of(context).primaryColor,
+          elevation: 0,
+          backgroundColor: Theme.of(context).primaryColor,
           title: Text('Questionnaires'),
           leading: model.selectedPage == 0
               ? null
@@ -36,9 +35,7 @@ class QuestionaireView extends StatelessWidget {
                   model.setSelectedPageIndex = i;
                   model.setProgressAnim(i);
                 },
-                children: [
-                  ...model.pages
-                ],
+                children: [...model.pages],
               ),
             ),
             Padding(

@@ -16,7 +16,8 @@ class ForgetPasswordView extends StatelessWidget {
     return BuildViewModel<ForgetPassWordViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
-                      backgroundColor: Theme.of(context).primaryColor,
+          elevation: 0,
+          backgroundColor: Theme.of(context).primaryColor,
           title: Text('Forget Password'),
         ),
         body: BackgroundImage(

@@ -13,8 +13,9 @@ class ForumView extends StatelessWidget {
     return BuildViewModel<ForumViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
-                      backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
+          elevation: 0,
           title: Text('Forum View'),
         ),
         body: BackgroundImage(

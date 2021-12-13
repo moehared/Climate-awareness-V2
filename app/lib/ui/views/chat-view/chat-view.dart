@@ -14,6 +14,7 @@ class ChatView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
+          elevation: 0,
           title: const Text('Chat View'),
           actions: [
             IconButton(
