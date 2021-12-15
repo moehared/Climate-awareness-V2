@@ -22,7 +22,7 @@ class RowWithTextFieldAndChild extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 3,
+            // flex: 3,
             child: TextFieldWidget(
               addHorizontalPadding: false,
               onChanged: (_) {},

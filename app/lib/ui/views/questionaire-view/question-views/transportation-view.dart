@@ -9,6 +9,7 @@ import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
 import 'package:app/ui/widgets/reusable-widget/nextor_prev_question_widget.dart';
 import 'package:app/ui/widgets/reusable-widget/questionaire_input_widget.dart';
 import 'package:app/ui/widgets/reusable-widget/row_with_textfield_and_child.dart';
+
 import 'package:app/ui/widgets/slider-widget/slider_widget.dart';
 import 'package:app/ui/widgets/text-widgets/label_title_widget.dart';
 import 'package:app/ui/widgets/text-widgets/text-and-row-widget.dart';
@@ -130,9 +131,9 @@ class TransportationView extends StatelessWidget {
                   ),
                   if (model.showSimpleUI)
                     RowWithTextFieldAndChild(
-                      controller: model.publicController,
+                      controller: model.airTravelController,
                       onChanged: (_) {},
-                      focusNode: model.publicFocusNode,
+                      focusNode: model.airTravelFocusNode,
                       child: DropDownMenuWidget(
                         items: ['KM', 'Mi'],
                         hintText: 'KM',
@@ -158,9 +159,15 @@ class TransportationView extends StatelessWidget {
                                 model.airTravelAdvanceList[index].focusNode,
                             child: DropDownMenuWidget(
                               items: ['Month', 'Year'],
-                              hintText: 'Flights/year',
+                              hintText: model
+                                  .airTravelAdvanceList[index].dropdownValue,
                               color: Colors.black,
-                              onChanged: (_) {},
+                              onChanged: (val) {
+                                model.airTravelAdvanceList[index]
+                                    .dropdownValue = 'Flight/$val';
+
+                                print('value is $val');
+                              },
                             ),
                             hintText:
                                 model.airTravelAdvanceList[index].hintText,

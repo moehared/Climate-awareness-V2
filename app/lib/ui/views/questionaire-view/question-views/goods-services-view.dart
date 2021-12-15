@@ -1,7 +1,9 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
-import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/goods-services-viewmodel.dart';
+import 'package:app/domain/viewmodel/questionaire-viewmodel/goods-viewmodel/goods-services-viewmodel.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
 import 'package:app/ui/widgets/button-widget/simple_or_advance_button.dart';
+import 'package:app/ui/widgets/drop-down-widget/drop-down-widget.dart';
+import 'package:app/ui/widgets/reusable-widget/row_with_textfield_and_child.dart';
 import 'package:app/ui/widgets/slider-widget/slider_widget.dart';
 import 'package:app/ui/widgets/spacing_widget/verticle_space.dart';
 import 'package:app/ui/widgets/text-widgets/label_title_widget.dart';
@@ -30,33 +32,95 @@ class GoodsServicesView extends StatelessWidget {
             ),
             const BuildSpacing(),
             BuildSimpleOrAdvanceWidget(
-              onAdvanceClick: () {},
-              onSimpleClick: () {},
+              onAdvanceClick: model.onAdvanceClick,
+              onSimpleClick: model.onSimpleClick,
+              isSimple: model.isSimple,
             ),
             const BuildSpacing(),
             BuildTitleAndHelpButton(
               label: 'Goods',
               rightIconButton: () {},
             ),
-            BuildSliderWidget(
-              value: model.goodsValue,
-              onChange: (val) => model.onGoodsChange(val),
-              max: 3920,
-              step: 3920,
-              label: '\$${model.goodsValue.toStringAsFixed(0)} /Month',
-            ),
             const BuildSpacing(),
+            if (model.isSimple)
+              BuildSliderWidget(
+                value: model.goodsValue,
+                onChange: (val) => model.onGoodsChange(val),
+                max: 3920,
+                step: 3920,
+                label: '\$${model.goodsValue.toStringAsFixed(0)} /Month',
+              ),
+            if (!model.isSimple)
+              ...List.generate(
+                model.goodsList.length,
+                (index) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelTitleWidget(
+                      title: model.goodsList[index].title,
+                    ),
+                    RowWithTextFieldAndChild(
+                      controller: model.goodsList[index].textEditingController,
+                      onChanged: (_) {},
+                      focusNode: model.goodsList[index].focusNode,
+                      child: DropDownMenuWidget(
+                        items: ['Month', 'Year'],
+                        hintText: model.goodsList[index].dropdownValue,
+                        color: Colors.black,
+                        onChanged: (val) {
+                          model.onDropdownChange(val, index);
+
+                          // print('value is $val');
+                        },
+                      ),
+                      hintText: model.goodsList[index].hintText,
+                    ),
+                  ],
+                ),
+              ),
+            const BuildSpacing(space: 15),
             BuildTitleAndHelpButton(
               label: 'Services',
               rightIconButton: () {},
             ),
-            BuildSliderWidget(
-              value: model.servicesValue,
-              onChange: (val) => model.onServiceChange(val),
-              max: 7215,
-              step: 7215,
-              label: '\$${model.servicesValue.toStringAsFixed(0)} /Month',
-            ),
+            const BuildSpacing(),
+            if (model.isSimple)
+              BuildSliderWidget(
+                value: model.servicesValue,
+                onChange: (val) => model.onServiceChange(val),
+                max: 7215,
+                step: 7215,
+                label: '\$${model.servicesValue.toStringAsFixed(0)} /Month',
+              ),
+            if (!model.isSimple)
+              ...List.generate(
+                model.servicesList.length,
+                (index) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelTitleWidget(
+                      title: model.servicesList[index].title,
+                    ),
+                    RowWithTextFieldAndChild(
+                      controller:
+                          model.servicesList[index].textEditingController,
+                      onChanged: (_) {},
+                      focusNode: model.servicesList[index].focusNode,
+                      child: DropDownMenuWidget(
+                        items: ['Month', 'Year'],
+                        hintText: model.servicesList[index].dropdownValue,
+                        color: Colors.black,
+                        onChanged: (val) {
+                          model.onDropdownChange(val, index);
+
+                          // print('value is $val');
+                        },
+                      ),
+                      hintText: model.servicesList[index].hintText,
+                    ),
+                  ],
+                ),
+              ),
             const BuildSpacing(space: 15),
             BuildRichText(
               label:

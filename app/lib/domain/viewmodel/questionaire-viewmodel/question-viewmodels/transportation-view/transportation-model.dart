@@ -4,19 +4,16 @@ class PublicTransitModel {
   final String title;
   final String hinText;
   final TextEditingController textEditingController = TextEditingController();
-  final Function(String?)? onChange;
+
   final FocusNode focusNode = FocusNode();
-  final Function(String?)? onDropdownChange;
 
   PublicTransitModel({
     required this.title,
     required this.hinText,
-    this.onChange,
-    this.onDropdownChange,
   });
 }
 
-final publicTransitList =  [
+final publicTransitList = [
   PublicTransitModel(title: 'Bus', hinText: '237'),
   PublicTransitModel(title: 'Transit Rail (light & heavy)', hinText: '177'),
   PublicTransitModel(title: 'Commuter Rail', hinText: '118'),
@@ -29,18 +26,24 @@ class AirTravelModel {
   final TextEditingController textEditingController = TextEditingController();
 
   final FocusNode focusNode = FocusNode();
-  final String hintText;
+  String hintText;
 
+  String  dropdownValue;
 
-   AirTravelModel({
+  AirTravelModel({
     required this.title,
     required this.hintText,
+    required this.dropdownValue,
   });
 }
 
-final airTravelList =  [
-  AirTravelModel(title: 'Short (< 640 km/yr)', hintText: '2'),
-  AirTravelModel(title: 'Medium (640 - 2410 km/yr)', hintText: '5'),
-  AirTravelModel(title: 'Long (2410 - 4830 km/yr)', hintText: '0'),
-  AirTravelModel(title: 'Extended (> 4830 km/yr)', hintText: '0'),
+final airTravelList = [
+  AirTravelModel(title: 'Short (< 640 km/yr)', hintText: '2',dropdownValue: 'Flights/year',),
+  AirTravelModel(title: 'Medium (640 - 2410 km/yr)', hintText: '5',dropdownValue: 'Flights/year',),
+  AirTravelModel(title: 'Long (2410 - 4830 km/yr)', hintText: '0',
+    dropdownValue: 'Flights/year',
+  ),
+  AirTravelModel(title: 'Extended (> 4830 km/yr)', hintText: '0',
+    dropdownValue: 'Flights/year',
+  ),
 ];
