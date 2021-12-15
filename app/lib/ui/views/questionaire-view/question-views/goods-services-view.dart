@@ -43,7 +43,7 @@ class GoodsServicesView extends StatelessWidget {
               onChange: (val) => model.onGoodsChange(val),
               max: 3920,
               step: 3920,
-              label: '\$${model.goodsValue} /Month',
+              label: '\$${model.goodsValue.toStringAsFixed(0)} /Month',
             ),
             const BuildSpacing(),
             BuildTitleAndHelpButton(
@@ -55,7 +55,7 @@ class GoodsServicesView extends StatelessWidget {
               onChange: (val) => model.onServiceChange(val),
               max: 7215,
               step: 7215,
-              label: '\$${model.servicesValue} /Month',
+              label: '\$${model.servicesValue.toStringAsFixed(0)} /Month',
             ),
             const BuildSpacing(space: 15),
             BuildRichText(
@@ -67,7 +67,7 @@ class GoodsServicesView extends StatelessWidget {
             BuildSpacing(space: 30),
             BuildRoundedLongButton(
               title: 'Continue',
-              onPress: () {},
+              onPress: model.onContinue,
             ),
           ],
         ),

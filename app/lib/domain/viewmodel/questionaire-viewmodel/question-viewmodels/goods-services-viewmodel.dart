@@ -18,4 +18,5 @@ class GoodsServicesViewModel extends BaseViewModel {
   }
 
   void onTextLink() {}
+  void onContinue() {}
 }
