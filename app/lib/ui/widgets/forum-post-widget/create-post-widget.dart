@@ -220,7 +220,7 @@ class CreateUserPost extends StatelessWidget {
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RoundedLongButton(
+              child: BuildRoundedLongButton(
                 title: model.userPostsModel.postId.isEmpty
                     ? 'Create Post'
                     : 'Update',

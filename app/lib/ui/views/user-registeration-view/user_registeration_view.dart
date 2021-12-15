@@ -42,7 +42,7 @@ class UserRegisterationFormView extends StatelessWidget {
                     model: model,
                   ),
                   const SizedBox(height: 10),
-                  RoundedLongButton(
+                  BuildRoundedLongButton(
                     title: model.authMode == AuthMode.LOGIN
                         ? "Sign In"
                         : "Sign Up",

@@ -39,14 +39,14 @@ class ReusableQuetionCard extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Text(questionTitle),
           ),
-          SliderWidget(
+          BuildSliderWidget(
             value: value,
             onChange: onSliderChange,
             label: label,
             max: max,
             step: step,
           ),
-          RoundedLongButton(
+          BuildRoundedLongButton(
             title: "I don't know",
             onPress: defaultBtn,
           ),

@@ -44,7 +44,7 @@ class ForgetPasswordView extends StatelessWidget {
                   ),
                 ),
               ),
-              RoundedLongButton(
+              BuildRoundedLongButton(
                 title: 'Reset password',
                 isBusy: model.viewState == ViewState.BUSY,
                 onPress: model.resetPassword,

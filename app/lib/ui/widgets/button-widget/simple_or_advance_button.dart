@@ -1,8 +1,8 @@
 import 'package:app/common/styles/style.dart';
 import 'package:flutter/material.dart';
 
-class SimpleOrAdvanceWidget extends StatelessWidget {
-  const SimpleOrAdvanceWidget({
+class BuildSimpleOrAdvanceWidget extends StatelessWidget {
+  const BuildSimpleOrAdvanceWidget({
     Key? key,
     this.isSimple = true,
     required this.onAdvanceClick,

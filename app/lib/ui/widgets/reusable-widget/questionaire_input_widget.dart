@@ -49,7 +49,7 @@ class QuestionairesInput extends StatelessWidget {
       elevation: allowElevation ? 4 : 0,
       child: Column(
         children: [
-          TitleAndHelpButton(
+          BuildTitleAndHelpButton(
             label: categoryLabel,
             rightIconData: rightIconData,
             rightIconButton: rightIconButton,

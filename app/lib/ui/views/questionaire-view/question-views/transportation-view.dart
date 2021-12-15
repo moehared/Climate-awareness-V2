@@ -50,7 +50,7 @@ class TransportationView extends StatelessWidget {
               rightIconButton: () {},
               rightIconData: Icons.add,
               onEditComplete: () => onEditComplete(ctx, model.publicFocusNode),
-              child: SliderWidget(
+              child: BuildSliderWidget(
                 value: 0,
                 onChange: (val) {},
                 step: 4,
@@ -59,7 +59,7 @@ class TransportationView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
-            SimpleOrAdvanceWidget(
+            BuildSimpleOrAdvanceWidget(
               onAdvanceClick: model.onAdvance,
               onSimpleClick: model.onSimple,
               isSimple: model.showSimpleUI,
@@ -72,7 +72,7 @@ class TransportationView extends StatelessWidget {
               decoration: kSimpleOrAdvanceContainerStyle,
               child: Column(
                 children: [
-                  TitleAndHelpButton(
+                  BuildTitleAndHelpButton(
                     label: 'Public Transit',
                     rightIconButton: () {},
                   ),
@@ -124,7 +124,7 @@ class TransportationView extends StatelessWidget {
               decoration: kSimpleOrAdvanceContainerStyle,
               child: Column(
                 children: [
-                  TitleAndHelpButton(
+                  BuildTitleAndHelpButton(
                     label: 'Air Travelling',
                     rightIconButton: () {},
                   ),
@@ -172,7 +172,7 @@ class TransportationView extends StatelessWidget {
               ),
             ),
 
-            NextOrPrevQuestionWidget(
+            BuildNextOrPrevQuestionWidget(
               prev: QuestionaireViewModel.previousQuestionScreen,
               next: QuestionaireViewModel.nextQuestionScreen,
             )

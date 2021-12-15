@@ -76,7 +76,7 @@ class UtilitiesView extends StatelessWidget {
               onEditComplete: () =>
                   onEditComplete(ctx, model.livingSpaceFocusNode),
             ),
-            TitleAndHelpButton(
+            BuildTitleAndHelpButton(
               label: 'Living space area',
               leftIconButton: null,
               rightIconButton: () {},
@@ -97,19 +97,19 @@ class UtilitiesView extends StatelessWidget {
               focusNode: model.livingSpaceFocusNode,
               onChanged: (item) {},
             ),
-            TitleAndHelpButton(
+            BuildTitleAndHelpButton(
               label: 'Water Usage',
               leftIconButton: null,
               rightIconButton: () {},
             ),
-            SliderWidget(
+            BuildSliderWidget(
               value: model.waterSliderValue,
               onChange: (val) => model.onWaterValueChange(val),
               step: 5,
               max: 5,
               label: model.waterValueLabel(model.waterSliderValue.toInt()),
             ),
-            NextOrPrevQuestionWidget(prev: prev, next: next)
+            BuildNextOrPrevQuestionWidget(prev: prev, next: next)
           ],
         ),
       ),

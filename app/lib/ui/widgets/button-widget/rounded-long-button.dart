@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // ignore_for_file: file_names
-class RoundedLongButton extends StatelessWidget {
-  const RoundedLongButton({
+class BuildRoundedLongButton extends StatelessWidget {
+  const BuildRoundedLongButton({
     Key? key,
     required this.title,
     required this.onPress,

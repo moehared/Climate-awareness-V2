@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SliderWidget extends StatelessWidget {
-  const SliderWidget({
+class BuildSliderWidget extends StatelessWidget {
+  const BuildSliderWidget({
     Key? key,
     required this.value,
     required this.onChange,

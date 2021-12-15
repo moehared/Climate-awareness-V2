@@ -2,8 +2,8 @@ import 'package:app/ui/widgets/button-widget/elevated-button.dart';
 import 'package:app/ui/widgets/button-widget/text-button.dart';
 import 'package:flutter/material.dart';
 
-class NextOrPrevQuestionWidget extends StatelessWidget {
-  const NextOrPrevQuestionWidget({
+class BuildNextOrPrevQuestionWidget extends StatelessWidget {
+  const BuildNextOrPrevQuestionWidget({
     Key? key,
     required this.prev,
     required this.next,
