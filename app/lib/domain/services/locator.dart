@@ -20,6 +20,7 @@ import 'package:app/domain/viewmodel/community_viewmodel/community_viewmodel.dar
 import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
+import 'package:app/domain/viewmodel/profile_viewmodel/chart_details_viewModel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/food-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/goods-viewmodel/goods-services-viewmodel.dart';
@@ -50,8 +51,7 @@ void setUpLocatorService() {
   // init singleton object here
   locator.registerLazySingleton<RepositoryInterface<UserModel>>(
       () => AccountFirebaseFireStoreRepo());
-  locator.registerLazySingleton<NetworkService>(
-      () => NetworkService());
+  locator.registerLazySingleton<NetworkService>(() => NetworkService());
   locator.registerLazySingleton<RepositoryInterface<UserPostModel>>(
       () => PostFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(
@@ -87,6 +87,7 @@ void setUpLocatorService() {
   locator.registerFactory<ChatViewModel>(() => ChatViewModel());
   locator.registerFactory<LocationViewModel>(() => LocationViewModel());
   locator.registerFactory<ProfileViewModel>(() => ProfileViewModel());
+  locator.registerFactory<ChartDetailsViewModel>(() => ChartDetailsViewModel());
   locator.registerFactory<QuestionaireViewModel>(() => QuestionaireViewModel());
   locator.registerFactory<UtilitiesViewModel>(() => UtilitiesViewModel());
   locator.registerFactory<FoodViewModel>(() => FoodViewModel());

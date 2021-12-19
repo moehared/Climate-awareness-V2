@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 
 const kTextFieldform = InputDecoration(
   fillColor: Colors.white,
@@ -54,4 +54,8 @@ final kSimpleOrAdvanceContainerStyle = BoxDecoration(
   border: Border.all(
     color: Colors.grey,
   ),
+);
+
+final kTextButtonStyle = (ctx) => TextStyle(
+  color: Theme.of(ctx).colorScheme.secondary,
 );

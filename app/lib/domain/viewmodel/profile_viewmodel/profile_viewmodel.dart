@@ -7,6 +7,7 @@ import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
+import 'package:app/ui/views/profile-view/chart-details-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:app/ui/views/user-registeration-view/user_registeration_view.dart';
@@ -51,5 +52,9 @@ class ProfileViewModel extends BaseViewModel {
   void navigateToQuestionaireView() {
     print('go to question view');
     _navService.navigateTo(QuickCarbonView.routeName);
+  }
+
+  void showChartDetailsView() {
+    _navService.navigateTo(ChartDetailsView.routeName);
   }
 }

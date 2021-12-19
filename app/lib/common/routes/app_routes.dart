@@ -4,6 +4,7 @@ import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 
 import 'package:app/ui/views/forget-password-view/forget-password-view.dart';
 import 'package:app/ui/views/forum-view/forum-view.dart';
+import 'package:app/ui/views/profile-view/chart-details-view.dart';
 import 'package:app/ui/views/profile-view/profile-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
 
@@ -11,6 +12,7 @@ import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:app/ui/views/tab-views/tab-views.dart';
 import 'package:app/ui/views/user-registeration-view/user_registeration_view.dart';
 import 'package:app/ui/widgets/youtube-player-widget/youtube-player.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -45,6 +47,10 @@ class AppRouter {
           builder: (_) => TabViews(
             directedIndexPage: settings.arguments as int,
           ),
+        );
+      case ChartDetailsView.routeName:
+        return MaterialPageRoute(
+          builder: (_) => ChartDetailsView(),
         );
       default:
         return MaterialPageRoute(builder: (_) => AuthServiceWrapper());

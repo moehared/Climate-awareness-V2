@@ -6,6 +6,7 @@ import 'package:app/domain/models/place-model/place.dart';
 import 'package:app/domain/models/place-model/suggestion_place.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
@@ -57,7 +58,7 @@ class NetworkService {
     late final http.Response response;
     late final List<SuggestionPlace> places;
     final url =
-        '$placesEndPoint&input=$city&types=geocode&components=country:ca&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
+        '$placesEndPoint&input=$city&types=(cities)&components=country:ca&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
     final URL = Uri.parse(url);
 
     try {
@@ -151,26 +152,43 @@ class NetworkService {
 
   Future<void> getPlaceDetails(String placeID) async {
     late final http.Response response;
+    var place = Place(city: '', street: '', streetNumber: '', zipCode: '');
     final sessionToken = Uuid().v4();
+    //fields=address_component&
     final urlEndPoint =
-        '$PLACE_DETAILS_ENDPOINT?place_id=$placeID&fields=address_component&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
+        // 'https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyANoPTW9_6_FU5BW_KhkHENGP1XMxLzx1c&place_id=$placeID';
+        '$PLACE_DETAILS_ENDPOINT?place_id=$placeID&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
 
     try {
       final url = Uri.parse(urlEndPoint);
       response = await http.get(url);
       final result = json.decode(response.body);
-      print('place detail response: ${response.body}');
+      print('decoded data: $result');
+      print('place detail geometry: ${result['result']['geometry']}');
 
       final components =
           result['result']['address_components'] as List<dynamic>;
-      // print('component: $components');
-      components.forEach((element) {
-        if (element.toString().contains('types')) {
-          if (element['types'].toString().contains('locality')) {
-            print(element['types'][0]);
-          }
+      //TODO: decode the geomtry location and see if zip code is found.
+      final geometry = result['result']['geometry'];
+
+      // build result
+
+      components.forEach((c) {
+        final List type = c['types'];
+        if (type.contains('street_number')) {
+          place = place.copyWith(streetNumber: c['long_name']);
+        }
+        if (type.contains('route')) {
+          place = place.copyWith(street: c['long_name']);
+        }
+        if (type.contains('locality')) {
+          place = place.copyWith(city: c['long_name']);
+        }
+        if (type.contains('postal_code')) {
+          place = place.copyWith(zipCode: c['long_name']);
         }
       });
+      debugPrint('place details: ${place.toString()}');
       // return Place(streetNumber: streetNumber, street: street, city: city, zipCode: zipCode);
     } catch (e) {
       throw ('could not fetch place details: $e');

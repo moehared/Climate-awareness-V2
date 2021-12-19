@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:app/common/styles/style.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/ui/widgets/chart-widget/result-chart.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
+import 'package:app/ui/widgets/reusable-widget/build_button.dart';
 import 'package:app/ui/widgets/reusable-widget/reusable_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 
@@ -28,7 +31,7 @@ class ProfileView extends StatelessWidget {
           elevation: 0,
           backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
-          brightness: Brightness.light,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
           title: Text('Profile'),
           actions: [
             IconButton(
@@ -60,32 +63,45 @@ class ProfileView extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(color: Colors.black26),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 20),
-                  child: RichText(
-                    text: TextSpan(
-                        text: 'Carbon Footprint Score: ',
-                        style: TextStyle(
-                          fontFamily: 'Roboto-Medium',
-                          color: Colors.white,
+                Divider(color: Colors.white24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10),
+                        child: RichText(
+                          text: TextSpan(
+                              text: 'Carbon Score: ',
+                              style: TextStyle(
+                                fontFamily: 'Roboto-Medium',
+                                color: Colors.white,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${model.user?.c02Score?.toStringAsFixed(2) ?? '0.00'} tons CO2eq/month',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold',
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                              ]),
                         ),
-                        children: [
-                          TextSpan(
-                            text:
-                                '${model.user?.c02Score?.toStringAsFixed(2)} tons CO2eq/month',
-                            style: TextStyle(
-                              fontFamily: 'Roboto-Bold',
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ]),
-                  ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: model.showChartDetailsView,
+                      child: Text(
+                        'View Details',
+                        style: kTextButtonStyle(context),
+                      ),
+                    ),
+                  ],
                 ),
                 // ResultChart(carbonScore ?? 0),
-                Divider(color: Colors.black26),
+                Divider(color: Colors.white24),
                 TitleAndButton(
                   title: 'Personalized Tips',
                   viewAll: () {},
@@ -123,7 +139,7 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                 SizedBox(height: 5),
-                Divider(color: Colors.black26),
+                Divider(color: Colors.white24),
                 TitleAndButton(
                   title: 'Achievement',
                   viewAll: () {},
@@ -170,9 +186,7 @@ class TitleAndButton extends StatelessWidget {
           onPressed: () {},
           child: Text(
             'View All',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+            style: kTextButtonStyle(context),
           ),
         ),
       ],

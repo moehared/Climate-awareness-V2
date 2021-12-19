@@ -54,8 +54,7 @@ class QuickCarbonViewModel extends BaseViewModel {
       // // update current user carbon footprint
       // await _userAccountService.updateUser(userModel);
       setViewState(ViewState.IDLE);
-//TODO: find another to pass info to the profile.maybe save user local device
-// TODO: re-direct user to the profile tab
+//TODO: save data on user local device
       final directSelectedPageIndex = 4;
       _navService.navigateAndReplce(
         TabViews.routeName,
@@ -78,36 +77,37 @@ class QuickCarbonViewModel extends BaseViewModel {
     _textFocusNode.dispose();
     _textController.dispose();
   }
-// TODO: fetch city places 
-  // Future fetchPlaces(city) async {
-  //   try {
-  //     _placeList = await _networkService.fetchPlaces(city);
-  //     notifyListeners();
-  //   } catch (e) {
-  //     if (e.toString().contains('ZERO_RESULTS')) {
-  //       this._textFocusNode.unfocus();
-  //       promptDialog(
-  //         message: "we could not find the city '$city' You have entered",
-  //         dialogService: _dialogService,
-  //         title: 'No city found',
-  //       );
 
-  //       // return;
-  //     } else {
-  //       promptDialog(
-  //         message: 'Could not Fetch city',
-  //         dialogService: _dialogService,
-  //         title: 'Something went wrong!',
-  //       );
-  //     }
-  //   }
-  // }
+// TODO: fetch city places
+  Future fetchPlaces(city) async {
+    try {
+      _placeList = await _networkService.fetchPlaces(city);
+      notifyListeners();
+    } catch (e) {
+      if (e.toString().contains('ZERO_RESULTS')) {
+        this._textFocusNode.unfocus();
+        promptDialog(
+          message: "we could not find the city '$city' You have entered",
+          dialogService: _dialogService,
+          title: 'No city found',
+        );
+
+        // return;
+      } else {
+        promptDialog(
+          message: 'Could not Fetch city',
+          dialogService: _dialogService,
+          title: 'Something went wrong!',
+        );
+      }
+    }
+  }
 
   Future<void> onSelectedCity(SuggestionPlace? city) async {
     if (city == null) return;
     this._textController.text = city.name;
     this._textFocusNode.unfocus();
-    // await this._networkService.getPlaceDetails(city.placeID);
+    await this._networkService.getPlaceDetails(city.placeID);
     this._placeList = [];
     notifyListeners();
   }
