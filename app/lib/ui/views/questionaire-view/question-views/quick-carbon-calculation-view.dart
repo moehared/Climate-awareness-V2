@@ -44,7 +44,7 @@ class QuickCarbonView extends StatelessWidget {
                 onChanged: (city) => model.fetchPlaces(city),
                 focusNode: model.textFocusNode,
                 controller: model.textController,
-                hintText: 'Enter a postal code in the city you live',
+                hintText: 'Enter a postal code or the city you live in ',
               ),
               Visibility(
                 visible: model.placeList.isNotEmpty,

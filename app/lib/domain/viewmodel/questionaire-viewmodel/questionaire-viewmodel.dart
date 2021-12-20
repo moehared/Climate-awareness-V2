@@ -14,10 +14,7 @@ class QuestionaireViewModel extends BaseViewModel {
   static int _selectedPage = 0;
 
   static final List<Widget> _pages = [
-    UtilitiesView(
-      next: nextQuestionScreen,
-      prev: previousQuestionScreen,
-    ),
+    UtilitiesView(),
     TransportationView(
       next: nextQuestionScreen,
       prev: previousQuestionScreen,

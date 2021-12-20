@@ -10,12 +10,13 @@ class BuildThreeChildrenRowWidget<T extends BaseViewModel>
     required this.controller,
     this.keyboardType,
     this.onEditComplete,
-    required this.onChanged,
-    required this.onPerMonthlyDropdownChanged,
+    required this.onTextChanged,
+    required this.onAnnuallyDropdownChanged,
     required this.billTypeValue,
     required this.billTypeItems,
     required this.monthlyValue,
     required this.textfieldHintlabel,
+    required this.onBillTypeChange,
     this.units,
     this.focusNode,
   }) : super(key: key);
@@ -26,50 +27,47 @@ class BuildThreeChildrenRowWidget<T extends BaseViewModel>
   final String billTypeValue;
   final String monthlyValue;
   final String textfieldHintlabel;
-  final Function(String?)? onChanged;
-  final Function(String?)? onPerMonthlyDropdownChanged;
+  final Function(String?)? onTextChanged;
+  final Function(String?)? onBillTypeChange;
+  final Function(String?)? onAnnuallyDropdownChanged;
   final List<String> billTypeItems;
   final FocusNode? focusNode;
   final List<String>? units;
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: TextFieldWidget(
-            onChanged: (_) {},
-            focusNode: focusNode,
-            textInputAction: TextInputAction.next,
-            keyboardType: keyboardType,
-            controller: controller,
-            onEditComplete: onEditComplete,
-            hintText: textfieldHintlabel,
-          ),
-        ),
-        Expanded(
-          child: FittedBox(
-            child: DropDownMenuWidget(
-              onChanged: onChanged,
-              hintText: billTypeValue,
-              items: billTypeItems,
-              color: Colors.black, // can be refactor in the future
-              //TODO: Refactor colors and background if neccessary
+    return Container(
+      child: Row(
+        children: [
+          Expanded(
+            child: TextFieldWidget(
+              onChanged: onTextChanged,
+              focusNode: focusNode,
+              textInputAction: TextInputAction.next,
+              keyboardType: keyboardType,
+              controller: controller,
+              onEditComplete: onEditComplete,
+              hintText: textfieldHintlabel,
             ),
           ),
-        ),
-        FittedBox(
-          child: DropDownMenuWidget(
-            onChanged: onPerMonthlyDropdownChanged,
+          DropDownMenuWidget(
+            onChanged: onBillTypeChange,
+            hintText: billTypeValue,
+            items: billTypeItems,
+            color: Colors.black, // can be refactor in the future
+            //TODO: Refactor colors and background if neccessary
+          ),
+          DropDownMenuWidget(
+            onChanged: onAnnuallyDropdownChanged,
             hintText: monthlyValue,
             items: units == null
                 ? ['yr', 'mo']
                 : units, // can be changed in the future to handle bi-weekly
             // but for now , we can leave as it is
             color: Colors.black,
-          ),
-        ),
-      ],
+          )
+        ],
+      ),
     );
   }
 }

@@ -14,16 +14,13 @@ import 'package:flutter/material.dart';
 class UtilitiesView extends StatelessWidget {
   const UtilitiesView({
     Key? key,
-    required this.next,
-    required this.prev,
   }) : super(key: key);
-  final Function() next;
-  final Function() prev;
 
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<UtilitiesViewModel>(
       builder: (ctx, model, child) => SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -32,54 +29,59 @@ class UtilitiesView extends StatelessWidget {
                   LabelTitleWidget(title: 'HOW MUCH DO YOU USE IN YOUR HOME?'),
             ),
             QuestionairesInput(
-              categoryLabel: 'Electricity',
+              categoryLabel: model.electricty,
               costTypeItems: ['\$', 'kWh'],
-              costTypeValue: '\$',
+              onBillTypeChanged: (type) => model.onBillTypeChange(type),
+              costTypeValue: model.electrictyCostValue,
               controller: model.electrictyController,
-              occurrenceValue: "/ mo",
-              onChanged: (item) {},
-              onPerMonthlyDropdownChanged: (item) {},
-              textfieldHintlabel: '\$92/month',
+              occurrenceValue: model.electrictyOccurenceValue,
+              onAnnualDropdownChanged: (item) =>
+                  model.setAnnualElectricCityDropdown(item),
+              textfieldHintlabel: model.electrictyHintText,
               keyboardType: TextInputType.number,
-              rightIconButton: () {},
+              rightIconButton: model.showElectrictyInfo,
               rightIconData: Icons.help,
               onEditComplete: () => onEditComplete(ctx, model.heatingFocusNode),
             ),
             QuestionairesInput(
-              categoryLabel: 'Heating Oil & Other Fuels',
+              onBillTypeChanged: (type) => model.onHeatingDropdownChanged(type),
+              categoryLabel: model.heatingAndOthers,
               costTypeItems: ['\$', 'gal'],
-              costTypeValue: '\$',
+              costTypeValue: model.heatingDropdownValue,
               controller: model.heatingController,
-              occurrenceValue: "/ mo",
-              onChanged: (item) {},
-              onPerMonthlyDropdownChanged: (item) {},
-              textfieldHintlabel: '\$290/month',
+              occurrenceValue: model.heatingAnnuallyValue,
+              onAnnualDropdownChanged: (item) =>
+                  model.onAnnualDropdownValue(item),
+              textfieldHintlabel: model.heatingHintText,
               focusNode: model.heatingFocusNode,
               keyboardType: TextInputType.number,
-              rightIconButton: () {},
+              rightIconButton: model.showHeatingInfo,
               rightIconData: Icons.help,
               onEditComplete: () =>
                   onEditComplete(ctx, model.naturalGasFocusNode),
             ),
             QuestionairesInput(
-              categoryLabel: 'Natural Gas',
+              onBillTypeChanged: (type) =>
+                  model.onNaturalGasCostUnitChange(type),
+              categoryLabel: model.naturalGas,
               costTypeItems: ['\$', 'therms', 'ft³'],
-              costTypeValue: '\$',
+              costTypeValue: model.naturalGasUnitCostValue,
               controller: model.naturalGasController,
-              occurrenceValue: "/ mo",
+              occurrenceValue: model.naturalGasAnnualValue,
               onChanged: (item) {},
-              onPerMonthlyDropdownChanged: (item) {},
-              textfieldHintlabel: '\$480/month',
+              onAnnualDropdownChanged: (item) =>
+                  model.onNaturalGasAnnualChange(item),
+              textfieldHintlabel: model.naturalGasHintText,
               focusNode: model.naturalGasFocusNode,
               keyboardType: TextInputType.number,
-              rightIconButton: () {},
+              rightIconButton: model.showNaturalHelpInfo,
+              rightIconData: Icons.help,
               onEditComplete: () =>
                   onEditComplete(ctx, model.livingSpaceFocusNode),
             ),
             BuildTitleAndHelpButton(
-              label: 'Living space area',
-              leftIconButton: null,
-              rightIconButton: () {},
+              label: model.livingSpace,
+              rightIconButton: model.showLivingSpaceInfo,
             ),
             RowWithTextFieldAndChild(
               hintText: '1850 /ft²',
@@ -98,9 +100,8 @@ class UtilitiesView extends StatelessWidget {
               onChanged: (item) {},
             ),
             BuildTitleAndHelpButton(
-              label: 'Water Usage',
-              leftIconButton: null,
-              rightIconButton: () {},
+              label: model.waterUsage,
+              rightIconButton: model.showWaterHelpInfo,
             ),
             BuildSliderWidget(
               value: model.waterSliderValue,
@@ -109,7 +110,12 @@ class UtilitiesView extends StatelessWidget {
               max: 5,
               label: model.waterValueLabel(model.waterSliderValue.toInt()),
             ),
-            BuildNextOrPrevQuestionWidget(prev: prev, next: next)
+            BuildNextOrPrevQuestionWidget(
+              prev: () {},
+              next: model.next,
+              hidePrevBtn: true,
+              disabled: !model.isValid,
+            ),
           ],
         ),
       ),

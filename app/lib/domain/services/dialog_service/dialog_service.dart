@@ -5,9 +5,9 @@ import 'package:app/domain/dialog_manager/dialog_model.dart';
 /// credit: from filled stack youtube tutorial.
 
 class DiaglogService {
-  Function(DialogRequest)? _showDialogListener;
+  Function(DialogRequest,bool)? _showDialogListener;
   Completer<DialogResponse>? _completer;
-  void registerDialogListener(Function(DialogRequest) showDiaglogLisener) {
+  void registerDialogListener(Function(DialogRequest,[bool isError]) showDiaglogLisener) {
     _showDialogListener = showDiaglogLisener;
   }
 
@@ -16,6 +16,8 @@ class DiaglogService {
     String desc = '',
     String buttonTitle = "Ok",
     String buttonCancel = '',
+    bool isError = false
+    
   }) {
     _completer = Completer();
     _showDialogListener!(DialogRequest(
@@ -23,7 +25,7 @@ class DiaglogService {
       description: desc,
       buttonTitle: buttonTitle,
       cancelText: buttonCancel,
-    ));
+    ),isError);
     return _completer!.future;
   }
 

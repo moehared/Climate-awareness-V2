@@ -9,7 +9,7 @@ class ElevatedButtonWidget extends StatelessWidget {
     this.isBusy = false,
   }) : super(key: key);
   final String label;
-  final Function() onPress;
+  final Function()? onPress;
   final bool isBusy;
   @override
   Widget build(BuildContext context) {

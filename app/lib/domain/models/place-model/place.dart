@@ -1,32 +1,25 @@
-class Place {
-  final String streetNumber;
-  final String street;
+class SelectedCity {
   final String city;
   final String zipCode;
-  Place({
-    required this.streetNumber,
-    required this.street,
+  final String country;
+  SelectedCity({
+    required this.country,
     required this.city,
     required this.zipCode,
   });
 
-  
-
-
   @override
   String toString() {
-    return 'Place(streetNumber: $streetNumber, street: $street, city: $city, zipCode: $zipCode)';
+    return 'Place(country: $country city: $city, zipCode: $zipCode)';
   }
 
-  Place copyWith({
-    String? streetNumber,
-    String? street,
+  SelectedCity copyWith({
+    String? country,
     String? city,
     String? zipCode,
   }) {
-    return Place(
-      streetNumber: streetNumber ?? this.streetNumber,
-      street: street ?? this.street,
+    return SelectedCity(
+      country: country ?? this.country,
       city: city ?? this.city,
       zipCode: zipCode ?? this.zipCode,
     );

@@ -35,6 +35,7 @@ class TransportationView extends StatelessWidget {
               child: LabelTitleWidget(title: 'HOW DO YOU GET AROUND?'),
             ),
             QuestionairesInput(
+              onBillTypeChanged: (type) {},
               allowElevation: true,
               categoryLabel: 'Add Vehicle if you drive.',
               costTypeItems: ['Gasoline', 'Electric', 'Diesal'],
@@ -45,18 +46,33 @@ class TransportationView extends StatelessWidget {
               units: ['Km', 'Mi'],
               leftIconData: Icons.remove,
               leftIconButton: () {},
-              onPerMonthlyDropdownChanged: (item) {},
+              onAnnualDropdownChanged: (item) {},
               textfieldHintlabel: '20,000 km/year',
               keyboardType: TextInputType.number,
               rightIconButton: () {},
               rightIconData: Icons.add,
               onEditComplete: () => onEditComplete(ctx, model.publicFocusNode),
-              child: BuildSliderWidget(
-                value: 0,
-                onChange: (val) {},
-                step: 4,
-                max: 30,
-                label: '2',
+              child: Column(
+                children: [
+                  Card(
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: Text(
+                        '20 mpg',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  ),
+                  BuildSliderWidget(
+                    value: 0,
+                    onChange: (val) {},
+                    step: 4,
+                    max: 30,
+                    label: '2',
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 15),

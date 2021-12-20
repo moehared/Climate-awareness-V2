@@ -32,6 +32,7 @@ class DropDownMenuWidget extends StatelessWidget {
           ),
         ),
         child: DropdownButton<String>(
+          underline: Container(),
           dropdownColor: dropdownColor,
           hint: Padding(
             padding: const EdgeInsets.all(10.0),

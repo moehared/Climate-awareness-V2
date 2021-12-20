@@ -5,6 +5,7 @@ import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class DiaglogManager extends StatefulWidget {
   final Widget child;
@@ -26,11 +27,38 @@ class _DiaglogManagerState extends State<DiaglogManager> {
     super.initState();
   }
 
-  void _showDialog(DialogRequest dialogRequest) {
-    if (Platform.isIOS) {
+  void _showDialog(DialogRequest dialogRequest, [bool showErrorAlert = false]) {
+    if (showErrorAlert) {
+      Alert(
+        context: context,
+        style: AlertStyle(
+          animationType: AnimationType.grow,
+          backgroundColor: Colors.white,
+        ),
+        desc: dialogRequest.title,
+        type: AlertType.error,
+        content: dialogRequest.description.isNotEmpty
+            ? Text(dialogRequest.description)
+            : Container(),
+        buttons: [
+          DialogButton(
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              _dialogService.dialogComplete(DialogResponse(confirmed: true));
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              dialogRequest.buttonTitle,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+        ],
+      ).show();
+    } else if (Platform.isIOS) {
       print("cupertino diaglog");
 
       showCupertinoDialog(
+        barrierDismissible: true,
         context: context,
         builder: (ctx) => CupertinoAlertDialog(
           title: Text(dialogRequest.title),
@@ -40,8 +68,10 @@ class _DiaglogManagerState extends State<DiaglogManager> {
           actions: [
             if (dialogRequest.cancelText != null)
               CupertinoButton(
-                onPressed: () => _dialogService
-                    .dialogComplete(DialogResponse(confirmed: false)),
+                onPressed: () {
+                  _dialogService
+                    .dialogComplete(DialogResponse(confirmed: false));
+                },
                 child: Text(dialogRequest.cancelText ?? "Cancel"),
               ),
             CupertinoButton(

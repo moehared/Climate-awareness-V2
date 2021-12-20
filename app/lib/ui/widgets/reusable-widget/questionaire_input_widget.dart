@@ -10,13 +10,14 @@ class QuestionairesInput extends StatelessWidget {
     required this.controller,
     this.keyboardType,
     this.onEditComplete,
-    required this.onChanged,
-    required this.onPerMonthlyDropdownChanged,
+    this.onChanged,
+    required this.onAnnualDropdownChanged,
     required this.costTypeValue,
     required this.costTypeItems,
     required this.occurrenceValue,
     required this.textfieldHintlabel,
     required this.rightIconButton,
+    required this.onBillTypeChanged,
     this.focusNode,
     this.rightIconData,
     this.units,
@@ -33,7 +34,8 @@ class QuestionairesInput extends StatelessWidget {
   final String occurrenceValue;
   final String textfieldHintlabel;
   final Function(String?)? onChanged;
-  final Function(String?)? onPerMonthlyDropdownChanged;
+  final Function(String?)? onAnnualDropdownChanged;
+    final Function(String?)? onBillTypeChanged;
   final List<String> costTypeItems;
   final FocusNode? focusNode;
   final Function() rightIconButton;
@@ -58,36 +60,21 @@ class QuestionairesInput extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           BuildThreeChildrenRowWidget(
+            onBillTypeChange: onBillTypeChanged,
             controller: controller,
             focusNode: focusNode,
             units: units,
             keyboardType: keyboardType,
             billTypeValue: costTypeValue,
             billTypeItems: costTypeItems,
-            onChanged: (item) {},
+            onTextChanged: onChanged,
             monthlyValue: occurrenceValue,
             textfieldHintlabel: textfieldHintlabel,
-            onPerMonthlyDropdownChanged: (item) {},
+            onAnnuallyDropdownChanged: onAnnualDropdownChanged,
             onEditComplete: onEditComplete,
           ),
           // const SizedBox(height: 20),
-          if (child != null)
-            Column(
-              children: [
-                Card(
-                  color: Theme.of(context).colorScheme.secondary,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    child: Text(
-                      '20 mpg',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ),
-                ),
-                child!
-              ],
-            )
+          if (child != null) child!
         ],
       ),
     );

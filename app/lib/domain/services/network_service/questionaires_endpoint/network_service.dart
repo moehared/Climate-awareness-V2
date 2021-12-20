@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:app/common/config.dart';
 import 'package:app/domain/models/place-model/place.dart';
@@ -7,6 +6,7 @@ import 'package:app/domain/models/place-model/suggestion_place.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
@@ -116,7 +116,7 @@ class NetworkService {
       final responseBody = xml2Json.toParker();
       final decodedData = json.decode(responseBody);
       final String result = decodedData['response']['result_grand_total'];
-
+      debugPrint('result == $result');
       // print('grand total is :$result\n runType is =  ${result.runtimeType}');
       return double.parse(result) / 12.0;
     } catch (e) {
@@ -150,9 +150,9 @@ class NetworkService {
     }
   }
 
-  Future<void> getPlaceDetails(String placeID) async {
+  Future<SelectedCity> getPlaceDetails(String placeID) async {
     late final http.Response response;
-    var place = Place(city: '', street: '', streetNumber: '', zipCode: '');
+    var place = SelectedCity(city: '', zipCode: '', country: '');
     final sessionToken = Uuid().v4();
     //fields=address_component&
     final urlEndPoint =
@@ -163,33 +163,23 @@ class NetworkService {
       final url = Uri.parse(urlEndPoint);
       response = await http.get(url);
       final result = json.decode(response.body);
-      print('decoded data: $result');
-      print('place detail geometry: ${result['result']['geometry']}');
+      // debugPrint('decoded data: $result');
+      // debugPrint('place detail geometry: ${result['result']['geometry']}');
 
-      final components =
-          result['result']['address_components'] as List<dynamic>;
-      //TODO: decode the geomtry location and see if zip code is found.
       final geometry = result['result']['geometry'];
+      final lat = geometry['location']['lat'];
+      final lng = geometry['location']['lng'];
 
-      // build result
+      // debugPrint('lat == $lat');
+      // debugPrint('lng == $lng');
 
-      components.forEach((c) {
-        final List type = c['types'];
-        if (type.contains('street_number')) {
-          place = place.copyWith(streetNumber: c['long_name']);
-        }
-        if (type.contains('route')) {
-          place = place.copyWith(street: c['long_name']);
-        }
-        if (type.contains('locality')) {
-          place = place.copyWith(city: c['long_name']);
-        }
-        if (type.contains('postal_code')) {
-          place = place.copyWith(zipCode: c['long_name']);
-        }
-      });
+      final placeMark = await placemarkFromCoordinates(lat, lng);
+      place = place.copyWith(zipCode: placeMark[0].postalCode);
+      place = place.copyWith(city: placeMark[0].locality);
+      place = place.copyWith(country: placeMark[0].country);
+
       debugPrint('place details: ${place.toString()}');
-      // return Place(streetNumber: streetNumber, street: street, city: city, zipCode: zipCode);
+      return place;
     } catch (e) {
       throw ('could not fetch place details: $e');
     }

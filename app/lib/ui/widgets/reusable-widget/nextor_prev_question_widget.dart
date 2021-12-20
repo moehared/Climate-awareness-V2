@@ -7,10 +7,18 @@ class BuildNextOrPrevQuestionWidget extends StatelessWidget {
     Key? key,
     required this.prev,
     required this.next,
+    this.disabled = true,
+    this.hideNextBtn = false,
+    this.hidePrevBtn = false,
   }) : super(key: key);
 
   final Function() prev;
   final Function() next;
+
+  /// we can disabled btn and hide for validation purpose
+  final bool disabled;
+  final bool hidePrevBtn;
+  final bool hideNextBtn;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +27,18 @@ class BuildNextOrPrevQuestionWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButtonWidget(
-            onPress: prev,
-            label: 'Previous',
-            includeBorder: true,
-          ),
-          ElevatedButtonWidget(
-            label: 'Next',
-            onPress: next,
-          )
+          if (!hidePrevBtn)
+            TextButtonWidget(
+              onPress: prev,
+              label: 'Previous',
+              includeBorder: true,
+            ),
+          if (hidePrevBtn) Container(),
+          if (!hideNextBtn)
+            ElevatedButtonWidget(
+              label: 'Next',
+              onPress: disabled ? next : null,
+            )
         ],
       ),
     );

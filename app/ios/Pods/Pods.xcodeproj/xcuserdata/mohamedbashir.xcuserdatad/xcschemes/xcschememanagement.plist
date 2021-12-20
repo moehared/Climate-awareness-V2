@@ -164,6 +164,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>geocoding.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>image_picker.xcscheme</key>
 		<dict>
 			<key>isShown</key>

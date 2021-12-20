@@ -7,5 +7,21 @@ const HOUSE_HOLD_INCOME_INFO =
     'Entering income helps the calculator provide appropriate default values and a comparison to similar households. This information is private even for users that share their profile publicly.';
 const HOUSE_HOLD_QUESTION = 'How many people live in your household?';
 const HOUSE_HOLD_INCOME = 'What is your gross annual household income?';
+const ELECTRICITY_INFO_TEXT =
+    'To calculate your total electricity usage or costs, review your monthly electricity bills. Each bill will tell you how many kilowatt hours you have used in the month at what cost.';
+const HEATING_INFO_TEXT =
+    'To calculate your total annual usage or cost of heating oil or other fuels to heat your home, review your monthly bills for heating oil or other home heating fuels. Each bill will tell you how many litres of oil were delivered to you each month at what cost.';
+const NATURAL_INFO_TEXT =
+    'To calculate your total annual natural gas usage or costs, review your monthly utility bills. Each bill will tell you how many cubic metres you have used in the month at what cost.';
+const LIVING_SPACE_INFO_TEXT =
+    'For a house, measure the length of a house and multiply it by the width of the house. If you have two stories, multiply by two. For an apartment or condo, first determine the area of each room by multiplying the length and width of each room. Add up the total area measurements for each room. This will give you the total area of your living space, all rooms combined.';
+const WATER_USAGE_INFO_TEXT = '''
+Average household water consumption: 242 liters/ day
+1-person household: 148 liters/day
+2-person household: 242 liters/day
+3-person household: 261 liters/day
+4-person household: 299 literes/day
+5-person household: 337 liters/day
+''';
 
 final bucketStorage = PageStorageBucket();

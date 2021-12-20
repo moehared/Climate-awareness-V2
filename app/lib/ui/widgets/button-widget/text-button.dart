@@ -10,7 +10,7 @@ class TextButtonWidget extends StatelessWidget {
     this.isBusy = false,
   }) : super(key: key);
   final bool includeBorder;
-  final Function() onPress;
+  final Function()? onPress;
   final String label;
   final bool isBusy;
   @override
