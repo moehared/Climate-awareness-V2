@@ -36,7 +36,7 @@ class UtilitiesViewModel extends BaseViewModel {
   FocusNode get heatingFocusNode => _heatingFocusNode;
   FocusNode get livingSpaceFocusNode => _spaceLivingFocusNode;
   double get waterSliderValue => _waterValue;
-  var _isValid = false;
+  static var _isValid = false;
   var _electrictyOccurenceValue = 'mo';
   var _electrictyCostValue = '\$';
   var _electrictyHintText = '\$92/month';
@@ -219,19 +219,19 @@ class UtilitiesViewModel extends BaseViewModel {
         _naturalGasUnitCostValue, _naturalGasAnnualValue);
   }
 
-  void next() {
-    if (!_isValid) {
-      _isValid = true;
-      promptDialog(
-        message: 'error',
-        dialogService: _dialogService,
-        title: 'error',
-        showErrorAlert: true,
-      );
-      notifyListeners();
+  static next() {
+    // if (!_isValid) {
+    //   _isValid = true;
+    //   // promptDialog(
+    //   //   message: 'error',
+    //   //   dialogService: _dialogService,
+    //   //   title: 'error',
+    //   //   showErrorAlert: true,
+    //   // );
+    //   // notifyListeners();
 
-      return;
-    }
+    //   return;
+    // }
     QuestionaireViewModel.nextQuestionScreen();
   }
 }

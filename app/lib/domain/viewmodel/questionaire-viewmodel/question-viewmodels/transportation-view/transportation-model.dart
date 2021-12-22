@@ -2,9 +2,8 @@ import 'package:flutter/widgets.dart';
 
 class PublicTransitModel {
   final String title;
-  final String hinText;
+  String hinText;
   final TextEditingController textEditingController = TextEditingController();
-
   final FocusNode focusNode = FocusNode();
 
   PublicTransitModel({
@@ -14,10 +13,11 @@ class PublicTransitModel {
 }
 
 final publicTransitList = [
-  PublicTransitModel(title: 'Bus', hinText: '237'),
-  PublicTransitModel(title: 'Transit Rail (light & heavy)', hinText: '177'),
+  PublicTransitModel(title: 'Bus', hinText: '237 Km/year'),
+  PublicTransitModel(
+      title: 'Transit Rail (light & heavy)', hinText: '177 Km/year'),
   PublicTransitModel(title: 'Commuter Rail', hinText: '118'),
-  PublicTransitModel(title: 'Inter-city Rail (Amtrak)', hinText: '59'),
+  PublicTransitModel(title: 'Inter-city Rail (Amtrak)', hinText: '59 Km/year'),
 ];
 
 class AirTravelModel {
@@ -28,7 +28,7 @@ class AirTravelModel {
   final FocusNode focusNode = FocusNode();
   String hintText;
 
-  String  dropdownValue;
+  String dropdownValue;
 
   AirTravelModel({
     required this.title,
@@ -38,12 +38,24 @@ class AirTravelModel {
 }
 
 final airTravelList = [
-  AirTravelModel(title: 'Short (< 640 km/yr)', hintText: '2',dropdownValue: 'Flights/year',),
-  AirTravelModel(title: 'Medium (640 - 2410 km/yr)', hintText: '5',dropdownValue: 'Flights/year',),
-  AirTravelModel(title: 'Long (2410 - 4830 km/yr)', hintText: '0',
+  AirTravelModel(
+    title: 'Short (< 640 km/yr)',
+    hintText: '2',
     dropdownValue: 'Flights/year',
   ),
-  AirTravelModel(title: 'Extended (> 4830 km/yr)', hintText: '0',
+  AirTravelModel(
+    title: 'Medium (640 - 2410 km/yr)',
+    hintText: '5',
+    dropdownValue: 'Flights/year',
+  ),
+  AirTravelModel(
+    title: 'Long (2410 - 4830 km/yr)',
+    hintText: '0',
+    dropdownValue: 'Flights/year',
+  ),
+  AirTravelModel(
+    title: 'Extended (> 4830 km/yr)',
+    hintText: '0',
     dropdownValue: 'Flights/year',
   ),
 ];

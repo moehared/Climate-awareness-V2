@@ -112,9 +112,9 @@ class UtilitiesView extends StatelessWidget {
             ),
             BuildNextOrPrevQuestionWidget(
               prev: () {},
-              next: model.next,
+              next: UtilitiesViewModel.next,
               hidePrevBtn: true,
-              disabled: !model.isValid,
+              // disabled: !model.isValid,
             ),
           ],
         ),

@@ -7,7 +7,7 @@ class BuildThreeChildrenRowWidget<T extends BaseViewModel>
     extends StatelessWidget {
   const BuildThreeChildrenRowWidget({
     Key? key,
-    required this.controller,
+    this.controller,
     this.keyboardType,
     this.onEditComplete,
     required this.onTextChanged,
@@ -21,7 +21,7 @@ class BuildThreeChildrenRowWidget<T extends BaseViewModel>
     this.focusNode,
   }) : super(key: key);
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputType? keyboardType;
   final Function()? onEditComplete;
   final String billTypeValue;
@@ -51,6 +51,7 @@ class BuildThreeChildrenRowWidget<T extends BaseViewModel>
             ),
           ),
           DropDownMenuWidget(
+          
             onChanged: onBillTypeChange,
             hintText: billTypeValue,
             items: billTypeItems,

@@ -7,7 +7,7 @@ class QuestionairesInput extends StatelessWidget {
   QuestionairesInput({
     Key? key,
     required this.categoryLabel,
-    required this.controller,
+    this.controller,
     this.keyboardType,
     this.onEditComplete,
     this.onChanged,
@@ -25,9 +25,10 @@ class QuestionairesInput extends StatelessWidget {
     this.leftIconData,
     this.child,
     this.allowElevation = false,
+    this.removelabelWidget = false,
   }) : super(key: key);
   final String categoryLabel;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputType? keyboardType;
   final Function()? onEditComplete;
   final String costTypeValue;
@@ -35,7 +36,7 @@ class QuestionairesInput extends StatelessWidget {
   final String textfieldHintlabel;
   final Function(String?)? onChanged;
   final Function(String?)? onAnnualDropdownChanged;
-    final Function(String?)? onBillTypeChanged;
+  final Function(String?)? onBillTypeChanged;
   final List<String> costTypeItems;
   final FocusNode? focusNode;
   final Function() rightIconButton;
@@ -45,21 +46,24 @@ class QuestionairesInput extends StatelessWidget {
   final List<String>? units;
   final Widget? child;
   final bool allowElevation;
+  final bool removelabelWidget;
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: allowElevation ? 4 : 0,
       child: Column(
         children: [
-          BuildTitleAndHelpButton(
-            label: categoryLabel,
-            rightIconData: rightIconData,
-            rightIconButton: rightIconButton,
-            leftIconButton: leftIconButton,
-            leftIconData: leftIconData,
-          ),
+          if (!removelabelWidget)
+            BuildTitleAndHelpButton(
+              label: categoryLabel,
+              rightIconData: rightIconData,
+              rightIconButton: rightIconButton,
+              leftIconButton: leftIconButton,
+              leftIconData: leftIconData,
+            ),
           const SizedBox(height: 10),
           BuildThreeChildrenRowWidget(
+            key: key,
             onBillTypeChange: onBillTypeChanged,
             controller: controller,
             focusNode: focusNode,

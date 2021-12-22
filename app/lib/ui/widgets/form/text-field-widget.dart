@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget({
     Key? key,
-    required this.controller,
+    this.controller,
     required this.hintText,
     required this.onChanged,
     this.onSumbitted,
@@ -14,7 +14,7 @@ class TextFieldWidget extends StatelessWidget {
     this.onEditComplete,
     this.addHorizontalPadding = true,
   }) : super(key: key);
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FocusNode? focusNode;
   final String hintText;
   final Function(String?)? onChanged;

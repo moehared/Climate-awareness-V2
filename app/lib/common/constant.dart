@@ -24,4 +24,13 @@ Average household water consumption: 242 liters/ day
 5-person household: 337 liters/day
 ''';
 
+const PUBLIC_TRANSIT_HELP_TEXT =
+    '''Enter How much Kilo meter or Mile You think You have travelled OR click on advance and enter type of transit you have taken per year or per month
+    ''';
+
+const AIR_TRANSIT_HELP_TEXT =
+    '''Enter How much Kilo meter or Mile you You have travelled on plane OR click on advance and enter number of flights you have taken per year or per month.
+
+     ''';
+
 final bucketStorage = PageStorageBucket();

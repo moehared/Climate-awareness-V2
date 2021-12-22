@@ -34,47 +34,67 @@ class TransportationView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 40.0),
               child: LabelTitleWidget(title: 'HOW DO YOU GET AROUND?'),
             ),
-            QuestionairesInput(
-              onBillTypeChanged: (type) {},
-              allowElevation: true,
-              categoryLabel: 'Add Vehicle if you drive.',
-              costTypeItems: ['Gasoline', 'Electric', 'Diesal'],
-              costTypeValue: 'Gasoline',
-              controller: model.vehicleController,
-              occurrenceValue: "Km",
-              onChanged: (item) {},
-              units: ['Km', 'Mi'],
-              leftIconData: Icons.remove,
-              leftIconButton: () {},
-              onAnnualDropdownChanged: (item) {},
-              textfieldHintlabel: '20,000 km/year',
-              keyboardType: TextInputType.number,
-              rightIconButton: () {},
+            BuildTitleAndHelpButton(
+              label: 'Add Vehicle if you drive.',
+              rightIconButton: model.showVehicleUI,
               rightIconData: Icons.add,
-              onEditComplete: () => onEditComplete(ctx, model.publicFocusNode),
-              child: Column(
-                children: [
-                  Card(
-                    color: Theme.of(context).colorScheme.secondary,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: Text(
-                        '20 mpg',
-                        style: Theme.of(context).textTheme.bodyText1,
+              leftIconData: Icons.remove,
+              leftIconButton: model.removeVehicleUI,
+            ),
+            ...List.generate(model.vehicleCount, (i) {
+              final key = ValueKey(i);
+              return QuestionairesInput(
+                key: key,
+                removelabelWidget: true,
+                onBillTypeChanged: (type) => model.updateFuelDropdown(type, i),
+                allowElevation: true,
+                categoryLabel: 'Add Vehicle if you drive.',
+                costTypeItems: ['Gasoline', 'Electric', 'Diesal'],
+                costTypeValue: model.fuelTypeValues[i],
+                // controller: model.vehicleController,
+                occurrenceValue: model.unitTypeValues[i],
+                onChanged: (item) {},
+                units: ['Km', 'Mi'],
+                leftIconData: Icons.remove,
+                leftIconButton: model.removeVehicleUI,
+                onAnnualDropdownChanged: (item) =>
+                    model.updateUnitDropdown(item, i),
+                textfieldHintlabel: '20,000 km/year',
+                keyboardType: TextInputType.number,
+                rightIconButton: () {},
+                rightIconData: Icons.add,
+                // onEditComplete: () => onEditComplete(
+                //   ctx,
+                //   model.publicFocusNode,
+                // ),
+                child: Column(
+                  children: [
+                    Card(
+                      key: key,
+                      color: Theme.of(context).colorScheme.secondary,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Text(
+                          '${model.mpgValues[i].toStringAsFixed(0)} mpg',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                       ),
                     ),
-                  ),
-                  BuildSliderWidget(
-                    value: 0,
-                    onChange: (val) {},
-                    step: 4,
-                    max: 30,
-                    label: '2',
-                  ),
-                ],
-              ),
-            ),
+                    BuildSliderWidget(
+                      value: model.mpgValues[i],
+                      onChange: (val) {
+                        model.updateMPGValue(val, i);
+                      },
+                      step: 115,
+                      max: 115,
+                      label: '${model.mpgValues[i].toStringAsFixed(0)}',
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+
             const SizedBox(height: 15),
             BuildSimpleOrAdvanceWidget(
               onAdvanceClick: model.onAdvance,
@@ -91,7 +111,7 @@ class TransportationView extends StatelessWidget {
                 children: [
                   BuildTitleAndHelpButton(
                     label: 'Public Transit',
-                    rightIconButton: () {},
+                    rightIconButton: model.showPublicTransitHelpInfo,
                   ),
                   if (model.showSimpleUI)
                     RowWithTextFieldAndChild(
@@ -100,11 +120,12 @@ class TransportationView extends StatelessWidget {
                       focusNode: model.publicFocusNode,
                       child: DropDownMenuWidget(
                         items: ['KM', 'Mi'],
-                        hintText: 'KM',
+                        hintText: model.publicUnitValue,
                         color: Colors.black,
-                        onChanged: (_) {},
+                        onChanged: (unit) =>
+                            model.updatePublicUnitDropdownValue(unit),
                       ),
-                      hintText: '600 km/year',
+                      hintText: model.publicTransitHintText,
                     ),
                   if (!model.showSimpleUI)
                     ...List.generate(
@@ -122,10 +143,12 @@ class TransportationView extends StatelessWidget {
                             focusNode:
                                 model.publicTransitAdvanceList[index].focusNode,
                             child: DropDownMenuWidget(
-                              items: ['KM', 'Mi'],
-                              hintText: 'KM',
+                              items: ['Km', 'Mi'],
+                              hintText: model.publicAdvanceUnitValue[index],
                               color: Colors.black,
-                              onChanged: (_) {},
+                              onChanged: (unit) =>
+                                  model.updatePublicAdvanceDropdownValues(
+                                      unit, index),
                             ),
                             hintText:
                                 model.publicTransitAdvanceList[index].hinText,
@@ -143,7 +166,7 @@ class TransportationView extends StatelessWidget {
                 children: [
                   BuildTitleAndHelpButton(
                     label: 'Air Travelling',
-                    rightIconButton: () {},
+                    rightIconButton: model.showAirTransitHelpInfo,
                   ),
                   if (model.showSimpleUI)
                     RowWithTextFieldAndChild(
@@ -152,12 +175,14 @@ class TransportationView extends StatelessWidget {
                       focusNode: model.airTravelFocusNode,
                       child: DropDownMenuWidget(
                         items: ['KM', 'Mi'],
-                        hintText: 'KM',
+                        hintText: model.airTravelUnitDropdownValue,
                         color: Colors.black,
-                        onChanged: (_) {},
+                        onChanged: (val) =>
+                            model.updateAirTravelUnitDropdownValue(val),
                       ),
-                      hintText: '5000 km/year',
+                      hintText: model.airTravelHintText,
                     ),
+                    //TODO: handle Advance UI
                   if (!model.showSimpleUI)
                     ...List.generate(
                       model.airTravelAdvanceList.length,
