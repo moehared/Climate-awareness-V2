@@ -1,3 +1,7 @@
+import 'package:app/common/constant.dart';
+import 'package:app/common/utils/prompt_dialog.dart';
+import 'package:app/domain/services/dialog_service/dialog_service.dart';
+import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/goods-viewmodel/goods_model.dart'
     as goods;
@@ -6,8 +10,10 @@ class GoodsServicesViewModel extends BaseViewModel {
   var _goodsValue = 0.0;
   var _serviceValue = 0.0;
   var _isSimple = true;
+  final _dialogService = locator<DiaglogService>();
   final _goodsList = goods.goodsList;
   final _servicesList = goods.serviceList;
+  var _isValid = true;
   double get goodsValue => _goodsValue;
 
   double get servicesValue => _serviceValue;
@@ -42,8 +48,14 @@ class GoodsServicesViewModel extends BaseViewModel {
   void onTextLink() {}
   void onContinue() {}
 
-  void onDropdownChange(String? val, index) {
-    _goodsList[index].dropdownValue = '\$/$val';
-    notifyListeners();
+
+
+  void showGoodsAndServiceHelpInfo() {
+    promptDialog(
+        title: 'Select How much you spent on Goods And service',
+        message: GOODS_HELP_TEXT,
+        dialogService: _dialogService);
   }
+
+
 }

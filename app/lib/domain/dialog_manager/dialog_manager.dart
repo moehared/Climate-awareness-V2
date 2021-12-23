@@ -27,7 +27,8 @@ class _DiaglogManagerState extends State<DiaglogManager> {
     super.initState();
   }
 
-  void _showDialog(DialogRequest dialogRequest, [bool showErrorAlert = false]) {
+  void _showDialog(DialogRequest dialogRequest,
+      [bool showErrorAlert = false, Widget? child]) {
     if (showErrorAlert) {
       Alert(
         context: context,
@@ -62,15 +63,17 @@ class _DiaglogManagerState extends State<DiaglogManager> {
         context: context,
         builder: (ctx) => CupertinoAlertDialog(
           title: Text(dialogRequest.title),
-          content: dialogRequest.description.isNotEmpty
-              ? Text(dialogRequest.description)
-              : null,
+          content: child == null
+              ? dialogRequest.description.isNotEmpty
+                  ? Text(dialogRequest.description)
+                  : null
+              : child,
           actions: [
             if (dialogRequest.cancelText != null)
               CupertinoButton(
                 onPressed: () {
                   _dialogService
-                    .dialogComplete(DialogResponse(confirmed: false));
+                      .dialogComplete(DialogResponse(confirmed: false));
                 },
                 child: Text(dialogRequest.cancelText ?? "Cancel"),
               ),
@@ -90,9 +93,11 @@ class _DiaglogManagerState extends State<DiaglogManager> {
           builder: (ctx) {
             return AlertDialog(
               title: Text(dialogRequest.title),
-              content: dialogRequest.description.isNotEmpty
-                  ? Text(dialogRequest.description)
-                  : null,
+              content: child == null
+                  ? dialogRequest.description.isNotEmpty
+                      ? Text(dialogRequest.description)
+                      : null
+                  : child,
               actions: [
                 if (dialogRequest.cancelText != null)
                   TextButton(

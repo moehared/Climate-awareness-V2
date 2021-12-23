@@ -4,7 +4,7 @@ import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmod
 import 'package:app/ui/widgets/button-widget/simple_or_advance_button.dart';
 import 'package:app/ui/widgets/reusable-widget/nextor_prev_question_widget.dart';
 import 'package:app/ui/widgets/slider-widget/slider_widget.dart';
-import 'package:app/ui/widgets/spacing_widget/verticle_space.dart';
+
 import 'package:app/ui/widgets/text-widgets/label_title_widget.dart';
 import 'package:app/ui/widgets/text-widgets/text-and-row-widget.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class FoodView extends StatelessWidget {
               child: BuildTitleAndHelpButton(
                 label:
                     'HOW MUCH DOES THE AVERAGE PERSON IN YOUR HOUSEHOLD EAT?',
-                rightIconButton: () {},
+                rightIconButton: model.showHelpText,
               ),
             ),
             const SizedBox(height: 20),
@@ -46,12 +46,14 @@ class FoodView extends StatelessWidget {
                   : 'Beef, pork, lamb, veal',
             ),
             BuildSliderWidget(
-              value: model.onMeatValue,
+              value: model.isSimple
+                  ? model.simpleMeatValue
+                  : model.advanceMeatValue,
               onChange: model.onMeatChange,
-              step: 3,
-              max: model.isSimple ? 7.8 : 360,
+              step: model.isSimple ? 9 : 8,
+              max: model.isSimple ? 7.8 : 350 / 100,
               label:
-                  '${model.onMeatValue.toStringAsFixed(1)} daily servings per person',
+                  '${model.isSimple ? model.simpleMeatValue.toStringAsFixed(1) : model.advanceMeatValue.toStringAsFixed(1)} daily servings per person',
             ),
             if (!model.isSimple)
               Column(
@@ -60,12 +62,12 @@ class FoodView extends StatelessWidget {
                     title: 'Fish & seafood',
                   ),
                   BuildSliderWidget(
-                    value: 2.6,
-                    onChange: (val) {},
-                    step: 3,
-                    max: 120,
+                    value: model.seafoodAdvanceMeatValue,
+                    onChange: (val) => model.updateSeafoodAdvanceMeatValue(val),
+                    step: 8,
+                    max: 11 / 10,
                     label:
-                        ' ${model.seaFoodValue.toStringAsFixed(1)}  daily servings per person',
+                        ' ${model.seafoodAdvanceMeatValue.toStringAsFixed(1)}  daily servings per person',
                   ),
                   const SizedBox(height: 20),
                   LabelTitleWidget(
@@ -73,59 +75,64 @@ class FoodView extends StatelessWidget {
                         'Other meat and meat alternatives (processed meat, nuts, etc.)',
                   ),
                   BuildSliderWidget(
-                    value: 2.6,
-                    onChange: (val) {},
-                    step: 3,
-                    max: 9,
+                    value: model.otherMeat,
+                    onChange: (val) => model.updateOtherMeat(val),
+                    step: 6,
+                    max: 9 / 10,
                     label: '${model.otherMeat} daily servings per person',
                   ),
                   const SizedBox(height: 20),
                   LabelTitleWidget(title: '  Poultry & eggs'),
                   BuildSliderWidget(
-                    value: 80,
-                    onChange: (val) {},
-                    step: 3,
-                    max: 240,
-                    label: '0.3 daily servings per person',
+                    value: model.eggsAndPoultryValue,
+                    onChange: (val) => model.updateEggsAndPoultryValue(val),
+                    step: 7,
+                    max: 24 / 10,
+                    label:
+                        '${model.eggsAndPoultryValue.toStringAsFixed(1)}  daily servings per person',
                   ),
                 ],
               ),
             const SizedBox(height: 20),
             LabelTitleWidget(title: 'Grains & baked goods'),
             BuildSliderWidget(
-              value: 2.6,
-              onChange: (val) {},
-              step: 3,
-              max: 7.8,
-              label: ' daily servings per person',
+              value: model.grainValue,
+              onChange: (val) => model.updateGrainValue(val),
+              step: 15,
+              max: 134 / 10,
+              label:
+                  '${model.grainValue.toStringAsFixed(1)} daily servings per person',
             ),
             const SizedBox(height: 20),
             LabelTitleWidget(
               title: 'Dairy',
             ),
             BuildSliderWidget(
-              value: 2.6,
-              onChange: (val) {},
-              step: 3,
-              max: 7.8,
-              label: '2.6 daily servings per person',
+              value: model.dairyValue,
+              onChange: (val) => model.updateDairyValue(val),
+              step: 9,
+              max: 7.2,
+              label:
+                  ' ${model.dairyValue.toStringAsFixed(1)} daily servings per person',
             ),
             const SizedBox(height: 20),
             LabelTitleWidget(title: 'Fruits and vegetables'),
             BuildSliderWidget(
-              value: 2.6,
-              onChange: (val) {},
-              step: 3,
-              max: 7.8,
-              label: '2.6 daily servings per person',
+              value: model.fruitAndVegetableValue,
+              onChange: (val) => model.updateFruitsAndVegetableValue(val),
+              step: 10,
+              max: 116 / 10,
+              label:
+                  '${model.fruitAndVegetableValue.toStringAsFixed(1)} daily servings per person',
             ),
             LabelTitleWidget(title: 'Snacks, drinks, etc...'),
             BuildSliderWidget(
-              value: 2.6,
-              onChange: (val) {},
-              step: 3,
-              max: 7.8,
-              label: '2.6 daily servings per person',
+              value: model.snackAndDrinkValue,
+              onChange: (val) => model.updateSnackAndDrinkValue(val),
+              step: 12,
+              max: 110 / 10,
+              label:
+                  '${model.snackAndDrinkValue.toStringAsFixed(1)} daily servings per person',
             ),
             BuildNextOrPrevQuestionWidget(
               prev: QuestionaireViewModel.previousQuestionScreen,

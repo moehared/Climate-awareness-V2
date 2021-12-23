@@ -200,4 +200,13 @@ class TransportationViewModel extends BaseViewModel {
       dialogService: _dialogService,
     );
   }
+
+  updateAirAdvanceDropdown(String? val, int index) {
+    if (val == null) {
+      _isValid = false;
+      return;
+    }
+    this._airTravelList[index].dropdownValue = 'Flight/$val';
+    notifyListeners();
+  }
 }

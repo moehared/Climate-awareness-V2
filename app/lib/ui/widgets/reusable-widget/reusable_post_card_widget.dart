@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:app/common/utils/regex-patterns.dart';
 import 'package:app/common/utils/show_pop-up_menu.dart';
+import 'package:app/common/utils/url_link.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/ui/widgets/edit-post-widget/edit-post-widget.dart';
-import 'package:app/ui/widgets/user-setting-menu/user_setting_menu.dart';
+
 import 'package:app/ui/widgets/youtube-player-widget/youtube-player.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 
 import 'package:app/domain/models/user_post_model.dart';
 
@@ -24,18 +24,7 @@ class ReusablePostCard extends StatelessWidget {
     required this.uuid,
   });
 
-  Future<void> _launchInBrowser(String url) async {
-    //todo: check if the url is a youtube or article and based this either launch url or play video
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceWebView: true,
-        forceSafariVC: true,
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  
 
   void playYoutubeVideo() {
     final navigationServices = locator<NavigationService>();
@@ -160,7 +149,7 @@ class ReusablePostCard extends StatelessWidget {
                         : Text("Watch", style: TextStyle(color: Colors.white)),
                     onPressed: () => checkYoutubeURL(post.url)
                         ? playYoutubeVideo()
-                        : _launchInBrowser(post.url),
+                        : launchInBrowser(post.url),
                   ),
                 ),
               ),

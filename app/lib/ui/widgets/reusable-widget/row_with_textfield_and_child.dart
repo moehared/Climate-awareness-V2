@@ -6,7 +6,7 @@ class RowWithTextFieldAndChild extends StatelessWidget {
     Key? key,
     this.focusNode,
     required this.controller,
-    required this.onChanged,
+    this.onChanged,
     required this.child,
     required this.hintText,
   }) : super(key: key);

@@ -56,7 +56,7 @@ class ServiceModel {
   final textEditingController = TextEditingController();
   final focusNode = FocusNode();
   final String hintText;
-  final String dropdownValue;
+  String dropdownValue;
   ServiceModel({
     required this.title,
     required this.hintText,

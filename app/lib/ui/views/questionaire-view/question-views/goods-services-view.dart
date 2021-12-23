@@ -39,7 +39,7 @@ class GoodsServicesView extends StatelessWidget {
             const BuildSpacing(),
             BuildTitleAndHelpButton(
               label: 'Goods',
-              rightIconButton: () {},
+              rightIconButton: model.showGoodsAndServiceHelpInfo,
             ),
             const BuildSpacing(),
             if (model.isSimple)
@@ -48,7 +48,7 @@ class GoodsServicesView extends StatelessWidget {
                 onChange: (val) => model.onGoodsChange(val),
                 max: 3920,
                 step: 3920,
-                label: '\$${model.goodsValue.toStringAsFixed(0)} /Month',
+                label: '\$${model.goodsValue.toStringAsFixed(0)} / Month',
               ),
             if (!model.isSimple)
               ...List.generate(
@@ -64,14 +64,10 @@ class GoodsServicesView extends StatelessWidget {
                       onChanged: (_) {},
                       focusNode: model.goodsList[index].focusNode,
                       child: DropDownMenuWidget(
-                        items: ['Month', 'Year'],
+                        hideDropdownIcon: true,
+                        items: ['Month'],
                         hintText: model.goodsList[index].dropdownValue,
                         color: Colors.black,
-                        onChanged: (val) {
-                          model.onDropdownChange(val, index);
-
-                          // print('value is $val');
-                        },
                       ),
                       hintText: model.goodsList[index].hintText,
                     ),
@@ -81,7 +77,7 @@ class GoodsServicesView extends StatelessWidget {
             const BuildSpacing(space: 15),
             BuildTitleAndHelpButton(
               label: 'Services',
-              rightIconButton: () {},
+              rightIconButton: model.showGoodsAndServiceHelpInfo,
             ),
             const BuildSpacing(),
             if (model.isSimple)
@@ -90,7 +86,7 @@ class GoodsServicesView extends StatelessWidget {
                 onChange: (val) => model.onServiceChange(val),
                 max: 7215,
                 step: 7215,
-                label: '\$${model.servicesValue.toStringAsFixed(0)} /Month',
+                label: '\$${model.servicesValue.toStringAsFixed(0)} / Month',
               ),
             if (!model.isSimple)
               ...List.generate(
@@ -107,14 +103,10 @@ class GoodsServicesView extends StatelessWidget {
                       onChanged: (_) {},
                       focusNode: model.servicesList[index].focusNode,
                       child: DropDownMenuWidget(
-                        items: ['Month', 'Year'],
+                        items: ['Month'],
+                        hideDropdownIcon: true,
                         hintText: model.servicesList[index].dropdownValue,
                         color: Colors.black,
-                        onChanged: (val) {
-                          model.onDropdownChange(val, index);
-
-                          // print('value is $val');
-                        },
                       ),
                       hintText: model.servicesList[index].hintText,
                     ),

@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 
 class DropDownMenuWidget extends StatelessWidget {
   const DropDownMenuWidget({
-    
-    required this.onChanged,
+    this.onChanged,
     required this.hintText,
     this.color = Colors.white,
     required this.items,
     this.dropdownColor = Colors.white,
+    this.hideDropdownIcon = false,
   });
   final Function(String?)? onChanged;
   final String hintText;
   final Color color;
   final List<String>? items;
   final Color? dropdownColor;
+  final bool hideDropdownIcon;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,6 +34,7 @@ class DropDownMenuWidget extends StatelessWidget {
           ),
         ),
         child: DropdownButton<String>(
+          iconSize: hideDropdownIcon ? 0 : 24,
           underline: Container(),
           dropdownColor: dropdownColor,
           hint: Padding(

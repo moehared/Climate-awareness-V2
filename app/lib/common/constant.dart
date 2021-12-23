@@ -29,8 +29,19 @@ const PUBLIC_TRANSIT_HELP_TEXT =
     ''';
 
 const AIR_TRANSIT_HELP_TEXT =
-    '''Enter How much Kilo meter or Mile you You have travelled on plane OR click on advance and enter number of flights you have taken per year or per month.
+    '''Enter How much Kilo meter or Mile you You have travelled on plane OR click on advance and enter number of flights you have taken per year or per month
 
      ''';
+const FOOD_HELP_TEXT = '''
+Enter the daily diet of the average person in your household. For example, if three people eat a total of six servings per day, enter 2 servings per person (6 ÷ 3 = 2)
+
+Find more help calculating your servings
+''';
+
+const GOODS_HELP_TEXT =
+    """simply adjust total monthly spending based on your best guess estimate Or Click on Advance tab and enter how much you spent on each of the following item 
+    Enter '0' for the ones you didn't spend money on it""";
+const FOOD_INFO_URL =
+    'https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/suggested-servings-from-each-food-group#.WlvTPZM-dE4';
 
 final bucketStorage = PageStorageBucket();

@@ -182,7 +182,7 @@ class TransportationView extends StatelessWidget {
                       ),
                       hintText: model.airTravelHintText,
                     ),
-                    //TODO: handle Advance UI
+                  //TODO: handle Advance UI
                   if (!model.showSimpleUI)
                     ...List.generate(
                       model.airTravelAdvanceList.length,
@@ -195,7 +195,6 @@ class TransportationView extends StatelessWidget {
                           RowWithTextFieldAndChild(
                             controller: model.airTravelAdvanceList[index]
                                 .textEditingController,
-                            onChanged: (_) {},
                             focusNode:
                                 model.airTravelAdvanceList[index].focusNode,
                             child: DropDownMenuWidget(
@@ -203,12 +202,8 @@ class TransportationView extends StatelessWidget {
                               hintText: model
                                   .airTravelAdvanceList[index].dropdownValue,
                               color: Colors.black,
-                              onChanged: (val) {
-                                model.airTravelAdvanceList[index]
-                                    .dropdownValue = 'Flight/$val';
-
-                                print('value is $val');
-                              },
+                              onChanged: (val) =>
+                                  model.updateAirAdvanceDropdown(val, index),
                             ),
                             hintText:
                                 model.airTravelAdvanceList[index].hintText,
