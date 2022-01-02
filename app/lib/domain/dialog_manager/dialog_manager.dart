@@ -28,7 +28,7 @@ class _DiaglogManagerState extends State<DiaglogManager> {
   }
 
   void _showDialog(DialogRequest dialogRequest,
-      [bool showErrorAlert = false, Widget? child]) {
+      [bool showErrorAlert = false, Widget? child,AlertType? alertType]) {
     if (showErrorAlert) {
       Alert(
         context: context,
@@ -37,7 +37,7 @@ class _DiaglogManagerState extends State<DiaglogManager> {
           backgroundColor: Colors.white,
         ),
         desc: dialogRequest.title,
-        type: AlertType.error,
+        type: alertType== null ? AlertType.error : alertType,
         content: dialogRequest.description.isNotEmpty
             ? Text(dialogRequest.description)
             : Container(),

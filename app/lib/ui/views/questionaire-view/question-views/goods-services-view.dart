@@ -23,6 +23,7 @@ class GoodsServicesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BuildViewModel<GoodsServicesViewModel>(
       builder: (ctx, model, child) => SingleChildScrollView(
+           physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -61,7 +62,7 @@ class GoodsServicesView extends StatelessWidget {
                     ),
                     RowWithTextFieldAndChild(
                       controller: model.goodsList[index].textEditingController,
-                      onChanged: (_) {},
+                      onChanged: (_) => model.onAdvanceGoodsInputChanged(index),
                       focusNode: model.goodsList[index].focusNode,
                       child: DropDownMenuWidget(
                         hideDropdownIcon: true,
@@ -100,7 +101,7 @@ class GoodsServicesView extends StatelessWidget {
                     RowWithTextFieldAndChild(
                       controller:
                           model.servicesList[index].textEditingController,
-                      onChanged: (_) {},
+                      onChanged: (_) => model.onAdvanceServiceInputChanged(index),
                       focusNode: model.servicesList[index].focusNode,
                       child: DropDownMenuWidget(
                         items: ['Month'],

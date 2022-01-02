@@ -67,13 +67,8 @@ void setUpLocatorService() {
   locator.registerLazySingleton<PostDatabaseService>(
       () => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
   locator.registerLazySingleton<Questionaire>(() => Questionaire(
-        category: [
-          Utilities(),
-          Transportation(),
-          Food(),
-          GoodsServices(),
-        ],
-      ));
+        {},
+      ),);
 
   // init factory view here
   locator.registerFactory<CommunityViewModel>(() => CommunityViewModel());

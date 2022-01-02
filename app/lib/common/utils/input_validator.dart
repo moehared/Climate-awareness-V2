@@ -21,12 +21,17 @@ extension PasswordValidator on String {
   }
 }
 
-extension UrlValidator on String{
-  //check if from a black list 
+extension UrlValidator on String {
+  //check if from a black list
   //check if it has right syntax
-  
-  bool isValidUrl(){
-    return RegExp("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)").hasMatch(this);
+
+  bool isValidUrl() {
+    return RegExp(
+            "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+        .hasMatch(this);
   }
 }
 
+bool validateUserInput(String input) {
+  return int.tryParse(input) != null;
+}

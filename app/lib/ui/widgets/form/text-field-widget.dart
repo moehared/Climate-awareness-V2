@@ -1,4 +1,5 @@
 import 'package:app/common/styles/style.dart';
+import 'package:app/ui/widgets/text-widgets/label_title_widget.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
@@ -11,6 +12,7 @@ class TextFieldWidget extends StatelessWidget {
     this.focusNode,
     this.keyboardType,
     this.textInputAction,
+    this.helperText,
     this.onEditComplete,
     this.addHorizontalPadding = true,
   }) : super(key: key);
@@ -23,6 +25,7 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Function()? onEditComplete;
   final bool addHorizontalPadding;
+  final String? helperText;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,6 +43,8 @@ class TextFieldWidget extends StatelessWidget {
         textAlign: TextAlign.center,
         textInputAction: textInputAction,
         decoration: kTextFieldform.copyWith(
+          // helperText: helperText,
+          helperStyle: TextStyle(),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.grey,

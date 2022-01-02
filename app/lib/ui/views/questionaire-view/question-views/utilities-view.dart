@@ -1,4 +1,3 @@
-import 'package:app/common/styles/style.dart';
 import 'package:app/common/utils/on_edit_complete.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/utilities-viewmodel.dart';
@@ -22,6 +21,7 @@ class UtilitiesView extends StatelessWidget {
       builder: (ctx, model, child) => SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 40.0),
@@ -31,6 +31,8 @@ class UtilitiesView extends StatelessWidget {
             QuestionairesInput(
               categoryLabel: model.electricty,
               costTypeItems: ['\$', 'kWh'],
+              helperText: model.electrictyHelperText,
+              onChanged: (input) => model.onElectrictyInputChanged(input),
               onBillTypeChanged: (type) => model.onBillTypeChange(type),
               costTypeValue: model.electrictyCostValue,
               controller: model.electrictyController,
@@ -39,6 +41,7 @@ class UtilitiesView extends StatelessWidget {
                   model.setAnnualElectricCityDropdown(item),
               textfieldHintlabel: model.electrictyHintText,
               keyboardType: TextInputType.number,
+              
               rightIconButton: model.showElectrictyInfo,
               rightIconData: Icons.help,
               onEditComplete: () => onEditComplete(ctx, model.heatingFocusNode),
@@ -47,6 +50,8 @@ class UtilitiesView extends StatelessWidget {
               onBillTypeChanged: (type) => model.onHeatingDropdownChanged(type),
               categoryLabel: model.heatingAndOthers,
               costTypeItems: ['\$', 'gal'],
+              onChanged: (input) => model.onHeatingInputTextChanged(input),
+              helperText: model.heatingHelperText,
               costTypeValue: model.heatingDropdownValue,
               controller: model.heatingController,
               occurrenceValue: model.heatingAnnuallyValue,
@@ -63,12 +68,13 @@ class UtilitiesView extends StatelessWidget {
             QuestionairesInput(
               onBillTypeChanged: (type) =>
                   model.onNaturalGasCostUnitChange(type),
+              helperText: model.naturalHelperText,
               categoryLabel: model.naturalGas,
               costTypeItems: ['\$', 'therms', 'ft³'],
               costTypeValue: model.naturalGasUnitCostValue,
               controller: model.naturalGasController,
               occurrenceValue: model.naturalGasAnnualValue,
-              onChanged: (item) {},
+              onChanged: (item) => model.onNaturalInputChanged(item),
               onAnnualDropdownChanged: (item) =>
                   model.onNaturalGasAnnualChange(item),
               textfieldHintlabel: model.naturalGasHintText,
@@ -97,8 +103,11 @@ class UtilitiesView extends StatelessWidget {
               ),
               controller: model.livingSpaceController,
               focusNode: model.livingSpaceFocusNode,
-              onChanged: (item) {},
+              onChanged: (input) => model.onLivingSpaceAreaInputChanged(input),
             ),
+            SizedBox(height: 10),
+            LabelTitleWidget(title: model.livingSpaceAreaHelperText),
+            SizedBox(height: 15),
             BuildTitleAndHelpButton(
               label: model.waterUsage,
               rightIconButton: model.showWaterHelpInfo,
@@ -112,7 +121,7 @@ class UtilitiesView extends StatelessWidget {
             ),
             BuildNextOrPrevQuestionWidget(
               prev: () {},
-              next: UtilitiesViewModel.next,
+              next: model.next,
               hidePrevBtn: true,
               // disabled: !model.isValid,
             ),

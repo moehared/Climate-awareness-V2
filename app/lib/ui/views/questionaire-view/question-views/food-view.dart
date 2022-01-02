@@ -22,6 +22,7 @@ class FoodView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BuildViewModel<FoodViewModel>(
       builder: (ctx, model, child) => SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -136,7 +137,7 @@ class FoodView extends StatelessWidget {
             ),
             BuildNextOrPrevQuestionWidget(
               prev: QuestionaireViewModel.previousQuestionScreen,
-              next: QuestionaireViewModel.nextQuestionScreen,
+              next: model.next,
             )
           ],
         ),

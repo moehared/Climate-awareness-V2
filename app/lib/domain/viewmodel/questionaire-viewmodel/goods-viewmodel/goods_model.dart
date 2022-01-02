@@ -44,11 +44,6 @@ final goodsList = [
     hintText: '30',
     dropdownValue: '\$/month',
   ),
-  GoodsModel(
-    title: 'Medical',
-    hintText: '0',
-    dropdownValue: '\$/month',
-  ),
 ];
 
 class ServiceModel {

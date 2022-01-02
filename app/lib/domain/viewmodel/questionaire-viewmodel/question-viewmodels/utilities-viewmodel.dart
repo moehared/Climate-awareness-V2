@@ -1,24 +1,50 @@
+import 'dart:collection';
+
 import 'package:app/common/constant.dart';
 import 'package:app/common/utils/prompt_dialog.dart';
+import 'package:app/domain/models/questionaire-model/category.dart';
+
+import 'package:app/domain/models/questionaire-model/concrete-objects/utilities.dart';
+import 'package:app/domain/models/questionaire-model/questionaire.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/questionaire-viewmodel.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 
 class UtilitiesViewModel extends BaseViewModel {
   var _waterValue = 0.0;
   final electricty = 'Electricty';
+  var _heatingHelperText = '';
+  var _electrictyHelperText = '';
+  var _naturalHelperText = '';
+  var _livingSpaceAreaHelperText = '';
   final naturalGas = 'Natural Gas';
   final heatingAndOthers = 'Heating Oil & Other Fuels';
   final livingSpace = 'Living space area';
   final waterUsage = 'Water Usage';
-  var _heatingHintText = '\$290/year';
+  var _heatingHintText = '\$24/mo';
   var _heatingDropdownValue = '\$';
-  var _naturalGasHintText = '480/year';
+  var _naturalGasHintText = '48/mo';
   var _naturalGasUnitCostValue = '\$';
   var _naturalGasAnnualValue = '/mo';
+  var _utilitiesModel = Utilities(
+      electrictyBill: "",
+      questionID: 'Q1',
+      electrictyUnitCost: "\$",
+      electrictyFreqeuncyType: "/mo",
+      heatingyBill: "",
+      heatingUnitCost: "\$",
+      heatingreqeuncyType: "/mo",
+      naturalBill: "",
+      naturalUnitCost: "\$",
+      naturalFreqeuncyType: "/mo",
+      livingSpaceArea: "",
+      waterUsage: "");
+
   final _dialogService = locator<DiaglogService>();
+
   var _heatingAnnualDropdownValue = '/mo';
   final _electrictyController = TextEditingController();
   final _heatingController = TextEditingController();
@@ -36,14 +62,16 @@ class UtilitiesViewModel extends BaseViewModel {
   FocusNode get heatingFocusNode => _heatingFocusNode;
   FocusNode get livingSpaceFocusNode => _spaceLivingFocusNode;
   double get waterSliderValue => _waterValue;
-  static var _isValid = false;
-  var _electrictyOccurenceValue = 'mo';
+  Utilities get utilites => _utilitiesModel;
+
+
+  var _electrictyOccurenceValue = '/mo';
   var _electrictyCostValue = '\$';
   var _electrictyHintText = '\$92/month';
 
   get electrictyCostValue => _electrictyCostValue;
 
-  get electrictyOccurenceValue => _electrictyOccurenceValue;
+  String get electrictyOccurenceValue => _electrictyOccurenceValue;
 
   String get electrictyHintText => _electrictyHintText;
 
@@ -56,7 +84,11 @@ class UtilitiesViewModel extends BaseViewModel {
   String get naturalGasUnitCostValue => _naturalGasUnitCostValue;
   String get naturalGasAnnualValue => _naturalGasAnnualValue;
 
-  bool get isValid => _isValid;
+  String get heatingHelperText => _heatingHelperText;
+  String get electrictyHelperText => _electrictyHelperText;
+  String get naturalHelperText => _naturalHelperText;
+  String get livingSpaceAreaHelperText => _livingSpaceAreaHelperText;
+
   void showHeatingInfo() {
     promptDialog(
       message: HEATING_INFO_TEXT,
@@ -123,67 +155,116 @@ class UtilitiesViewModel extends BaseViewModel {
 
   void setAnnualElectricCityDropdown(String? item) {
     if (item == null) return;
-    debugPrint('_electrictyOccurenceValue == $_electrictyHintText');
-    debugPrint('monthly == $item');
-    debugPrint('hint text == $_electrictyHintText');
+
     _electrictyOccurenceValue = item;
     notifyListeners();
     _determineElectricyHintText(
         _electrictyCostValue, _electrictyOccurenceValue);
   }
 
-  void electrictyUserInput() {
-    if (_electrictyController.text.isEmpty) return;
-    debugPrint('user input: ${_electrictyController.text}');
-    _electrictyHintText = _electrictyController.text;
-    notifyListeners();
-  }
-
-  void _determineElectricyHintText(String costType, String annualType) {
-    final isMonthlyValue = annualType == 'mo';
+  void _determineElectricyHintText(String costType, String annualType,
+      [bool isHint = true]) {
+    final isMonthlyValue = annualType == '/mo';
     final isMoney = costType == '\$';
-
-    if (isMoney) {
-      _electrictyHintText = isMonthlyValue ? '\$92/month' : '\$1,104/year';
+    var frequency = '';
+    if (isHint && _electrictyController.text.isEmpty) {
+      if (isMoney) {
+        _electrictyHintText = isMonthlyValue ? '\$92/month' : '\$1,104/year';
+      } else {
+        _electrictyHintText = isMonthlyValue ? '917/kWh' : '11,000/kWh';
+      }
     } else {
-      _electrictyHintText = isMonthlyValue ? '917/kWh' : '11,000/kWh';
+      final cost = int.tryParse(_electrictyController.text);
+
+      if (isMoney) {
+        frequency =
+            isMonthlyValue ? '\$$cost per month' : '\$${cost! * 12} per year';
+      } else {
+        frequency = isMonthlyValue
+            ? '$cost/kWh per month'
+            : '${cost! * 12}/kWh per year';
+      }
     }
 
+    _utilitiesModel = _utilitiesModel.copyWith(electrictyBill: frequency);
+
+    _electrictyHelperText = frequency;
+
     notifyListeners();
   }
 
-  void _determineHeatingHintText(String costType, String annualType) {
-    final isMonthlyValue = annualType == 'mo';
+  void _determineHeatingHintText(String costType, String annualType,
+      [bool isHint = true]) {
+    final isMonthlyValue = annualType == '/mo';
     final isMoney = costType == '\$';
 
-    if (isMoney) {
-      _heatingHintText = isMonthlyValue ? '\$24/month' : '\$290/year';
+    var frequency = '';
+    if (isHint && _heatingController.text.isEmpty) {
+      if (isMoney) {
+        _heatingHintText = isMonthlyValue ? '\$24/month' : '\$290/year';
+      } else {
+        _heatingHintText = isMonthlyValue ? '8/gal' : '97/gal';
+      }
     } else {
-      _heatingHintText = isMonthlyValue ? '8/gal' : '97/gal';
+      final cost = int.tryParse(_heatingController.text);
+
+      if (isMoney) {
+        frequency =
+            isMonthlyValue ? '\$$cost per month' : '\$${cost! * 12} per year';
+        _utilitiesModel.copyWith(heatingyBill: frequency);
+      } else {
+        frequency = isMonthlyValue
+            ? '$cost/gal per month'
+            : '${cost! * 12}/gal per year';
+      }
     }
+
+    _utilitiesModel = _utilitiesModel.copyWith(heatingyBill: frequency);
+    _heatingHelperText = frequency;
 
     notifyListeners();
   }
 
-  void _determineNaturalGasHintText(String costType, String annualType) {
-    final isMonthlyValue = annualType == 'mo';
+  void _determineNaturalGasHintText(String costType, String annualType,
+      [bool isHint = true]) {
+    final isMonthlyValue = annualType == '/mo';
     final isTherms = costType == 'therms';
     final isMoney = costType == '\$';
-    print('Is therms == $isTherms');
-    if (isMoney) {
-      _naturalGasHintText = isMonthlyValue ? '\$40/month' : '\$480/year';
-    } else if (isTherms) {
-      _naturalGasHintText = isMonthlyValue ? '31/month' : '378/year';
+    var frequency = '';
+
+    if (isHint && _naturalGasController.text.isEmpty) {
+      if (isMoney) {
+        _naturalGasHintText = isMonthlyValue ? '\$40/month' : '\$480/year';
+      } else if (isTherms) {
+        _naturalGasHintText = isMonthlyValue ? '31/month' : '378/year';
+      } else {
+        _naturalGasHintText = isMonthlyValue ? '3,150/ft³' : '37,795/ft³';
+      }
     } else {
-      _naturalGasHintText = isMonthlyValue ? '3,150/ft³' : '37,795/ft³';
+      final cost = int.tryParse(_heatingController.text);
+
+      if (isMoney) {
+        frequency =
+            isMonthlyValue ? '\$$cost per month' : '\$${cost! * 12} per year';
+      } else if (isTherms) {
+        frequency =
+            isMonthlyValue ? '$cost per month' : '${cost! * 12} per year';
+      } else {
+        frequency = isMonthlyValue
+            ? '$cost/ft³ per month'
+            : '${cost! * 12}/ft³ per year';
+      }
     }
+
+    _utilitiesModel = _utilitiesModel.copyWith(naturalBill: frequency);
+    _naturalHelperText = frequency;
 
     notifyListeners();
   }
 
   void onBillTypeChange(String? item) {
     if (item == null) return;
-    print('money == $item');
+
     _electrictyCostValue = item;
     notifyListeners();
     _determineElectricyHintText(
@@ -212,26 +293,86 @@ class UtilitiesViewModel extends BaseViewModel {
   }
 
   void onNaturalGasAnnualChange(String? item) {
-    //TODO: Validate all inputs before allowing user to go next page
     if (item == null) return;
     _naturalGasAnnualValue = item;
     _determineNaturalGasHintText(
         _naturalGasUnitCostValue, _naturalGasAnnualValue);
   }
 
-  static next() {
-    // if (!_isValid) {
-    //   _isValid = true;
-    //   // promptDialog(
-    //   //   message: 'error',
-    //   //   dialogService: _dialogService,
-    //   //   title: 'error',
-    //   //   showErrorAlert: true,
-    //   // );
-    //   // notifyListeners();
+  bool isValid() {
+    if (_electrictyController.text.isEmpty ||
+        _electrictyCostValue.isEmpty ||
+        _electrictyOccurenceValue.isEmpty ||
+        _heatingController.text.isEmpty ||
+        _heatingDropdownValue.isEmpty ||
+        _heatingAnnualDropdownValue.isEmpty ||
+        _naturalGasController.text.isEmpty ||
+        _naturalGasAnnualValue.isEmpty ||
+        _naturalGasUnitCostValue.isEmpty ||
+        _livingSpaceController.text.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
+  void next() {
+    // if (!isValid()) {
+    //   promptDialog(
+    //     message:
+    //         'Answer all the required fields before proceeding to the next question ',
+    //     dialogService: _dialogService,
+    //     title: 'required field\n',
+    //     showErrorAlert: true,
+    //   );
 
     //   return;
     // }
+
+    _utilitiesModel = _utilitiesModel.copyWith(
+      electrictyBill: _electrictyController.text,
+      heatingyBill: _heatingController.text,
+      naturalBill: _naturalGasController.text,
+      livingSpaceArea: _livingSpaceController.text,
+      waterUsage: waterValueLabel(_waterValue.toInt()),
+      electrictyFreqeuncyType: _electrictyOccurenceValue,
+      electrictyUnitCost: _electrictyCostValue,
+      heatingUnitCost: _heatingDropdownValue,
+      heatingreqeuncyType: _heatingAnnualDropdownValue,
+      naturalFreqeuncyType: _naturalGasAnnualValue,
+      naturalUnitCost: _naturalGasUnitCostValue,
+    );
+    _determineHeatingHintText(
+        _heatingDropdownValue, _heatingAnnualDropdownValue, false);
+
+    _determineElectricyHintText(
+        _electrictyCostValue, _electrictyOccurenceValue, false);
+  categoryMap.addToCategory(_utilitiesModel.questionID, _utilitiesModel);
+    print(_utilitiesModel.toString());
+    print('category len = ${categoryMap.categoryMap.length}');
     QuestionaireViewModel.nextQuestionScreen();
+  }
+
+  void onHeatingInputTextChanged(String? input) {
+    if (input == null) return;
+    _heatingHelperText = '\$$input/ per month';
+    notifyListeners();
+  }
+
+  void onElectrictyInputChanged(String? input) {
+    if (input == null) return;
+    _electrictyHelperText = '\$$input/ per month';
+    notifyListeners();
+  }
+
+  void onNaturalInputChanged(String? input) {
+    if (input == null) return;
+    _naturalHelperText = '\$$input/ per month';
+    notifyListeners();
+  }
+
+  void onLivingSpaceAreaInputChanged(String? input) {
+    if (input == null) return;
+    _livingSpaceAreaHelperText = '$input/ft²';
+    notifyListeners();
   }
 }

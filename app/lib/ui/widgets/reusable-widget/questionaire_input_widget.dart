@@ -26,6 +26,8 @@ class QuestionairesInput extends StatelessWidget {
     this.child,
     this.allowElevation = false,
     this.removelabelWidget = false,
+    this.helperText,
+    this.disableDropdownFuelButton = false,
   }) : super(key: key);
   final String categoryLabel;
   final TextEditingController? controller;
@@ -43,9 +45,11 @@ class QuestionairesInput extends StatelessWidget {
   final Function()? leftIconButton;
   final IconData? rightIconData;
   final IconData? leftIconData;
+  final bool disableDropdownFuelButton;
   final List<String>? units;
   final Widget? child;
   final bool allowElevation;
+  final String? helperText;
   final bool removelabelWidget;
   @override
   Widget build(BuildContext context) {
@@ -64,10 +68,12 @@ class QuestionairesInput extends StatelessWidget {
           const SizedBox(height: 10),
           BuildThreeChildrenRowWidget(
             key: key,
+            helperText: helperText,
             onBillTypeChange: onBillTypeChanged,
             controller: controller,
             focusNode: focusNode,
             units: units,
+            disableDropdownButton: disableDropdownFuelButton,
             keyboardType: keyboardType,
             billTypeValue: costTypeValue,
             billTypeItems: costTypeItems,

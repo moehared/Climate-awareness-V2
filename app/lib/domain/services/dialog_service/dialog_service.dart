@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:app/domain/dialog_manager/dialog_model.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 /// credit: from filled stack youtube tutorial.
 
 class DiaglogService {
-  Function(DialogRequest,bool,Widget?)? _showDialogListener;
+  Function(DialogRequest,bool,Widget?,AlertType?)? _showDialogListener;
   Completer<DialogResponse>? _completer;
-  void registerDialogListener(Function(DialogRequest,[bool isError,Widget? child]) showDiaglogLisener) {
+  void registerDialogListener(Function(DialogRequest,[bool isError,Widget? child,AlertType?]) showDiaglogLisener) {
     _showDialogListener = showDiaglogLisener;
   }
 
@@ -19,6 +20,7 @@ class DiaglogService {
     String buttonCancel = '',
     bool isError = false,
     Widget? child,
+    AlertType? alertType
     
   }) {
     _completer = Completer();
@@ -27,7 +29,7 @@ class DiaglogService {
       description: desc,
       buttonTitle: buttonTitle,
       cancelText: buttonCancel,
-    ),isError,child);
+    ),isError,child,alertType);
     return _completer!.future;
   }
 

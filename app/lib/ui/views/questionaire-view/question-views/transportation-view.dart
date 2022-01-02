@@ -28,6 +28,7 @@ class TransportationView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BuildViewModel<TransportationViewModel>(
       builder: (ctx, model, child) => SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -51,10 +52,12 @@ class TransportationView extends StatelessWidget {
                 categoryLabel: 'Add Vehicle if you drive.',
                 costTypeItems: ['Gasoline', 'Electric', 'Diesal'],
                 costTypeValue: model.fuelTypeValues[i],
-                // controller: model.vehicleController,
+                controller: model.vehicleControllers[i],
                 occurrenceValue: model.unitTypeValues[i],
-                onChanged: (item) {},
+                onChanged: (input) => model.onVehicleInputChanged(input, i),
+                // onEditComplete: () => model.onVehicleInputChanged(model.vehicleControllers[i],i),
                 units: ['Km', 'Mi'],
+                disableDropdownFuelButton: model.disableDropdownbuttons,
                 leftIconData: Icons.remove,
                 leftIconButton: model.removeVehicleUI,
                 onAnnualDropdownChanged: (item) =>
@@ -63,10 +66,6 @@ class TransportationView extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 rightIconButton: () {},
                 rightIconData: Icons.add,
-                // onEditComplete: () => onEditComplete(
-                //   ctx,
-                //   model.publicFocusNode,
-                // ),
                 child: Column(
                   children: [
                     Card(
@@ -86,6 +85,7 @@ class TransportationView extends StatelessWidget {
                       onChange: (val) {
                         model.updateMPGValue(val, i);
                       },
+                      disableSlider:model.disableDropdownbuttons,
                       step: 115,
                       max: 115,
                       label: '${model.mpgValues[i].toStringAsFixed(0)}',
@@ -116,10 +116,11 @@ class TransportationView extends StatelessWidget {
                   if (model.showSimpleUI)
                     RowWithTextFieldAndChild(
                       controller: model.publicController,
-                      onChanged: (_) {},
+                      onChanged: (input) =>
+                          model.onSimplePublicTransitChanged(input),
                       focusNode: model.publicFocusNode,
                       child: DropDownMenuWidget(
-                        items: ['KM', 'Mi'],
+                        items: ['km', 'mi'],
                         hintText: model.publicUnitValue,
                         color: Colors.black,
                         onChanged: (unit) =>
@@ -139,11 +140,13 @@ class TransportationView extends StatelessWidget {
                           RowWithTextFieldAndChild(
                             controller: model.publicTransitAdvanceList[index]
                                 .textEditingController,
-                            onChanged: (_) {},
+                            onChanged: (input) =>
+                                model.onAdvancePublicTransitInputChanged(
+                                    input, index),
                             focusNode:
                                 model.publicTransitAdvanceList[index].focusNode,
                             child: DropDownMenuWidget(
-                              items: ['Km', 'Mi'],
+                              items: ['km', 'mi'],
                               hintText: model.publicAdvanceUnitValue[index],
                               color: Colors.black,
                               onChanged: (unit) =>
@@ -171,10 +174,11 @@ class TransportationView extends StatelessWidget {
                   if (model.showSimpleUI)
                     RowWithTextFieldAndChild(
                       controller: model.airTravelController,
-                      onChanged: (_) {},
                       focusNode: model.airTravelFocusNode,
+                      onChanged: (input) =>
+                          model.onSimpleAirTravelChanged(input),
                       child: DropDownMenuWidget(
-                        items: ['KM', 'Mi'],
+                        items: ['km', 'mi'],
                         hintText: model.airTravelUnitDropdownValue,
                         color: Colors.black,
                         onChanged: (val) =>
@@ -197,6 +201,8 @@ class TransportationView extends StatelessWidget {
                                 .textEditingController,
                             focusNode:
                                 model.airTravelAdvanceList[index].focusNode,
+                            onChanged: (input) =>
+                                model.onAdvanceAirTravelInput(input, index),
                             child: DropDownMenuWidget(
                               items: ['Month', 'Year'],
                               hintText: model
@@ -217,7 +223,7 @@ class TransportationView extends StatelessWidget {
 
             BuildNextOrPrevQuestionWidget(
               prev: QuestionaireViewModel.previousQuestionScreen,
-              next: QuestionaireViewModel.nextQuestionScreen,
+              next: model.next,
             )
           ],
         ),

@@ -8,7 +8,9 @@ class DropDownMenuWidget extends StatelessWidget {
     required this.items,
     this.dropdownColor = Colors.white,
     this.hideDropdownIcon = false,
+    this.disableDropdownButton = false,
   });
+    final bool disableDropdownButton;
   final Function(String?)? onChanged;
   final String hintText;
   final Color color;
@@ -34,6 +36,7 @@ class DropDownMenuWidget extends StatelessWidget {
           ),
         ),
         child: DropdownButton<String>(
+          
           iconSize: hideDropdownIcon ? 0 : 24,
           underline: Container(),
           dropdownColor: dropdownColor,
@@ -45,7 +48,7 @@ class DropDownMenuWidget extends StatelessWidget {
             ),
           ),
           icon: const Icon(Icons.arrow_drop_down),
-          onChanged: onChanged,
+          onChanged: disableDropdownButton ? null :  onChanged,
           items: items?.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

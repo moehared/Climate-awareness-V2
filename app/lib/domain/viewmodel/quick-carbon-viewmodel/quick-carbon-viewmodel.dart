@@ -86,7 +86,7 @@ class QuickCarbonViewModel extends BaseViewModel {
 // TODO: fetch city places
   Future fetchPlaces(city) async {
     try {
-      _placeList = await _networkService.fetchPlaces(city);
+      // _placeList = await _networkService.fetchPlaces(city);
       notifyListeners();
     } catch (e) {
 // for now commenting out this code as the api we using doesnt take city. we will
@@ -123,7 +123,7 @@ class QuickCarbonViewModel extends BaseViewModel {
     this._textController.text = city.name;
     this._textFocusNode.unfocus();
 
-    _selectedPlace = await this._networkService.getPlaceDetails(city.placeID);
+    // _selectedPlace = await this._networkService.getPlaceDetails(city.placeID);
 
     this._placeList = [];
     notifyListeners();

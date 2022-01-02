@@ -25,7 +25,7 @@ class RowWithTextFieldAndChild extends StatelessWidget {
             // flex: 3,
             child: TextFieldWidget(
               addHorizontalPadding: false,
-              onChanged: (_) {},
+              onChanged: onChanged,
               focusNode: focusNode,
               keyboardType: TextInputType.number,
               controller: controller,

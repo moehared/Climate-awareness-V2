@@ -1,4 +1,5 @@
 import 'common/routes/app_routes.dart';
+import 'domain/models/questionaire-model/questionaire.dart';
 import 'domain/services/authentication_service/auth_service_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'domain/dialog_manager/dialog_manager.dart';
 import 'domain/services/locator.dart';
 import 'domain/services/navigation_service/navigation_service.dart';
-
+final categoryMap = locator<Questionaire>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

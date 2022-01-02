@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BuildSliderWidget extends StatelessWidget {
@@ -9,8 +8,10 @@ class BuildSliderWidget extends StatelessWidget {
     required this.step,
     required this.max,
     required this.label,
+    this.disableSlider = false,
   }) : super(key: key);
   final double value;
+  final bool disableSlider;
   final Function(double) onChange;
   final int step;
   final double max;
@@ -38,7 +39,7 @@ class BuildSliderWidget extends StatelessWidget {
         activeColor: Theme.of(context).colorScheme.secondary,
         inactiveColor: Colors.grey,
         value: value,
-        onChanged: onChange,
+        onChanged: disableSlider ? null : onChange,
         max: max,
       ),
     );
