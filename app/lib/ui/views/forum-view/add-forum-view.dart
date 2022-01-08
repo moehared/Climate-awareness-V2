@@ -5,19 +5,26 @@ import 'package:app/ui/widgets/forum-widget/create-forum-widget.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:flutter/material.dart';
 
-class ForumView extends StatelessWidget {
-  static const routeName = '/ForumView';
-  const ForumView({Key? key}) : super(key: key);
-
+//TODO: Add to route and add to locator
+class AddForumView extends StatelessWidget {
+  static const routeName = '/AddPostView';
+  AddForumView({
+    Key? key,
+    required this.postId,
+  }) : super(key: key);
+  final String postId;
   @override
   Widget build(BuildContext context) {
+    print(postId);
     return BuildViewModel<ForumViewModel>(
+      onModelReady: (model) => model.initState(postId),
       builder: (ctx, model, child) => Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
           elevation: 0,
-          title: Text('Forum View'),
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(
+              model.userForumModel.forumId.isEmpty ? 'Add Forum Post' : 'Edit Forum Post'),
         ),
         body: BackgroundImage(
           backgroundImage: "images/space2.png",
