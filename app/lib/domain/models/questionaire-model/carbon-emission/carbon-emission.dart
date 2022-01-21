@@ -1,5 +1,5 @@
 import 'package:app/domain/models/questionaire-model/category.dart';
 
-class CarbonEmission implements Category {
-  
+abstract class CarbonEmission implements Category {
+  Map<String, dynamic> toMap();
 }

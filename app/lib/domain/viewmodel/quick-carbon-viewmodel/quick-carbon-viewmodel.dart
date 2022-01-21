@@ -10,6 +10,7 @@ import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/services/network_service/questionaires_endpoint/network_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
+import 'package:app/main.dart';
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:app/ui/views/tab-views/tab-views.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,8 @@ class QuickCarbonViewModel extends BaseViewModel {
     try {
       final result =
           await _networkService.defaultCarbonFootPrintCalculatorByPostalCode(
-        postalCode: _selectedPlace.zipCode,
+        // postalCode: _selectedPlace.zipCode,
+        postalCode: _textController.text,
         income: '${1 + houseHoldIncome.toInt()}',
         size: houseHoldSize.toInt().toString(),
       );
@@ -71,6 +73,10 @@ class QuickCarbonViewModel extends BaseViewModel {
   }
 
   void refineEstimate() {
+    if (inputLocation.isEmpty) {
+      promptDialog(dialogService: _dialogService, title: 'enter a city');
+      return;
+    }
     _navService.navigateTo(QuestionaireView.routeName);
   }
 
@@ -85,6 +91,7 @@ class QuickCarbonViewModel extends BaseViewModel {
 
 // TODO: fetch city places
   Future fetchPlaces(city) async {
+    inputLocation = city;
     try {
       // _placeList = await _networkService.fetchPlaces(city);
       notifyListeners();

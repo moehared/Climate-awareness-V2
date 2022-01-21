@@ -1,3 +1,6 @@
+import 'package:app/domain/services/locator.dart';
+import 'package:app/domain/services/navigation_service/navigation_service.dart';
+import 'package:app/ui/views/profile-view/personalized-tips-view/personalized-tips-view.dart';
 import 'package:flutter/material.dart';
 
 class ReusableCard extends StatelessWidget {
@@ -19,7 +22,8 @@ class ReusableCard extends StatelessWidget {
     Size deviceSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-       
+        locator<NavigationService>()
+            .navigateTo(PersonalizedTipsDetailsView.routeName,argument: id);
       },
       child: Container(
         width: deviceSize.width * 0.40,
@@ -33,12 +37,14 @@ class ReusableCard extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
-           
               Flexible(
                 flex: 2,
                 child: Hero(
-                    tag: id,
-                    child: Image.asset(imageAsset.isNotEmpty ?  imageAsset: 'images/image.png')),
+                  tag: id,
+                  child: Image.asset(
+                    imageAsset.isNotEmpty ? imageAsset : 'images/image.png',
+                  ),
+                ),
               ),
               SizedBox(height: 4),
               Flexible(

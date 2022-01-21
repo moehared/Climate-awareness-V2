@@ -3,45 +3,89 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:app/domain/models/questionaire-model/carbon-emission/carbon-emission.dart';
+import 'package:hive/hive.dart';
 
 class Transportation extends CarbonEmission {
+  static const String CAR_TIP = """ 
+  · When possible, walk or ride your bicycle in order to avoid carbon emissions totally. Carpooling and public transportation definitely decrease CO2 emissions by spreading them out over many riders.\n
+  · change your driving style. Speeding and unnecessary acceleration increase your carbon footprint and waste gas as well as money.\n
+  """;
+  static const String PLANE_USAGE_TIP = """ 
+    Flights produce greenhouse gases - mainly carbon dioxide (CO2) - from burning fuel. These contribute to global warming when released into the atmosphere. Emissions from flights stay in the atmosphere and will warm it for several centuries Because aircraft emissions are released high in the atmosphere, they have a potent climate impact, triggering chemical reactions and atmospheric effects that heat the planet.\n Here is what you can do.\n
+  · Fly only when necessary and stay longer. When flying for work, group meetings together. Take direct flights when possible. Or, skip the flight and use video teleconferencing.\n
+  """;
+  static const String PUBLIC_USAGE_TIP = """ 
+  Individuals can save more than \$9,738 per year by taking public transportation instead of driving. Moreover, this mode can lead to substantial environmental benefits.\n
+  Transportation is the largest source of carbon emissions. Communities with strong public transportation can reduce the nation’s carbon emissions by 37 million metric tons yearly.\n
+  """;
   final int numberOfVehicle;
+
   final String totalPublicTransitPerYear;
+
   final String totalAirTravelPerYear;
+
   final String publicTransitUnit;
+
   final String airTravelUnit;
-  final List<Vehicle>? vehicle;
-  final String questionId;
+
+  final List<Vehicle?> vehicle;
+
+  final String questionID;
+
+  final String title;
+
+  final bool isSimple;
   // advance input for both air and public transit  . these are optional and can be null;
 
   String? bus;
+
   String? busUnit;
+
   String? transitRail;
+
   String? transitRailUnit;
+
   String? commuterRail;
+
   String? commuterRailUnit;
+
   String? interCityRail;
+
   String? interCityRailUnit;
 
+  final String imageAsset;
+
   String? shortTravelByAir;
+
   String? numberOfShortTravelByAir;
 
   String? mediumTravelByAir;
+
   String? numberOfMediumTravelByAir;
 
   String? longTravelByAir;
+  final String desc;
   String? numberOfLongTravelByAir;
+  String findById() {
+    return questionID;
+  }
 
   String? extendedTravelByAir;
+  final String learn;
   String? numberOfExtendedTravelByAir;
   Transportation({
-    required this.questionId,
+    this.desc = CAR_TIP + '\n' + PLANE_USAGE_TIP + '\n' + PUBLIC_USAGE_TIP,
+    this.title = 'Transportation',
+    this.imageAsset = 'images/trans.png',
+    this.learn = 'https://ourworldindata.org/co2-emissions-from-transport',
     required this.numberOfVehicle,
     required this.totalPublicTransitPerYear,
     required this.totalAirTravelPerYear,
     required this.publicTransitUnit,
     required this.airTravelUnit,
-    this.vehicle,
+    required this.vehicle,
+    required this.questionID,
+    required this.isSimple,
     this.bus,
     this.busUnit,
     this.transitRail,
@@ -66,7 +110,9 @@ class Transportation extends CarbonEmission {
     String? totalAirTravelPerYear,
     String? publicTransitUnit,
     String? airTravelUnit,
-    List<Vehicle>? vehicle,
+    List<Vehicle?>? vehicle,
+    String? questionId,
+    bool? isSimple,
     String? bus,
     String? busUnit,
     String? transitRail,
@@ -85,7 +131,6 @@ class Transportation extends CarbonEmission {
     String? numberOfExtendedTravelByAir,
   }) {
     return Transportation(
-      questionId: this.questionId,
       numberOfVehicle: numberOfVehicle ?? this.numberOfVehicle,
       totalPublicTransitPerYear:
           totalPublicTransitPerYear ?? this.totalPublicTransitPerYear,
@@ -94,6 +139,8 @@ class Transportation extends CarbonEmission {
       publicTransitUnit: publicTransitUnit ?? this.publicTransitUnit,
       airTravelUnit: airTravelUnit ?? this.airTravelUnit,
       vehicle: vehicle ?? this.vehicle,
+      questionID: questionId ?? this.questionID,
+      isSimple: isSimple ?? this.isSimple,
       bus: bus ?? this.bus,
       busUnit: busUnit ?? this.busUnit,
       transitRail: transitRail ?? this.transitRail,
@@ -117,15 +164,17 @@ class Transportation extends CarbonEmission {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
-      'questionId': questionId,
       'numberOfVehicle': numberOfVehicle,
       'totalPublicTransitPerYear': totalPublicTransitPerYear,
       'totalAirTravelPerYear': totalAirTravelPerYear,
       'publicTransitUnit': publicTransitUnit,
       'airTravelUnit': airTravelUnit,
-      'vehicle': vehicle != null ? vehicle!.map((x) => x.toMap()).toList() : [],
+      'vehicle': vehicle.map((x) => x?.toMap()).toList(),
+      'questionId': questionID,
+      'isSimple': isSimple,
       'bus': bus,
       'busUnit': busUnit,
       'transitRail': transitRail,
@@ -147,30 +196,30 @@ class Transportation extends CarbonEmission {
 
   factory Transportation.fromMap(Map<String, dynamic> map) {
     return Transportation(
-      questionId: map['questionId'] ?? "Q2",
       numberOfVehicle: map['numberOfVehicle']?.toInt() ?? 0,
-      totalPublicTransitPerYear: map['totalPublicTransitPerYear']?.toInt() ?? 0,
-      totalAirTravelPerYear: map['totalAirTravelPerYear']?.toInt() ?? 0,
+      totalPublicTransitPerYear: map['totalPublicTransitPerYear'] ?? '',
+      totalAirTravelPerYear: map['totalAirTravelPerYear'] ?? '',
       publicTransitUnit: map['publicTransitUnit'] ?? '',
       airTravelUnit: map['airTravelUnit'] ?? '',
-      vehicle: map['vehicle'] != null
-          ? List<Vehicle>.from(map['vehicle']?.map((x) => Vehicle.fromMap(x)))
-          : null,
-      bus: map['bus']?.toInt(),
+      vehicle:
+          List<Vehicle?>.from(map['vehicle']?.map((x) => Vehicle.fromMap(x))),
+      questionID: map['questionId'] ?? '',
+      isSimple: map['isSimple'] ?? false,
+      bus: map['bus'],
       busUnit: map['busUnit'],
-      transitRail: map['transitRail']?.toInt(),
+      transitRail: map['transitRail'],
       transitRailUnit: map['transitRailUnit'],
-      commuterRail: map['commuterRail']?.toInt(),
+      commuterRail: map['commuterRail'],
       commuterRailUnit: map['commuterRailUnit'],
-      interCityRail: map['interCityRail']?.toInt(),
+      interCityRail: map['interCityRail'],
       interCityRailUnit: map['interCityRailUnit'],
-      shortTravelByAir: map['shortTravelByAir']?.toInt(),
+      shortTravelByAir: map['shortTravelByAir'],
       numberOfShortTravelByAir: map['numberOfShortTravelByAir'],
-      mediumTravelByAir: map['mediumTravelByAir']?.toInt(),
+      mediumTravelByAir: map['mediumTravelByAir'],
       numberOfMediumTravelByAir: map['numberOfMediumTravelByAir'],
-      longTravelByAir: map['longTravelByAir']?.toInt(),
+      longTravelByAir: map['longTravelByAir'],
       numberOfLongTravelByAir: map['numberOfLongTravelByAir'],
-      extendedTravelByAir: map['extendedTravelByAir']?.toInt(),
+      extendedTravelByAir: map['extendedTravelByAir'],
       numberOfExtendedTravelByAir: map['numberOfExtendedTravelByAir'],
     );
   }
@@ -182,7 +231,7 @@ class Transportation extends CarbonEmission {
 
   @override
   String toString() {
-    return 'Transportation(numberOfVehicle: $numberOfVehicle, totalPublicTransitPerYear: $totalPublicTransitPerYear, totalAirTravelPerYear: $totalAirTravelPerYear, publicTransitUnit: $publicTransitUnit, airTravelUnit: $airTravelUnit, vehicle: $vehicle, bus: $bus, busUnit: $busUnit, transitRail: $transitRail, transitRailUnit: $transitRailUnit, commuterRail: $commuterRail, commuterRailUnit: $commuterRailUnit, interCityRail: $interCityRail, interCityRailUnit: $interCityRailUnit, shortTravelByAir: $shortTravelByAir, numberOfShortTravelByAir: $numberOfShortTravelByAir, mediumTravelByAir: $mediumTravelByAir, numberOfMediumTravelByAir: $numberOfMediumTravelByAir, longTravelByAir: $longTravelByAir, numberOfLongTravelByAir: $numberOfLongTravelByAir, extendedTravelByAir: $extendedTravelByAir, numberOfExtendedTravelByAir: $numberOfExtendedTravelByAir)';
+    return 'Transportation(numberOfVehicle: $numberOfVehicle, totalPublicTransitPerYear: $totalPublicTransitPerYear, totalAirTravelPerYear: $totalAirTravelPerYear, publicTransitUnit: $publicTransitUnit, airTravelUnit: $airTravelUnit, vehicle: $vehicle, questionId: $questionID, isSimple: $isSimple, bus: $bus, busUnit: $busUnit, transitRail: $transitRail, transitRailUnit: $transitRailUnit, commuterRail: $commuterRail, commuterRailUnit: $commuterRailUnit, interCityRail: $interCityRail, interCityRailUnit: $interCityRailUnit, shortTravelByAir: $shortTravelByAir, numberOfShortTravelByAir: $numberOfShortTravelByAir, mediumTravelByAir: $mediumTravelByAir, numberOfMediumTravelByAir: $numberOfMediumTravelByAir, longTravelByAir: $longTravelByAir, numberOfLongTravelByAir: $numberOfLongTravelByAir, extendedTravelByAir: $extendedTravelByAir, numberOfExtendedTravelByAir: $numberOfExtendedTravelByAir)';
   }
 
   @override
@@ -196,6 +245,8 @@ class Transportation extends CarbonEmission {
         other.publicTransitUnit == publicTransitUnit &&
         other.airTravelUnit == airTravelUnit &&
         listEquals(other.vehicle, vehicle) &&
+        other.questionID == questionID &&
+        other.isSimple == isSimple &&
         other.bus == bus &&
         other.busUnit == busUnit &&
         other.transitRail == transitRail &&
@@ -222,6 +273,8 @@ class Transportation extends CarbonEmission {
         publicTransitUnit.hashCode ^
         airTravelUnit.hashCode ^
         vehicle.hashCode ^
+        questionID.hashCode ^
+        isSimple.hashCode ^
         bus.hashCode ^
         busUnit.hashCode ^
         transitRail.hashCode ^
@@ -241,10 +294,15 @@ class Transportation extends CarbonEmission {
   }
 }
 
+@HiveType(typeId: 6)
 class Vehicle {
+  @HiveField(0)
   final int totalDrivenPerYear;
+  @HiveField(1)
   final String fuelType;
+  @HiveField(2)
   final String unitType;
+  @HiveField(3)
   final String mpgValue;
   Vehicle({
     required this.totalDrivenPerYear,

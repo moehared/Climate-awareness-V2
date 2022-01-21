@@ -23,7 +23,7 @@ class ChartDetailsViewModel extends BaseViewModel {
               color: Colors.white,
             ),
             color: data.color,
-            value: data.percent,
+            value: double.tryParse(data.percent),
             title: '\t${data.percent}%',
             badgeWidget: Badge(
               data.icon,

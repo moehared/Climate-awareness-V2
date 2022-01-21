@@ -200,6 +200,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/image_picker/image_picker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/path_provider_ios/path_provider_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/shared_preferences_ios/shared_preferences_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/url_launcher/url_launcher.framework"
 fi
@@ -229,6 +230,7 @@ if [[ "$CONFIGURATION" == "Profile" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/image_picker/image_picker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/path_provider_ios/path_provider_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/shared_preferences_ios/shared_preferences_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/url_launcher/url_launcher.framework"
 fi
@@ -258,6 +260,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/image_picker/image_picker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/path_provider_ios/path_provider_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/shared_preferences_ios/shared_preferences_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/url_launcher/url_launcher.framework"
 fi

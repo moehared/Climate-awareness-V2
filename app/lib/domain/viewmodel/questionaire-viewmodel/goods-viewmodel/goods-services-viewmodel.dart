@@ -1,12 +1,16 @@
 import 'package:app/common/constant.dart';
+
 import 'package:app/common/utils/input_validator.dart';
 import 'package:app/common/utils/prompt_dialog.dart';
 import 'package:app/domain/models/questionaire-model/concrete-objects/goods_services.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/locator.dart';
+import 'package:app/domain/services/navigation_service/navigation_service.dart';
+import 'package:app/domain/services/network_service/questionaires_endpoint/network_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/goods-viewmodel/goods_model.dart'
     as goods;
+import 'package:app/ui/views/tab-views/tab-views.dart';
 
 import '../../../../main.dart';
 
@@ -14,15 +18,17 @@ class GoodsServicesViewModel extends BaseViewModel {
   var _goodsValue = 500.0;
   var _serviceValue = 300.0;
   var _isSimple = true;
+  final _navService = locator<NavigationService>();
 
   var _goodsServicesModel = GoodsServices(
       totalGoodsSpent: 500,
-      questionId: 'Q4',
+      questionID: 'Q4',
       totalServiceSpent: 300,
       furnitureAndAppliance: '',
       clothing: '',
       entertaining: '',
       paperOfficeReading: '',
+      personalFinance: '',
       personalCare: '',
       autoParts: '',
       medical: '',
@@ -33,6 +39,7 @@ class GoodsServicesViewModel extends BaseViewModel {
       houseHoldMaintenanceAndRepair: '',
       otherService: '');
   final _dialogService = locator<DiaglogService>();
+  final _networkApi = locator<NetworkService>();
   final _goodsList = goods.goodsList;
   final _servicesList = goods.serviceList;
   double get goodsValue => _goodsValue;
@@ -61,6 +68,7 @@ class GoodsServicesViewModel extends BaseViewModel {
 
   void _changeMode() {
     this._isSimple = !this._isSimple;
+    _goodsServicesModel = _goodsServicesModel.copyWith(isSimple: _isSimple);
     notifyListeners();
   }
 
@@ -69,11 +77,22 @@ class GoodsServicesViewModel extends BaseViewModel {
   }
 
   void onTextLink() {}
-  void onContinue() {
+  void onContinue() async {
     print(_goodsServicesModel.toString());
-    categoryMap.addToCategory(
-        _goodsServicesModel.questionId, _goodsServicesModel);
-    print('category map count: ${categoryMap.categoryMap.length}');
+    questionaireMap.addToCategory(
+        _goodsServicesModel.questionID, _goodsServicesModel);
+    print('category map count: ${questionaireMap.categoryMap.length}');
+    try {
+      await _networkApi.getRefinedCarbonFootprint();
+   
+      final directSelectedPageIndex = 4;
+      _navService.navigateAndReplce(
+        TabViews.routeName,
+        argument: directSelectedPageIndex,
+      );
+    } catch (e) {
+      throw ('error occured while fetching from refined carbon footprint $e');
+    }
   }
 
   void showGoodsAndServiceHelpInfo() {
@@ -149,7 +168,7 @@ class GoodsServicesViewModel extends BaseViewModel {
         break;
       case 5:
         _goodsServicesModel = _goodsServicesModel.copyWith(
-            personalCare: _servicesList[5].textEditingController.text);
+            personalFinance: _servicesList[5].textEditingController.text);
         break;
       case 6:
         _goodsServicesModel = _goodsServicesModel.copyWith(

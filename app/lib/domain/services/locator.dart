@@ -1,13 +1,11 @@
-import 'package:app/domain/models/questionaire-model/concrete-objects/food.dart';
-import 'package:app/domain/models/questionaire-model/concrete-objects/goods_services.dart';
-import 'package:app/domain/models/questionaire-model/concrete-objects/transportation.dart';
-import 'package:app/domain/models/questionaire-model/concrete-objects/utilities.dart';
+import 'package:app/domain/models/questionaire-model/questionaire-result.dart';
 import 'package:app/domain/models/questionaire-model/questionaire.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
+
 import 'package:app/domain/services/network_service/questionaires_endpoint/network_service.dart';
 import 'package:app/domain/services/repository/account_firebase_repository.dart';
 import 'package:app/domain/services/repository/post_firebase_repository.dart';
@@ -21,6 +19,8 @@ import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-v
 import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/chart_details_viewModel.dart';
+import 'package:app/domain/viewmodel/profile_viewmodel/personalized-tips-viewmodel.dart/personalized-view-all-viewmodel.dart';
+import 'package:app/domain/viewmodel/profile_viewmodel/personalized-tips-viewmodel.dart/personalized-viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/question-viewmodels/food-viewmodel.dart';
 import 'package:app/domain/viewmodel/questionaire-viewmodel/goods-viewmodel/goods-services-viewmodel.dart';
@@ -54,6 +54,8 @@ void setUpLocatorService() {
   locator.registerLazySingleton<NetworkService>(() => NetworkService());
   locator.registerLazySingleton<RepositoryInterface<UserPostModel>>(
       () => PostFirebaseFireStoreRepo());
+  // locator.registerLazySingleton<Boxes<QuestionaireResult>>(
+  //     () => Boxes(QUESTIONAIRE_RESULT_BOX));
   locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(
       () => AccountFirebaseFireStoreRepo());
   locator.registerLazySingleton<PostFirebaseFireStoreRepo>(
@@ -66,9 +68,9 @@ void setUpLocatorService() {
 
   locator.registerLazySingleton<PostDatabaseService>(
       () => PostDatabaseService(locator<PostFirebaseFireStoreRepo>()));
-  locator.registerLazySingleton<Questionaire>(() => Questionaire(
-        {},
-      ),);
+  locator.registerLazySingleton<Questionaire>(
+    () => Questionaire({}, result: QuestionaireResult()),
+  );
 
   // init factory view here
   locator.registerFactory<CommunityViewModel>(() => CommunityViewModel());
@@ -76,7 +78,10 @@ void setUpLocatorService() {
       () => UserRegisterationViewModel());
   locator.registerFactory<ConfirmUserEmailViewModel>(
       () => ConfirmUserEmailViewModel());
-
+  locator.registerFactory<PersonalizedViewAllViewmodel>(
+      () => PersonalizedViewAllViewmodel());
+  locator.registerFactory<PersonalizedTipViewModelDetails>(
+      () => PersonalizedTipViewModelDetails());
   locator.registerFactory<TabViewModel>(() => TabViewModel());
   locator.registerFactory<AddPostViewModel>(() => AddPostViewModel());
   locator.registerFactory<ChatViewModel>(() => ChatViewModel());

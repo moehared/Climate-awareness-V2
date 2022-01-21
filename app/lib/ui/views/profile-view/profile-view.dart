@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:app/common/styles/style.dart';
+import 'package:app/common/utils/getcategory-obj.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
-import 'package:app/ui/widgets/chart-widget/result-chart.dart';
+import 'package:app/main.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
-import 'package:app/ui/widgets/reusable-widget/build_button.dart';
 import 'package:app/ui/widgets/reusable-widget/reusable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,8 +21,6 @@ class ProfileView extends StatelessWidget {
   final double? carbonScore;
   @override
   Widget build(BuildContext context) {
-    var tipData = [];
-
     return BuildViewModel<ProfileViewModel>(
       onModelReady: (model) => model.initState(),
       builder: (ctx, model, child) => Scaffold(
@@ -72,7 +70,7 @@ class ProfileView extends StatelessWidget {
                             vertical: 10.0, horizontal: 10),
                         child: RichText(
                           text: TextSpan(
-                              text: 'Carbon Score: ',
+                              text: 'Carbon Score:',
                               style: TextStyle(
                                 fontFamily: 'Roboto-Medium',
                                 color: Colors.white,
@@ -80,7 +78,7 @@ class ProfileView extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text:
-                                      '${model.user?.c02Score?.toStringAsFixed(2) ?? '0.00'} tons CO2eq/month',
+                                      '${questionaireMap.result.resultGrandTotal?.toStringAsFixed(2) ?? 0} tons CO2eq/month',
                                   style: TextStyle(
                                     fontFamily: 'Roboto-Bold',
                                     color: Colors.white,
@@ -104,34 +102,35 @@ class ProfileView extends StatelessWidget {
                 Divider(color: Colors.white24),
                 TitleAndButton(
                   title: 'Personalized Tips',
-                  viewAll: () {},
+                  viewAll: model.navigateToViewAll,
                 ),
                 // categories,
-                if (tipData.isNotEmpty)
+                // if (questionaireMap.result.category != null && questionaireMap.result.category!.isNotEmpty)
+                if (questionaireMap.categoryMap.isNotEmpty)
                   Container(
-                    // height: height >= 926 ? height * 0.15 : height * 0.20,
+                    height: 100,
                     width: double.infinity,
                     child: ListView.builder(
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (ctx, index) {
                         // var data = tipData.elementAt(index).values.toList();
-                        var data = tipData.elementAt(index);
+                        var data = getCategoryObject(index);
+
+                        print('data: $data');
                         // var data = tipData.elementAt(index);
                         // var data = newList.elementAt(index);
                         return ReusableCard(
-                          // id: data.id,
-                          // imageAsset: data.image,
-                          // subTitle: data.subTitle,
-                          id: data['id'],
-                          imageAsset: data['image'],
-                          subTitle: data['subtitle'],
+                          id: data.questionID,
+                          subTitle: data.title,
+                          imageAsset: data.imageAsset,
                         );
                       },
-                      itemCount: tipData.length,
+                      // itemCount: questionaireMap.result.category!.length,
+                      itemCount: questionaireMap.categoryMap.length,
                       scrollDirection: Axis.horizontal,
                     ),
                   ),
-                if (tipData.isEmpty)
+                if (questionaireMap.categoryMap.isEmpty)
                   Center(
                     child: Text(
                       'No personalized tips yet. start answering questionnaires',
@@ -159,7 +158,7 @@ class ProfileView extends StatelessWidget {
 
 class TitleAndButton extends StatelessWidget {
   final String title;
-  final Function viewAll;
+  final void Function()? viewAll;
 
   const TitleAndButton({
     Key? key,
@@ -183,7 +182,7 @@ class TitleAndButton extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: viewAll,
           child: Text(
             'View All',
             style: kTextButtonStyle(context),

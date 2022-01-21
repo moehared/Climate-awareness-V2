@@ -18,7 +18,7 @@ class FoodViewModel extends BaseViewModel {
   final _dialogService = locator<DiaglogService>();
   var _foodModel = Food(
     meatFishEggs: 2.6,
-    questionId: 'Q3',
+    questionID: 'Q3',
     grainsAndBakedGoods: 4.5,
     diary: 2.4,
     fruitsAndVegatables: 4.6,
@@ -85,6 +85,7 @@ class FoodViewModel extends BaseViewModel {
 
   void changedMode() {
     _isSimple = !_isSimple;
+    _foodModel = _foodModel.copyWith(isSimple: _isSimple);
     notifyListeners();
   }
 
@@ -142,7 +143,7 @@ class FoodViewModel extends BaseViewModel {
 
   void next() {
     print('food model : ${_foodModel.toString()}');
-    categoryMap.addToCategory(_foodModel.questionId, _foodModel);
+    questionaireMap.addToCategory(_foodModel.questionID, _foodModel);
     QuestionaireViewModel.nextQuestionScreen();
   }
 }

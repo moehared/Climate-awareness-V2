@@ -5,6 +5,8 @@ import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 import 'package:app/ui/views/forget-password-view/forget-password-view.dart';
 import 'package:app/ui/views/forum-view/forum-view.dart';
 import 'package:app/ui/views/profile-view/chart-details-view.dart';
+import 'package:app/ui/views/profile-view/personalized-tips-view/personalized-tips-view.dart';
+import 'package:app/ui/views/profile-view/personalized-tips-view/personalized-view-all.dart';
 import 'package:app/ui/views/profile-view/profile-view.dart';
 import 'package:app/ui/views/questionaire-view/question-views/quick-carbon-calculation-view.dart';
 
@@ -51,6 +53,17 @@ class AppRouter {
       case ChartDetailsView.routeName:
         return MaterialPageRoute(
           builder: (_) => ChartDetailsView(),
+        );
+
+        case PersonalizedTipsDetailsView.routeName:
+        return MaterialPageRoute(
+          builder: (_) => PersonalizedTipsDetailsView(id: settings.arguments as String),
+        );
+
+        case PersonalizedViewAll.PERSONALIZED_VIEW_ALL:
+        return MaterialPageRoute(
+          builder: (_) =>
+              PersonalizedViewAll(),
         );
       default:
         return MaterialPageRoute(builder: (_) => AuthServiceWrapper());

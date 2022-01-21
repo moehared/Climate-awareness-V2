@@ -1,5 +1,5 @@
 import 'package:app/domain/models/questionaire-model/category.dart';
 
-class ServiceEmission implements Category {
-  
+abstract class ServiceEmission implements Category {
+  Map<String, dynamic> toMap();
 }

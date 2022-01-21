@@ -2,19 +2,47 @@ import 'dart:convert';
 
 import 'package:app/domain/models/questionaire-model/service-emission/service-emission.dart';
 
+
+
 class Food extends ServiceEmission {
+
+    static const String FOODS_TIP = """ 
+  The food we eat can have a significant impact on the environment.Here Tips provided for you\n
+· Do not waste food.\n
+· Eat more meat-free meals.\n
+· Buy organic and local whenever possible.\n
+  """;
   final double meatFishEggs;
+
   final double grainsAndBakedGoods;
+
   final double diary;
+
   final double fruitsAndVegatables;
+
   final double snacksAndDrinks;
+
   final double meatOtherBeefLambPork;
+
   final double otherMeat;
+
   final double fishAndSeafood;
+
   final double poultryAndEggs;
-  final String questionId;
+
+  final String title;
+
+  final String questionID;
+
+  final String imageAsset;
+  final String desc;
+  bool? isSimple;
+  final String learn;
   Food({
-    required this.questionId,
+    this.desc = FOODS_TIP,
+    this.title = 'Food Consumption',
+    this.imageAsset = 'images/food.png',
+    this.learn = 'https://davidsuzuki.org/queen-of-green/food-climate-change/',
     required this.meatFishEggs,
     required this.grainsAndBakedGoods,
     required this.diary,
@@ -24,6 +52,8 @@ class Food extends ServiceEmission {
     required this.otherMeat,
     required this.fishAndSeafood,
     required this.poultryAndEggs,
+    required this.questionID,
+    this.isSimple = false,
   });
 
   Food copyWith({
@@ -36,9 +66,10 @@ class Food extends ServiceEmission {
     double? otherMeat,
     double? fishAndSeafood,
     double? poultryAndEggs,
+    String? questionId,
+    bool? isSimple,
   }) {
     return Food(
-      questionId: questionId,
       meatFishEggs: meatFishEggs ?? this.meatFishEggs,
       grainsAndBakedGoods: grainsAndBakedGoods ?? this.grainsAndBakedGoods,
       diary: diary ?? this.diary,
@@ -49,12 +80,17 @@ class Food extends ServiceEmission {
       otherMeat: otherMeat ?? this.otherMeat,
       fishAndSeafood: fishAndSeafood ?? this.fishAndSeafood,
       poultryAndEggs: poultryAndEggs ?? this.poultryAndEggs,
+      questionID: questionId ?? this.questionID,
+      isSimple: isSimple ?? this.isSimple,
     );
+  }
+
+  String findById() {
+    return questionID;
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'questionId':questionId,
       'meatFishEggs': meatFishEggs,
       'grainsAndBakedGoods': grainsAndBakedGoods,
       'diary': diary,
@@ -64,12 +100,13 @@ class Food extends ServiceEmission {
       'otherMeat': otherMeat,
       'fishAndSeafood': fishAndSeafood,
       'poultryAndEggs': poultryAndEggs,
+      'questionId': questionID,
+      'isSimple': isSimple,
     };
   }
 
   factory Food.fromMap(Map<String, dynamic> map) {
     return Food(
-      questionId: map['questionId'],
       meatFishEggs: map['meatFishEggs']?.toDouble() ?? 0.0,
       grainsAndBakedGoods: map['grainsAndBakedGoods']?.toDouble() ?? 0.0,
       diary: map['diary']?.toDouble() ?? 0.0,
@@ -79,6 +116,8 @@ class Food extends ServiceEmission {
       otherMeat: map['otherMeat']?.toDouble() ?? 0.0,
       fishAndSeafood: map['fishAndSeafood']?.toDouble() ?? 0.0,
       poultryAndEggs: map['poultryAndEggs']?.toDouble() ?? 0.0,
+      questionID: map['questionId'] ?? '',
+      isSimple: map['isSimple'],
     );
   }
 
@@ -88,7 +127,7 @@ class Food extends ServiceEmission {
 
   @override
   String toString() {
-    return 'Food(meatFishEggs: $meatFishEggs, grainsAndBakedGoods: $grainsAndBakedGoods, diary: $diary, fruitsAndVegatables: $fruitsAndVegatables, snacksAndDrinks: $snacksAndDrinks, meatOtherBeefLambPork: $meatOtherBeefLambPork, otherMeat: $otherMeat, fishAndSeafood: $fishAndSeafood, poultryAndEggs: $poultryAndEggs)';
+    return 'Food(meatFishEggs: $meatFishEggs, grainsAndBakedGoods: $grainsAndBakedGoods, diary: $diary, fruitsAndVegatables: $fruitsAndVegatables, snacksAndDrinks: $snacksAndDrinks, meatOtherBeefLambPork: $meatOtherBeefLambPork, otherMeat: $otherMeat, fishAndSeafood: $fishAndSeafood, poultryAndEggs: $poultryAndEggs, questionId: $questionID, isSimple: $isSimple)';
   }
 
   @override
@@ -104,7 +143,9 @@ class Food extends ServiceEmission {
         other.meatOtherBeefLambPork == meatOtherBeefLambPork &&
         other.otherMeat == otherMeat &&
         other.fishAndSeafood == fishAndSeafood &&
-        other.poultryAndEggs == poultryAndEggs;
+        other.poultryAndEggs == poultryAndEggs &&
+        other.questionID == questionID &&
+        other.isSimple == isSimple;
   }
 
   @override
@@ -117,6 +158,8 @@ class Food extends ServiceEmission {
         meatOtherBeefLambPork.hashCode ^
         otherMeat.hashCode ^
         fishAndSeafood.hashCode ^
-        poultryAndEggs.hashCode;
+        poultryAndEggs.hashCode ^
+        questionID.hashCode ^
+        isSimple.hashCode;
   }
 }

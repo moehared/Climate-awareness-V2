@@ -1,5 +1,3 @@
-
-
 import 'package:app/common/constant.dart';
 import 'package:app/common/utils/input_validator.dart';
 import 'package:app/common/utils/prompt_dialog.dart';
@@ -37,12 +35,21 @@ class TransportationViewModel extends BaseViewModel {
   var _fuelTypeValues = <String>[];
   var _transportationModel = Transportation(
       numberOfVehicle: 0,
-      questionId: "Q2",
-      totalPublicTransitPerYear: "",
-      totalAirTravelPerYear: "",
+      questionID: "Q2",
+      bus: '0',
+      commuterRail: '0',
+      interCityRail: '0',
+      numberOfExtendedTravelByAir: '0',
+      numberOfLongTravelByAir: '0',
+      numberOfMediumTravelByAir: '0',
+      numberOfShortTravelByAir: '0',
+      transitRail: '0',
+      totalPublicTransitPerYear: "0",
+      totalAirTravelPerYear: "0",
       vehicle: [],
       busUnit: 'km',
       commuterRailUnit: 'km',
+      isSimple: false,
       interCityRailUnit: 'km',
       longTravelByAir: 'Flight/Month',
       extendedTravelByAir: 'Flight/Month',
@@ -331,9 +338,9 @@ class TransportationViewModel extends BaseViewModel {
     _transportationModel =
         _transportationModel.copyWith(vehicle: _vehiclesMap.values.toList());
     print(_transportationModel.toString());
-    categoryMap.addToCategory(
-        _transportationModel.questionId, _transportationModel);
-    print('category map count: ${categoryMap.categoryMap.length}');
+    questionaireMap.addToCategory(
+        _transportationModel.questionID, _transportationModel);
+    print('category map count: ${questionaireMap.categoryMap.length}');
     QuestionaireViewModel.nextQuestionScreen();
   }
 
@@ -440,8 +447,6 @@ class TransportationViewModel extends BaseViewModel {
       default:
     }
   }
-
-  
 
   void onSimplePublicTransitChanged(String? input) {
     if (input == null) return;

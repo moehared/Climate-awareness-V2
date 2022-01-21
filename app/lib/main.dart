@@ -1,17 +1,27 @@
+import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+import 'common/constant.dart';
 import 'common/routes/app_routes.dart';
 import 'domain/models/questionaire-model/questionaire.dart';
 import 'domain/services/authentication_service/auth_service_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import 'domain/dialog_manager/dialog_manager.dart';
 import 'domain/services/locator.dart';
 import 'domain/services/navigation_service/navigation_service.dart';
-final categoryMap = locator<Questionaire>();
+
+var questionaireMap = locator<Questionaire>();
+String inputLocation = '';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // final director = await getApplicationDocumentsDirectory();
+ 
+    
   setUpLocatorService();
+
+  // await Hive.openBox<QuestionaireResult>(QUESTIONAIRE_RESULT_BOX);
   runApp(MyApp());
 }
 
@@ -30,7 +40,6 @@ class MyApp extends StatelessWidget {
         scrollbarTheme: ScrollbarThemeData(
           thumbColor: MaterialStateProperty.all(Colors.white),
           radius: const Radius.circular(32),
-          
         ),
         textTheme: TextTheme(
           bodyText1: TextStyle(

@@ -7,7 +7,14 @@
         {
             "name": "app",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "dlvLoadConfig": {
+                "followPointers": true,
+                "maxVariableRecurse": 1,
+                "maxStringLen": 400,
+                "maxArrayValues": 64,
+                "maxStructFields": -1
+            }
         },
         {
             "name": "app (profile mode)",
