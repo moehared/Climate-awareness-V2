@@ -14,7 +14,7 @@ import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/common/utils/date_format.dart';
 import 'dart:io';
 
-class ForumViewModel extends BaseViewModel {
+class AddForumViewModel extends BaseViewModel {
   //private variables
   File? _image;
   var _userFirstName = "";
@@ -42,7 +42,6 @@ class ForumViewModel extends BaseViewModel {
   final _navService = locator<NavigationService>();
   final _accountService = locator<AccountDatabaseService>();
 
-
 //Text Editing Controller Getters
   TextEditingController get titleContoller => _titleController;
   TextEditingController get descriptionController => _descriptionController;
@@ -56,14 +55,13 @@ class ForumViewModel extends BaseViewModel {
   bool get isEdit => _isEdit;
   bool get articleValid => _validUrlPath;
   File? get image => _image;
-  Future<UserModel> getUserModel(String uid) => _accountService.fetchUserModel(uid);
+  Future<UserModel> getUserModel(String uid) =>
+      _accountService.fetchUserModel(uid);
 
-   Future<UserModel> getUserFirstName(String uid){
-     String? uid = _userAuthService.currentUser.get()?.uid;
-   return getUserModel(uid!);
+  Future<UserModel> getUserFirstName(String uid) {
+    String? uid = _userAuthService.currentUser.get()?.uid;
+    return getUserModel(uid!);
   }
-
-
 
 //User Forum Model
   UserForumModel _userForumModel = UserForumModel(
@@ -85,7 +83,6 @@ class ForumViewModel extends BaseViewModel {
   void navigateToAddPostView() {
     _navService.navigateTo(AddForumView.routeName, argument: '');
   }
-
 
 //Init states
   void initState(String forumId) async {
@@ -142,7 +139,7 @@ class ForumViewModel extends BaseViewModel {
       _validUrlPath = false;
     }
     print("userArticleURL $userArticleUrl");
-    print("This is _validURL $_validUrlPath" );
+    print("This is _validURL $_validUrlPath");
     print("This is articleValid $articleValid");
   }
 
@@ -150,7 +147,7 @@ class ForumViewModel extends BaseViewModel {
   void submit() async {
     print("Did i Make liune 135");
     if (!_formKey.currentState!.validate()) {
-        print("could not submit");
+      print("could not submit");
       return;
     }
     print("did i make it here?");
@@ -162,8 +159,7 @@ class ForumViewModel extends BaseViewModel {
     setUserForumModel = userForumModel.copyWith(date: date);
     setUserForumModel = userForumModel.copyWith(
         userId: _userAuthService.currentUser.get()?.uid,
-        userDisplayName: _userAuthService.currentUser.get()!.displayName
-        );
+        userDisplayName: _userAuthService.currentUser.get()!.displayName);
     _userForumService.createNewForum(userForumModel);
     _navService.pop();
     print("pop service?");
@@ -180,7 +176,4 @@ class ForumViewModel extends BaseViewModel {
     // pop edit pop up menu bottom sheet modal
     _navService.pop();
   }
-
-
-
 }

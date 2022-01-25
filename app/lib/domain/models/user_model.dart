@@ -129,4 +129,21 @@ class UserModel {
         isPhoneVerified.hashCode ^
         dateUpdated.hashCode;
   }
+
+
+  UserModel getMock(){
+     return UserModel(
+      userId: "asfsafsadf",
+      firstName: "mock",
+      isPhoneVerified: true,
+      lastName: "mock",
+      password: " ",
+      isEmailVerified: true,
+      c02Score: 255,
+      email: " ",
+      phoneNumber: " ",
+      dateCreated: DateTime.now().toString(),
+      dateUpdated: DateTime.now().toString(),
+    );
+  }
 }

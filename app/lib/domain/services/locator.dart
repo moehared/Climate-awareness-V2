@@ -16,6 +16,8 @@ import 'package:app/domain/viewmodel/confirm_user_email_viewmodel/confirm_user_e
 
 import 'package:app/domain/viewmodel/community_viewmodel/community_viewmodel.dart';
 import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
+import 'package:app/domain/viewmodel/forum-viewmodel.dart/add-forum-viewmodel.dart';
+import 'package:app/domain/viewmodel/forum-viewmodel.dart/expanded-forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/chart_details_viewModel.dart';
@@ -32,10 +34,11 @@ import 'package:app/domain/viewmodel/tab_viewmodel.dart/tab_viewmodel.dart';
 import 'package:app/domain/viewmodel/user-registeration-viewmodel/user_registeration_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:app/domain/services/database_services/forum_service.dart';
+import 'package:app/domain/services/repository/forum_firebase_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xml2json/xml2json.dart';
-
+import  'package:app/domain/models/user_forum_model.dart';
 import 'dialog_service/dialog_service.dart';
 import 'navigation_service/navigation_service.dart';
 
@@ -54,12 +57,16 @@ void setUpLocatorService() {
   locator.registerLazySingleton<NetworkService>(() => NetworkService());
   locator.registerLazySingleton<RepositoryInterface<UserPostModel>>(
       () => PostFirebaseFireStoreRepo());
+  locator.registerLazySingleton<RepositoryInterface<UserForumModel>>(
+      () => ForumFirebaseFireStoreRepo());
   // locator.registerLazySingleton<Boxes<QuestionaireResult>>(
   //     () => Boxes(QUESTIONAIRE_RESULT_BOX));
   locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(
       () => AccountFirebaseFireStoreRepo());
   locator.registerLazySingleton<PostFirebaseFireStoreRepo>(
       () => PostFirebaseFireStoreRepo());
+   locator.registerLazySingleton<ForumFirebaseFireStoreRepo>(
+      () => ForumFirebaseFireStoreRepo());
   locator.registerLazySingleton<AccountDatabaseService>(
       () => AccountDatabaseService(locator<AccountFirebaseFireStoreRepo>()));
   locator.registerLazySingleton<AuthService>(() => AuthService(firebaseAuth));
@@ -71,6 +78,10 @@ void setUpLocatorService() {
   locator.registerLazySingleton<Questionaire>(
     () => Questionaire({}, result: QuestionaireResult()),
   );
+
+  locator.registerLazySingleton<ForumDatabaseService>(
+      () => ForumDatabaseService(locator<ForumFirebaseFireStoreRepo>()));
+
 
   // init factory view here
   locator.registerFactory<CommunityViewModel>(() => CommunityViewModel());
@@ -99,4 +110,6 @@ void setUpLocatorService() {
       () => ForgetPassWordViewModel());
   locator.registerFactory<QuickCarbonViewModel>(() => QuickCarbonViewModel());
   locator.registerFactory<ForumViewModel>(() => ForumViewModel());
+  locator.registerFactory<AddForumViewModel>(() => AddForumViewModel());
+  locator.registerFactory<ExpandedForumViewModel>(() => ExpandedForumViewModel());
 }

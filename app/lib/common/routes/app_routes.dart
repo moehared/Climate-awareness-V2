@@ -3,6 +3,8 @@ import 'package:app/ui/views/add-post-view/add-posts-view.dart';
 import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 
 import 'package:app/ui/views/forget-password-view/forget-password-view.dart';
+import 'package:app/ui/views/forum-view/add-forum-view.dart';
+import 'package:app/ui/views/forum-view/expanded-forum-view.dart';
 import 'package:app/ui/views/forum-view/forum-view.dart';
 import 'package:app/ui/views/profile-view/chart-details-view.dart';
 import 'package:app/ui/views/profile-view/personalized-tips-view/personalized-tips-view.dart';
@@ -36,6 +38,19 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => AddPostView(
             postId: settings.arguments as String,
+          ),
+        );
+      case ExpandedForumView.routeName:
+        return MaterialPageRoute(
+          builder: (_) => ExpandedForumView(
+            forumId: settings.arguments as String,
+          ),
+        );
+
+      case AddForumView.routeName:
+        return MaterialPageRoute(
+          builder: (_) => AddForumView(
+            forumId: settings.arguments as String,
           ),
         );
       case PlayYoutubeVideo.routeName:
