@@ -100,7 +100,7 @@ class NetworkService {
     }
   }
 
-  Future<double> defaultCarbonFootPrintCalculatorByPostalCode({
+  Future<void> defaultCarbonFootPrintCalculatorByPostalCode({
     required String postalCode,
     required String income,
     required String size,
@@ -121,17 +121,65 @@ class NetworkService {
       });
 
       if (response.statusCode >= 400) {
-        return throw ('error occured. state code is ${response.statusCode}');
+        throw ('error occured. state code is ${response.statusCode}');
       }
 
       xml2Json.parse(response.body);
       final responseBody = xml2Json.toParker();
-      final decodedData = json.decode(responseBody);
-      print('DECODED DATA: $decodedData');
+      final decodedData = json.decode(responseBody) as Map<String,dynamic>;
+      print('DECODED DEFAULT DATA: $decodedData');
       final String result = decodedData['response']['result_grand_total'];
       debugPrint('result == $result');
+
+       final double electricityVal = double.tryParse(
+              '${decodedData['response']['result_electricity_direct']}') ??
+          0;
+      final double naturalVal = double.tryParse(
+              '${decodedData['response']['result_natgas_direct']}') ??
+          0;
+
+      final double shelter =
+          double.tryParse('${decodedData['response']['result_shelter']}') ?? 0;
+      final double heatingVal = double.tryParse(
+              '${decodedData['response']['result_heatingoil_direct']}') ??
+          0;
+      final energy = electricityVal + naturalVal + shelter + heatingVal;
+      print('energy == $energy');
+      final String grandTotal = decodedData['response']['result_grand_total'];
+      final String airTravel =
+          decodedData['response']['result_air_travel_direct'];
+      final String vehicle =
+          decodedData['response']['result_motor_vehicles_direct'];
+      final String transit =
+          decodedData['response']['result_publictrans_direct'];
+      final String service = decodedData['response']['result_services_total'];
+      final String food = decodedData['response']['result_food_total'];
+      final String waterUsage = decodedData['response']['result_watersewage'];
+      print('map values: ${questionaireMap.categoryMap}');
+      print('questionaire obj: ${questionaireMap.toString()}');
+      questionaireMap.result = questionaireMap.result.copyWith(
+        resultGrandTotal: double.tryParse(grandTotal)! / 12.0,
+        resultAirTravelDirect: double.tryParse(airTravel),
+        resultMotorVehiclesDirect: double.tryParse(vehicle),
+        resultPublictransDirect: double.tryParse(transit),
+        energy: energy,
+        id: 'id',
+        // category: questionaireMap.categoryMap,
+        resultServicesTotal: double.tryParse(service),
+        resultFoodTotal: double.tryParse(food),
+        resultWaterSewage: double.tryParse(waterUsage),
+      );
+
+      try {
+        // save data on location device;
+        SharePref.saveQuestionaire(QUESTIONAIRE_RESULT_BOX, questionaireMap);
+        // _questionaireBox.getQuestionaireResultBox
+        //     .put(questionaireMap.result.id, questionaireMap.result);
+      } catch (e) {
+        throw ('Could not persist data in local storage');
+      }
       // print('grand total is :$result\n runType is =  ${result.runtimeType}');
-      return double.parse(result) / 12.0;
+      // return double.parse(result) / 12.0;
     } catch (e) {
       throw ('error occurred $e');
     }

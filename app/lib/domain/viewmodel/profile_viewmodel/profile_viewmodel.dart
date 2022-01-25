@@ -99,10 +99,11 @@ class ProfileViewModel extends BaseViewModel {
     questionaireMap.setCategoryMap = questionaire;
 
     final result = res['result'];
+
     final resultObj = QuestionaireResult.fromJson(result);
     questionaireMap.result = resultObj;
     notifyListeners();
-    print('questionaire result == ${questionaireMap.categoryMap}');
+    print('questionaire result == ${questionaireMap.result}');
   }
 
   void navigateToQuestionaireView() {

@@ -43,7 +43,7 @@ class ChartDetailsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                ...ChartData.data
+                ...ChartData().data
                     .map(
                       (data) => Row(
                         children: [

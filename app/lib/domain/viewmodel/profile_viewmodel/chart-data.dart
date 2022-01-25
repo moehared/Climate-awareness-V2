@@ -2,7 +2,8 @@ import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 
 class ChartData {
-  static List<Data> data = [
+    
+  List<Data> data = [
     Data(
         name: 'Plane',
         percent: questionaireMap.result.resultAirTravelDirect?.toStringAsFixed(2) ?? '0',
@@ -37,6 +38,7 @@ class ChartData {
         icon: 'chart-data-icon/services.png',
         color: Colors.deepPurpleAccent),
   ];
+  
 }
 
 class Data {

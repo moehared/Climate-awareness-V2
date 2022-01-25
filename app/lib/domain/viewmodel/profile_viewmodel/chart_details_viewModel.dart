@@ -4,12 +4,16 @@ import 'package:app/ui/widgets/badge-widget/badge.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../../main.dart';
+
 class ChartDetailsViewModel extends BaseViewModel {
   int _touchedIndex = -1;
 
-  List<PieChartSectionData> get section => ChartData.data
+  List<PieChartSectionData> get section => ChartData().data
       .asMap()
       .map<int, PieChartSectionData>((index, data) {
+        print(
+            'questionaire result inside chart details == ${questionaireMap.result}');
         final isTouched = index == _touchedIndex;
 
         final radius = isTouched ? 100.0 : 80.0;
