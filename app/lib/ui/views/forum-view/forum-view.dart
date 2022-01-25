@@ -16,8 +16,7 @@ class ForumView extends StatefulWidget {
   State<ForumView> createState() => _ForumView();
 }
 
-class _ForumView extends State<ForumView> 
-with SingleTickerProviderStateMixin {
+class _ForumView extends State<ForumView> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<ForumViewModel>(
@@ -42,18 +41,12 @@ with SingleTickerProviderStateMixin {
                 ),
                 body: BackgroundImage(
                   backgroundImage: 'images/space2.png',
-                  child:  SingleChildScrollView(
+                  child: SingleChildScrollView(
                     child: Column(
-                    children: [
-                      Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                      ),
-                      AllForumViews()
-                    ],
-                  ),
+                      children: [
+                        AllForumViews(),
+                      ],
+                    ),
                   ),
                   // child: Column(
                   //   children: [
