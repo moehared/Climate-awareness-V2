@@ -68,6 +68,7 @@ class ExpandedForumWidget extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () => {
+                      //TODO put this logic into viewmodel as a function
                       if (model.userForumModel.userLikePost!
                           .containsKey(model.userForumModel.userId))
                         {

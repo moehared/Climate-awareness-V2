@@ -93,12 +93,35 @@ class ForumFirebaseFireStoreRepo
   Future<void> incrementLikePost(String forumId) async {
     //print("Liking ${userId}");
     final DocumentReference docRef = firestore.collection(FORUM_COLLECTION).doc(forumId);
-    docRef.update({"likeCount": FieldValue.increment(1)});
+     var someCheck = await firestore
+        .collection(FORUM_COLLECTION)
+        .doc(forumId)
+        .get()
+        .then((value) {
+      return value.data()!['likeCount'];
+    });
+    if (someCheck < 0 ) {
+      docRef.update({"likeCount": FieldValue.increment(1)});
+    } else {
+      docRef.update({"likeCount": FieldValue.increment(1)});
+    }
+    
   }
 
   Future<void> decrementLikePost(String forumId) async {
     final docRef = firestore.collection(FORUM_COLLECTION).doc(forumId);
-    docRef.update({"likeCount": FieldValue.increment(-1)});
+    var someCheck = await firestore.collection(FORUM_COLLECTION).doc(forumId).get().then((value) {
+      return  value.data()!['likeCount'];
+    });  
+    if(someCheck ==  -1  ){
+      
+      await docRef.update({"likeCount": FieldValue.increment(1)});
+    }
+    else{
+     await docRef.update({"likeCount": FieldValue.increment(-1)});
+    }
+
+ 
   }
 
 
