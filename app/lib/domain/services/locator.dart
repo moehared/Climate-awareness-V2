@@ -18,6 +18,8 @@ import 'package:app/domain/viewmodel/confirm_user_email_viewmodel/confirm_user_e
 
 import 'package:app/domain/viewmodel/community_viewmodel/community_viewmodel.dart';
 import 'package:app/domain/viewmodel/forget-password-viewmodel/forget-password-viewmodel.dart';
+import 'package:app/domain/viewmodel/forum-viewmodel.dart/add-forum-viewmodel.dart';
+import 'package:app/domain/viewmodel/forum-viewmodel.dart/expanded-forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/domain/viewmodel/location_viewmodel/location_viewmodel.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/chart_details_viewModel.dart';
@@ -103,5 +105,6 @@ void setUpLocatorService() {
       () => ForgetPassWordViewModel());
   locator.registerFactory<QuickCarbonViewModel>(() => QuickCarbonViewModel());
   locator.registerFactory<ForumViewModel>(() => ForumViewModel());
-
+  locator.registerFactory<AddForumViewModel>(() => AddForumViewModel());
+  locator.registerFactory<ExpandedForumViewModel>(() => ExpandedForumViewModel());
 }

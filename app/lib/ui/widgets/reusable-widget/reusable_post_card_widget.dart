@@ -1,16 +1,12 @@
 import 'dart:io';
-
 import 'package:app/common/utils/regex-patterns.dart';
 import 'package:app/common/utils/show_pop-up_menu.dart';
 import 'package:app/common/utils/url_link.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/ui/widgets/edit-post-widget/edit-post-widget.dart';
-
 import 'package:app/ui/widgets/youtube-player-widget/youtube-player.dart';
 import 'package:flutter/material.dart';
-
-
 import 'package:app/domain/models/user_post_model.dart';
 
 class ReusablePostCard extends StatelessWidget {
@@ -23,8 +19,6 @@ class ReusablePostCard extends StatelessWidget {
     required this.id,
     required this.uuid,
   });
-
-  
 
   void playYoutubeVideo() {
     final navigationServices = locator<NavigationService>();

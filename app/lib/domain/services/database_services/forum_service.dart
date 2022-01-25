@@ -30,8 +30,12 @@ class ForumDatabaseService {
     await _repository.update(post);
   }
 
-  Future <void> likePost(String postId) async {
-    await _repository.likePost(postId);
+  void likePost(String forumId) async {
+    await _repository.incrementLikePost(forumId);
+  }
+
+    Future<void> dislikePost(String forumId) async {
+    await _repository.decrementLikePost(forumId);
   }
 
   void createComment(UserFourmCommentModel userForumCommentModel) async {

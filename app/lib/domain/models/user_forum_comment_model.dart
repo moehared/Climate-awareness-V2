@@ -4,20 +4,24 @@ class UserFourmCommentModel {
   final String forumId;
   final String commentId;
   final String userId;
+  final String userName;
   final String userComment;
   final String date; 
   UserFourmCommentModel({
     required this.forumId,
     required this.commentId,
     required this.userId,
+    required this.userName,
     required this.userComment,
     required this.date,
   });
+ 
 
   UserFourmCommentModel copyWith({
     String? forumId,
     String? commentId,
     String? userId,
+    String? userName,
     String? userComment,
     String? date,
   }) {
@@ -25,6 +29,7 @@ class UserFourmCommentModel {
       forumId: forumId ?? this.forumId,
       commentId: commentId ?? this.commentId,
       userId: userId ?? this.userId,
+      userName: userName ?? this.userName,
       userComment: userComment ?? this.userComment,
       date: date ?? this.date,
     );
@@ -35,6 +40,7 @@ class UserFourmCommentModel {
       'forumId': forumId,
       'commentId': commentId,
       'userId': userId,
+      'userName': userName,
       'userComment': userComment,
       'date': date,
     };
@@ -45,6 +51,7 @@ class UserFourmCommentModel {
       forumId: map['forumId'] ?? '',
       commentId: map['commentId'] ?? '',
       userId: map['userId'] ?? '',
+      userName: map['userName'] ?? '',
       userComment: map['userComment'] ?? '',
       date: map['date'] ?? '',
     );
@@ -56,7 +63,7 @@ class UserFourmCommentModel {
 
   @override
   String toString() {
-    return 'UserFourmCommentModel(forumId: $forumId, commentId: $commentId, userId: $userId, userComment: $userComment, date: $date)';
+    return 'UserFourmCommentModel(forumId: $forumId, commentId: $commentId, userId: $userId, userName: $userName, userComment: $userComment, date: $date)';
   }
 
   @override
@@ -67,6 +74,7 @@ class UserFourmCommentModel {
       other.forumId == forumId &&
       other.commentId == commentId &&
       other.userId == userId &&
+      other.userName == userName &&
       other.userComment == userComment &&
       other.date == date;
   }
@@ -76,6 +84,7 @@ class UserFourmCommentModel {
     return forumId.hashCode ^
       commentId.hashCode ^
       userId.hashCode ^
+      userName.hashCode ^
       userComment.hashCode ^
       date.hashCode;
   }

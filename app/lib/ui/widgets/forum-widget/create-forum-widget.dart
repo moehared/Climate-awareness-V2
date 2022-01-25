@@ -1,3 +1,4 @@
+import 'package:app/domain/viewmodel/forum-viewmodel.dart/add-forum-viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/common/styles/style.dart';
@@ -10,7 +11,7 @@ class CreateUserForum extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final ForumViewModel model;
+  final AddForumViewModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -107,43 +108,13 @@ class CreateUserForum extends StatelessWidget {
                   : model.userForumModel.topic,
               items: model.topicList,
             ),
-              const SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
-              "Article URL",
-              style: Theme.of(context).textTheme.bodyText1,
+            const SizedBox(
+              height: 24,
             ),
-             TextFormField(
-              onChanged: (_) {
-                model.eventEmitted(true);
-              },
-              controller: model.urlController,
-              style: TextStyle(color: Colors.white),
-              textAlign: TextAlign.center,
-              decoration: userPostFormStyle.copyWith(
-                  hintText: "Enter a article URL or Video URL"),
-              validator: (url) {
-                url = "";
-                model.blacklistCheck(url);
-                if (model.blackListValidator) {
-                  return "URL contains illicit words";
-                }
-                model.checkArticleURL(url);
-                print("valid " + model.articleValid.toString());
-                if (!model.articleValid) {
-                  return "URL is not valid";
-                }
-              },
-              onSaved: (postUrl) {
-                model.setUserForumModel =
-                    model.userForumModel.copyWith(url: postUrl);
-              },
-            ),
-             const SizedBox(
-              height:24,
-            ),
-                  Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: BuildRoundedLongButton(
                 title: model.userForumModel.forumId.isEmpty
