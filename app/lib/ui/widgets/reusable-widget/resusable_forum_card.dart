@@ -179,7 +179,7 @@ class ResuableForumCard extends StatelessWidget {
                   const SizedBox(
                     width: 5.0,
                   ),
-                  Text(
+                  Text(forum.likeCount == 0 ? "Likes ": 
                     "Likes ${forum.likeCount}",
                     style: TextStyle(color: Colors.grey[600]),
                   ),
