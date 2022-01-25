@@ -74,32 +74,46 @@ class ExpandedForumViewModel extends BaseViewModel {
     _userForumCommentmodel = copy;
     notifyListeners();
   }
-  set setUserForumModel(UserForumModel copy){
+
+  set setUserForumModel(UserForumModel copy) {
     _userForumModel = copy;
     notifyListeners();
   }
 
   void likedPost() {
     final currentUser = _userAuthService.currentUser.get()?.uid;
-    if(currentUser == null){
-      return ;
-    }
-    // isLikePressed = true; 
-    setUserForumModel = userForumModel.copyWith(userLikePost: {currentUser: true});
-    _userForumService.updatePost(userForumModel);
-    _userForumService.likePost(userForumModel.forumId);
-  }
-
-  void dislikePost(){
-       final currentUser = _userAuthService.currentUser.get()?.uid;
     if (currentUser == null) {
       return;
     }
+    // isLikePressed = true;
+    setUserForumModel =
+        userForumModel.copyWith(userLikePost: {currentUser: true});
+    _userForumService.updatePost(userForumModel);
+    var lengthOfUserLikePost = userForumModel.userLikePost!.length;
+  setUserForumModel =
+        userForumModel.copyWith(likeCount: lengthOfUserLikePost);
+    _userForumService.updatePost(userForumModel);
+   // _userForumService.likePost(userForumModel.forumId);
+    notifyListeners();
+  }
 
-    // isLikePressed = false;
-     setUserForumModel = userForumModel.copyWith(userLikePost:{});
-     _userForumService.updatePost(userForumModel);
-     _userForumService.dislikePost(userForumModel.forumId);
+  void dislikePost() {
+    final currentUser = _userAuthService.currentUser.get()?.uid;
+  
+    if (currentUser == null) {
+      return;
+    }
+    setUserForumModel = userForumModel.copyWith(userLikePost: {});
+    _userForumService.updatePost(userForumModel);
+    var lengthOfUserLikePost = userForumModel.userLikePost!.length;
+    // if(userForumModel.likeCount < 0){
+    //   setUserForumModel = userForumModel.copyWith(likeCount: 0);
+    //   _userForumService.updatePost(userForumModel);
+    // }
+    setUserForumModel = userForumModel.copyWith(likeCount:lengthOfUserLikePost);
+    _userForumService.updatePost(userForumModel);
+    //_userForumService.dislikePost(userForumModel.forumId);
+    notifyListeners();
   }
 
   void blacklistCheck(String userInput) async {
@@ -116,8 +130,9 @@ class ExpandedForumViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  bool isLikedPost(){
-    return userForumModel.userLikePost!.containsKey(_userAuthService.currentUser.get()?.uid);
+  bool isLikedPost() {
+    return userForumModel.userLikePost!
+        .containsKey(_userAuthService.currentUser.get()?.uid);
   }
 
   //submit Commenter

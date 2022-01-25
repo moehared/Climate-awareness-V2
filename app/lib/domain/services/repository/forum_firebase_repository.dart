@@ -100,7 +100,7 @@ class ForumFirebaseFireStoreRepo
         .then((value) {
       return value.data()!['likeCount'];
     });
-    if (someCheck < 0 ) {
+    if (someCheck == -1 ) {
       docRef.update({"likeCount": FieldValue.increment(1)});
     } else {
       docRef.update({"likeCount": FieldValue.increment(1)});
@@ -113,7 +113,7 @@ class ForumFirebaseFireStoreRepo
     var someCheck = await firestore.collection(FORUM_COLLECTION).doc(forumId).get().then((value) {
       return  value.data()!['likeCount'];
     });  
-    if(someCheck ==  -1  ){
+    if( await someCheck ==  -1  ){
       
       await docRef.update({"likeCount": FieldValue.increment(1)});
     }

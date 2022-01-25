@@ -109,6 +109,7 @@ class ResuableForumCard extends StatelessWidget {
                 Text(
                   "Topic: ${forum.topic}",
                   style: TextStyle(fontSize: 10),
+                  maxLines: 1,
                 ),
               ]),
                  const SizedBox(
@@ -143,12 +144,16 @@ class ResuableForumCard extends StatelessWidget {
                 height: 12,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     "${forum.date}",
                     style: TextStyle(
                         fontSize: 10, color: Colors.black.withOpacity(0.5)),
+                  )
+                  ,
+                  const SizedBox(
+                    width: 5,
                   )
                 ],
               ),
