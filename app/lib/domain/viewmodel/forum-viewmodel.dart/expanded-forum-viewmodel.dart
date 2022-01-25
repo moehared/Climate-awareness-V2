@@ -84,7 +84,7 @@ class ExpandedForumViewModel extends BaseViewModel {
     if(currentUser == null){
       return ;
     }
-    isLikePressed = true; 
+    // isLikePressed = true; 
     setUserForumModel = userForumModel.copyWith(userLikePost: {currentUser: true});
     _userForumService.updatePost(userForumModel);
     _userForumService.likePost(userForumModel.forumId);
@@ -94,9 +94,9 @@ class ExpandedForumViewModel extends BaseViewModel {
        final currentUser = _userAuthService.currentUser.get()?.uid;
     if (currentUser == null) {
       return;
-     
     }
-     isLikePressed = false;
+
+    // isLikePressed = false;
      setUserForumModel = userForumModel.copyWith(userLikePost:{});
      _userForumService.updatePost(userForumModel);
      _userForumService.dislikePost(userForumModel.forumId);

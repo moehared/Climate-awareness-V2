@@ -30,26 +30,26 @@ class ResuableForumCard extends StatelessWidget {
     final media = MediaQuery.of(context).size;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       //TODO: Add profile picture
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextButton(
-            style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
-            onPressed: () => showPopUpMenu(
-                child: ShowEditForumPopUpMenu(
-                  forumId: forum.forumId,
-                  userID: forum.userId,
-                ),
-                context: context),
-            child: Text(
-              'Edit Forum Post',
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    backgroundColor: Colors.pink,
-                  ),
-            ),
-          ),
-        ],
-      ),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        const SizedBox(
+          height: 15,
+        )
+        //   TextButton(
+        //     style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
+        //     onPressed: () => showPopUpMenu(
+        //         child: ShowEditForumPopUpMenu(
+        //           forumId: forum.forumId,
+        //           userID: forum.userId,
+        //         ),
+        //         context: context),
+        //     child: Text(
+        //       'Edit Forum Post',
+        //       style: Theme.of(context).textTheme.bodyText1!.copyWith(
+        //             backgroundColor: Colors.pink,
+        //           ),
+        //     ),
+        //   ),
+      ]),
       //This is for the background]
       GestureDetector(
         onTap: () => goToExpandedView(),
@@ -70,6 +70,9 @@ class ResuableForumCard extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  const SizedBox(
+                    width: 20.0,
+                  ),
                   CircleAvatar(
                     radius: 20.0,
                     backgroundColor: Colors.grey[200],
@@ -83,26 +86,85 @@ class ResuableForumCard extends StatelessWidget {
                       Text(forum.userDisplayName),
                     ],
                   ),
+                  const SizedBox(
+                    width: 185.0,
+                  ),
                   IconButton(
-                      onPressed: () => {}, icon: const Icon(Icons.more_horiz))
+                      onPressed: () => showPopUpMenu(
+                          child: ShowEditForumPopUpMenu(
+                            forumId: forum.forumId,
+                            userID: forum.userId,
+                          ),
+                          context: context),
+                      icon: const Icon(Icons.more_horiz))
                 ],
               ),
               const SizedBox(
-                height: 20,
+                height: 2.5,
+              ),
+              Row(
+                
+                children: [
+                  const SizedBox(width: 20.0,),
+                Text(
+                  "Topic: ${forum.topic}",
+                  style: TextStyle(fontSize: 10),
+                ),
+              ]),
+                 const SizedBox(
+                height: 2.5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("${forum.title}")],
+                children: [
+                  Text(
+                    "${forum.title}",
+                    style:
+                        TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                  )
+                ],
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Expanded(
+                      child: Text(
+                    "${forum.description}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 12),
+                  ))
+                ],
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "${forum.date}",
+                    style: TextStyle(
+                        fontSize: 10, color: Colors.black.withOpacity(0.5)),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 20.0,
+                  ),
                   Container(
                     padding: const EdgeInsets.all(4.0),
                     decoration: BoxDecoration(
-                        color: Colors.grey, shape: BoxShape.circle),
+                        color: Colors.grey[200], shape: BoxShape.circle),
                     child: const Icon(
                       Icons.favorite,
                       size: 10.0,
@@ -117,14 +179,27 @@ class ResuableForumCard extends StatelessWidget {
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                   const SizedBox(
-                    width: 5.0,
+                    width: 15.0,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200], shape: BoxShape.circle),
+                    child: const Icon(
+                      Icons.comment,
+                      size: 10.0,
+                      color: Colors.red,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 4.0,
                   ),
                   Text(
-                    "Comment ${forum.commentCount}",
+                    "Comments ${forum.commentCount}",
                     style: TextStyle(color: Colors.grey[600]),
                   )
                 ],
-              )
+              ),
             ],
           ),
         ),

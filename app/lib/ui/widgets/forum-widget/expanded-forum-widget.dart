@@ -67,8 +67,32 @@ class ExpandedForumWidget extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () => model.likedPost(),
-                    icon:  model.isLikedPost() ? Icon(Icons.favorite,color: Colors.red,) :  Icon(Icons.favorite_border_outlined, color: Colors.black,),
+                    onPressed: () => {
+                      if (model.userForumModel.userLikePost!
+                          .containsKey(model.userForumModel.userId))
+                        {
+                          if (model.userForumModel
+                                  .userLikePost![model.userForumModel.userId] ==
+                              true)
+                            {
+                              model.dislikePost()
+                            }
+                        }
+                        else{
+                          model.likedPost()
+                        }
+
+                    },
+                    //model.likedPost(),
+                    icon: model.isLikedPost()
+                        ? Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          )
+                        : Icon(
+                            Icons.favorite_border_outlined,
+                            color: Colors.black,
+                          ),
                     iconSize: 30,
                   ),
                   Text(
@@ -85,7 +109,6 @@ class ExpandedForumWidget extends StatelessWidget {
             ],
           ),
         ),
-
         const SizedBox(
           height: 10,
         ),
@@ -131,10 +154,10 @@ class ExpandedForumWidget extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-
         UserCommentForumStream(
-          fourmId: !model.userForumModel.forumId.isEmpty ? model.userForumModel.forumId : " "
-          ),
+            fourmId: !model.userForumModel.forumId.isEmpty
+                ? model.userForumModel.forumId
+                : " "),
       ],
     );
   }
