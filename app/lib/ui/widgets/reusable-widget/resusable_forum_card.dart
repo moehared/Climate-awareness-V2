@@ -116,6 +116,9 @@ class ResuableForumCard extends StatelessWidget {
                     "Likes ${forum.likeCount}",
                     style: TextStyle(color: Colors.grey[600]),
                   ),
+                  const SizedBox(
+                    width: 5.0,
+                  ),
                   Text(
                     "Comment ${forum.commentCount}",
                     style: TextStyle(color: Colors.grey[600]),
