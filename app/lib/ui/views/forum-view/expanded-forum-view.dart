@@ -6,11 +6,11 @@ import 'package:app/domain/viewmodel/forum-viewmodel.dart/forum-viewmodel.dart';
 import 'package:app/ui/widgets/forum-widget/create-forum-widget.dart';
 import 'package:app/ui/widgets/forum-widget/expanded-forum-widget.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
+import 'package:app/ui/widgets/user-forum-stream-widget/user-forum-comment-stream.dart';
 import 'package:flutter/material.dart';
 
 //TODO: Add to route and add to locator
 class ExpandedForumView extends StatelessWidget {
-
   static const routeName = '/ExpandedForumView';
 
   ExpandedForumView({
@@ -36,15 +36,18 @@ class ExpandedForumView extends StatelessWidget {
         body: Container(
           //backgroundImage: "images/space2.png",
           child: SafeArea(
+          
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //Text("this is the expanded View ${forumId}"),
-                  ExpandedForumWidget(model: model),
-                  
-                  
+                  ExpandedForumWidget(model: model,),
+                  UserCommentForumStream(
+                      fourmId: !model.userForumModel.forumId.isEmpty
+                          ? model.userForumModel.forumId
+                          : " "),
                 ],
               ),
             ),

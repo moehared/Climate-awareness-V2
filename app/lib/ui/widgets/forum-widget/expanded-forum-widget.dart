@@ -139,10 +139,10 @@ class ExpandedForumWidget extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        UserCommentForumStream(
-            fourmId: !model.userForumModel.forumId.isEmpty
-                ? model.userForumModel.forumId
-                : " "),
+        // UserCommentForumStream(
+        //     fourmId: !model.userForumModel.forumId.isEmpty
+        //         ? model.userForumModel.forumId
+        //         : " "),
       ],
     );
   }
