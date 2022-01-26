@@ -34,10 +34,10 @@ class UserCommentForumStream extends StatelessWidget {
           if (!snapshot.hasData) {
             return ErrorTextWidget(errorMsg: 'No Data exists');
           }
-          print("This is a ${snapshot.data!.docs}");
-          for (var item in snapshot.data!.docs) {
-            print(item.data());
-          }
+          //print("This is a ${snapshot.data!.docs}");
+          // for (var item in snapshot.data!.docs) {
+          //   print(item.data());
+          // }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: Loading());
           }
