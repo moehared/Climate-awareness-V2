@@ -31,6 +31,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [Authentication Flow Chart](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/system%20design%20and%20architecture/user-flowchart.pdf)
 * [Non-Tested Lofi UI](https://github.com/moehared/Climate-awareness-V2/tree/main/design/Lofi_ui_)
 * [Scrum 2 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%202.pdf)
+* [Code Quality Review Report](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20closing/Code%20Quality%20Review%20report.pdf)
 
 
 # Project vlogs
