@@ -32,6 +32,9 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [Non-Tested Lofi UI](https://github.com/moehared/Climate-awareness-V2/tree/main/design/Lofi_ui_)
 
 
+### Project Closing
+* [Code Quality Review Report](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%204.pdf)
+
 ### Scrum meeting
 * [Scrum 1 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%201.pdf)
 * [Scrum 2 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%202.pdf)
@@ -43,8 +46,7 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [project vlog video #3](https://youtu.be/F_N_AO7fZk8) due dec 3, 2021
 * [project vlog video #4](https://youtu.be/Ae5_bH_JNj4) due feb 1, 2022
 
-### Project Closing
-* [Code Quality Review Report](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%204.pdf)
+
 
 ## License 
 
