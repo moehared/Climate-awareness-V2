@@ -51,6 +51,7 @@ class QuickCarbonView extends StatelessWidget {
                 child: PredictionPlaceWidget(
                   onSelected: (city) => model.onSelectedCity(city),
                   predictionPlace: model.placeList,
+                  isBusy: model.viewState == ViewState.BUSY && !model.isCalculatingCarbon,
                 ),
               ),
               FittedBox(
@@ -93,7 +94,7 @@ class QuickCarbonView extends StatelessWidget {
               ElevatedButtonWidget(
                 label: 'Calculate Carbon',
                 onPress: model.quickCarbonEstimate,
-                isBusy: model.viewState == ViewState.BUSY,
+                isBusy: model.viewState == ViewState.BUSY && model.isCalculatingCarbon,
               ),
               TextButtonWidget(
                 onPress: model.refineEstimate,

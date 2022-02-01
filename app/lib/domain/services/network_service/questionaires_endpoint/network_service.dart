@@ -14,6 +14,7 @@ import 'package:app/domain/services/dialog_service/dialog_service.dart';
 import 'package:app/domain/services/local_db/share_pref/share_pref.dart';
 
 import 'package:app/domain/services/locator.dart';
+import 'package:app/domain/viewmodel/quick-carbon-viewmodel/quick-carbon-viewmodel.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -21,6 +22,8 @@ import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 // const GEOAPIFYENDPOINT = 'https://api.geoapify.com/v1/geocode/autocomplete?text=Mosco&apiKey';
+const NOMINATIM_OPENSTREETMAP_API =
+    'https://nominatim.openstreetmap.org/search.php?q=';
 const refinedEndpoint = 'https://apis.berkeley.edu/coolclimate/footprint?';
 const url =
     '$refinedEndpoint=3&input_location=Canada&input_income=6&input_size=3&input_footprint_transportation_miles1=0&input_footprint_transportation_mpg1=0&input_footprint_transportation_fuel1=0';
@@ -39,6 +42,7 @@ const alternativeEndPoint =
 
 class NetworkService {
   final _dialogService = locator<DiaglogService>();
+
   // final _questionaireBox = locator<Boxes<QuestionaireResult>>();
   Future getCarbonApi() async {
     late final http.Response response;
@@ -65,38 +69,71 @@ class NetworkService {
     }
   }
 
+  // Future<List<SuggestionPlace>> fetchPlaces(String city) async {
+  //   final sessionToken = Uuid().v4();
+  //   late final http.Response response;
+  //   late final List<SuggestionPlace> places;
+  //   // final url =
+  //   //     '$placesEndPoint&input=$city&types=(cities)&components=country:ca&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
+
+  //   final openStreetApi =
+  //       '$NOMINATIM_OPENSTREETMAP_API$city&format=jsonv2';
+  //   print('open map= $openStreetApi');
+  //   final URL = Uri.parse(openStreetApi);
+
+  //   try {
+  //     response = await http.get(URL);
+  //     print('response is ${response.body}');
+
+  //     if (response.statusCode == 200) {
+  //       final decodedData = json.decode(response.body);
+  //       if (decodedData['status'] as String == 'ZERO_RESULTS') {
+  //         print('no city found');
+
+  //         throw ('ZERO_RESULTS');
+  //       }
+  //       final list = decodedData['predictions'] as List<dynamic>;
+  //       // print('list is $list');
+  //       places = list.map<SuggestionPlace>((e) {
+  //         // print('place_id ----> ${e['place_id']}\n name ----> ${e['description']} ');
+  //         return SuggestionPlace(
+  //           placeID: e['place_id'],
+  //           name: e['description'],
+  //         );
+  //       }).toList();
+  //     }
+  //     return places;
+  //   } catch (e) {
+  //     throw (e);
+  //   }
+  // }
+
   Future<List<SuggestionPlace>> fetchPlaces(String city) async {
-    final sessionToken = Uuid().v4();
     late final http.Response response;
-    late final List<SuggestionPlace> places;
-    final url =
-        '$placesEndPoint&input=$city&types=(cities)&components=country:ca&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
-    final URL = Uri.parse(url);
+    List<SuggestionPlace> places = [];
+    final openStreetApi = '$NOMINATIM_OPENSTREETMAP_API$city&format=jsonv2';
+    print('open map= $openStreetApi');
+    final URL = Uri.parse(openStreetApi);
 
     try {
       response = await http.get(URL);
-      print('response is ${response.body}');
-
+      // print('response is ${response.body}');
+      // print('\n');
       if (response.statusCode == 200) {
-        final decodedData = json.decode(response.body);
-        if (decodedData['status'] as String == 'ZERO_RESULTS') {
-          print('no city found');
-
-          throw ('ZERO_RESULTS');
-        }
-        final list = decodedData['predictions'] as List<dynamic>;
-        // print('list is $list');
-        places = list.map<SuggestionPlace>((e) {
-          // print('place_id ----> ${e['place_id']}\n name ----> ${e['description']} ');
+        final decodedData = json.decode(response.body) as List<dynamic>;
+        debugPrint('decodedData is $decodedData');
+        places = decodedData.asMap().keys.map((index) {
           return SuggestionPlace(
-            placeID: e['place_id'],
-            name: e['description'],
-          );
+              placeID: decodedData[index]['place_id'],
+              name: decodedData[index]['display_name'],
+              lat: decodedData[index]['lat'],
+              lon: decodedData[index]['lon'],
+              osmId: decodedData[index]['osm_id']);
         }).toList();
       }
       return places;
     } catch (e) {
-      throw (e);
+      throw ('Could not find suggestion place $e');
     }
   }
 
@@ -126,12 +163,12 @@ class NetworkService {
 
       xml2Json.parse(response.body);
       final responseBody = xml2Json.toParker();
-      final decodedData = json.decode(responseBody) as Map<String,dynamic>;
+      final decodedData = json.decode(responseBody) as Map<String, dynamic>;
       print('DECODED DEFAULT DATA: $decodedData');
       final String result = decodedData['response']['result_grand_total'];
       debugPrint('result == $result');
 
-       final double electricityVal = double.tryParse(
+      final double electricityVal = double.tryParse(
               '${decodedData['response']['result_electricity_direct']}') ??
           0;
       final double naturalVal = double.tryParse(
@@ -211,40 +248,42 @@ class NetworkService {
     }
   }
 
-  Future<SelectedCity> getPlaceDetails(String placeID) async {
-    late final http.Response response;
-    var place = SelectedCity(city: '', zipCode: '', country: '');
-    final sessionToken = Uuid().v4();
-    //fields=address_component&
-    final urlEndPoint =
-        // 'https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyANoPTW9_6_FU5BW_KhkHENGP1XMxLzx1c&place_id=$placeID';
-        '$PLACE_DETAILS_ENDPOINT?place_id=$placeID&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
 
-    try {
-      final url = Uri.parse(urlEndPoint);
-      response = await http.get(url);
-      final result = json.decode(response.body);
-      // debugPrint('decoded data: $result');
-      // debugPrint('place detail geometry: ${result['result']['geometry']}');
 
-      final geometry = result['result']['geometry'];
-      final lat = geometry['location']['lat'];
-      final lng = geometry['location']['lng'];
+  // Future<SelectedCity> getPlaceDetails(String placeID) async {
+  //   late final http.Response response;
+  //   var place = SelectedCity(city: '', zipCode: '', country: '');
+  //   final sessionToken = Uuid().v4();
+  //   //fields=address_component&
+  //   final urlEndPoint =
+  //       // 'https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyANoPTW9_6_FU5BW_KhkHENGP1XMxLzx1c&place_id=$placeID';
+  //       '$PLACE_DETAILS_ENDPOINT?place_id=$placeID&key=$GOOGLE_API_KEY&sessiontoken=$sessionToken';
 
-      // debugPrint('lat == $lat');
-      // debugPrint('lng == $lng');
+  //   try {
+  //     final url = Uri.parse(urlEndPoint);
+  //     response = await http.get(url);
+  //     final result = json.decode(response.body);
+  //     // debugPrint('decoded data: $result');
+  //     // debugPrint('place detail geometry: ${result['result']['geometry']}');
 
-      final placeMark = await placemarkFromCoordinates(lat, lng);
-      place = place.copyWith(zipCode: placeMark[0].postalCode);
-      place = place.copyWith(city: placeMark[0].locality);
-      place = place.copyWith(country: placeMark[0].country);
+  //     final geometry = result['result']['geometry'];
+  //     final lat = geometry['location']['lat'];
+  //     final lng = geometry['location']['lng'];
 
-      debugPrint('place details: ${place.toString()}');
-      return place;
-    } catch (e) {
-      throw ('could not fetch place details: $e');
-    }
-  }
+  //     // debugPrint('lat == $lat');
+  //     // debugPrint('lng == $lng');
+
+  //     final placeMark = await placemarkFromCoordinates(lat, lng);
+  //     place = place.copyWith(zipCode: placeMark[0].postalCode);
+  //     place = place.copyWith(city: placeMark[0].locality);
+  //     place = place.copyWith(country: placeMark[0].country);
+
+  //     debugPrint('place details: ${place.toString()}');
+  //     return place;
+  //   } catch (e) {
+  //     throw ('could not fetch place details: $e');
+  //   }
+  // }
 
   Future getRefinedCarbonFootprint() async {
     var utilitiesUrlParam = '';
