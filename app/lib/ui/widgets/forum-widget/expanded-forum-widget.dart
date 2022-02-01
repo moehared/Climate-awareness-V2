@@ -67,23 +67,7 @@ class ExpandedForumWidget extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () => {
-                      //TODO put this logic into viewmodel as a function
-                      if (model.userForumModel.userLikePost!
-                          .containsKey(model.userForumModel.userId))
-                        {
-                          if (model.userForumModel
-                                  .userLikePost![model.userForumModel.userId] ==
-                              true)
-                            {
-                              model.dislikePost()
-                            }
-                        }
-                        else{
-                          model.likedPost()
-                        }
-
-                    },
+                    onPressed: () => model.likeThePost(),
                     //model.likedPost(),
                     icon: model.isLikedPost()
                         ? Icon(
@@ -155,10 +139,10 @@ class ExpandedForumWidget extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        UserCommentForumStream(
-            fourmId: !model.userForumModel.forumId.isEmpty
-                ? model.userForumModel.forumId
-                : " "),
+        // UserCommentForumStream(
+        //     fourmId: !model.userForumModel.forumId.isEmpty
+        //         ? model.userForumModel.forumId
+        //         : " "),
       ],
     );
   }

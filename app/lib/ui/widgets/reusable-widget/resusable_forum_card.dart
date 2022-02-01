@@ -87,7 +87,7 @@ class ResuableForumCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    width: 185.0,
+                    width: 150.0,
                   ),
                   IconButton(
                       onPressed: () => showPopUpMenu(

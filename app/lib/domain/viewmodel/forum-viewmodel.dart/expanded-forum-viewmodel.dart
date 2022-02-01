@@ -57,11 +57,11 @@ class ExpandedForumViewModel extends BaseViewModel {
     if (forumId.isEmpty) {
       return;
     }
-    print("This is the forumId Hello ${forumId}");
+   // print("This is the forumId Hello ${forumId}");
     _userForumModel = await _userForumService.fetchPostData(forumId);
     setUserCommentModel = userCommentModel.copyWith(forumId: forumId);
-    print(
-        "This is the forumId Saved to comment model ${userCommentModel.forumId}");
+    // print(
+    //     "This is the forumId Saved to comment model ${userCommentModel.forumId}");
     notifyListeners();
   }
 
@@ -85,34 +85,54 @@ class ExpandedForumViewModel extends BaseViewModel {
     if (currentUser == null) {
       return;
     }
+    //print("This is the current user ${currentUser}");
+    Map<String, bool> likeMap = {currentUser: true};
     // isLikePressed = true;
-    setUserForumModel =
-        userForumModel.copyWith(userLikePost: {currentUser: true});
+    userForumModel.userLikePost!.addAll(likeMap);
+    //print("This is the userLikePost ${userForumModel.userLikePost}");
+
     _userForumService.updatePost(userForumModel);
     var lengthOfUserLikePost = userForumModel.userLikePost!.length;
-  setUserForumModel =
+    setUserForumModel =
         userForumModel.copyWith(likeCount: lengthOfUserLikePost);
     _userForumService.updatePost(userForumModel);
-   // _userForumService.likePost(userForumModel.forumId);
     notifyListeners();
+  }
+
+  void likeThePost() {
+    final currentUser = _userAuthService.currentUser.get()?.uid;
+    if (currentUser == null) {
+      return;
+    }
+    if (userForumModel.userLikePost!.containsKey(currentUser)) {
+      if (userForumModel.userLikePost![currentUser] == true) {
+       // print("Or do i get to 80");
+        dislikePost();
+      }
+    } else {
+      //print("do i get to this spot 84");
+      likedPost();
+    }
   }
 
   void dislikePost() {
     final currentUser = _userAuthService.currentUser.get()?.uid;
-  
+    var lengthOfUserLikePost;
     if (currentUser == null) {
       return;
     }
-    setUserForumModel = userForumModel.copyWith(userLikePost: {});
+
+    if (userForumModel.userLikePost!.containsKey(currentUser)) {
+      userForumModel.userLikePost!
+          .removeWhere((key, value) => key == currentUser);
+      _userForumService.updatePost(userForumModel);
+      lengthOfUserLikePost = userForumModel.userLikePost!.length;
+    }
+
+    setUserForumModel =
+        userForumModel.copyWith(likeCount: lengthOfUserLikePost);
     _userForumService.updatePost(userForumModel);
-    var lengthOfUserLikePost = userForumModel.userLikePost!.length;
-    // if(userForumModel.likeCount < 0){
-    //   setUserForumModel = userForumModel.copyWith(likeCount: 0);
-    //   _userForumService.updatePost(userForumModel);
-    // }
-    setUserForumModel = userForumModel.copyWith(likeCount:lengthOfUserLikePost);
-    _userForumService.updatePost(userForumModel);
-    //_userForumService.dislikePost(userForumModel.forumId);
+
     notifyListeners();
   }
 
