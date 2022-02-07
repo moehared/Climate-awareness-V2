@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:app/common/constant.dart';
+import 'package:app/common/utils/optional.dart';
 import 'package:app/domain/models/questionaire-model/category.dart' as cat;
 import 'package:app/domain/models/questionaire-model/concrete-objects/food.dart';
 import 'package:app/domain/models/questionaire-model/concrete-objects/goods_services.dart';
@@ -22,16 +25,25 @@ import 'package:app/ui/views/user-registeration-view/user_registeration_view.dar
 import 'package:app/ui/widgets/user-setting-menu/user_setting_menu.dart';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileViewModel extends BaseViewModel {
+  static const IMAGE_KEY = '/IMAGE_KEY';
+  static const USER_INFO = 'USER_INFO ';
   final _authService = locator<AuthService>();
   final _navService = locator<NavigationService>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _userAccountDb = locator<AccountDatabaseService>();
+  final _auth = locator<AuthService>();
+
+  UserModel? _userModel;
+  File? _image;
+  final imagePicker = ImagePicker();
   // final _questionaireBox = locator<Boxes<QuestionaireResult>>();
-  UserModel? user;
   // all getters
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+  File? get image => _image;
+  UserModel? get user => _userModel;
 
   // all methods
 
@@ -50,64 +62,47 @@ class ProfileViewModel extends BaseViewModel {
     );
   }
 
-  // dynamic? getTipDataObj(int index) {
-  //   if (questionaireMap.result.category == null) return;
-  //   switch (index) {
-  //     case 0:
-  //       return questionaireMap.result.category!.values.elementAt(0)
-  //           as Utilities;
-  //     case 1:
-  //       return questionaireMap.result.category!.values.elementAt(1)
-  //           as Transportation;
-  //     case 2:
-  //       return questionaireMap.result.category!.values.elementAt(2) as Food;
-  //     case 3:
-  //       return questionaireMap.result.category!.values.elementAt(3)
-  //           as GoodsServices;
-  //     default:
-  //       return null;
-  //   }
-  // }
-
-//TODO: save user carbon footprint locally. so we avoid making too many calls to our DB
   void initState() async {
-    final Map<String, cat.Category> questionaire = {};
-    // user = await _userAccountDb
-    //     .fetchUserModel(_authService.currentUser.get()!.uid);
-    // notifyListeners();
-    // debugPrint('user is updated in profile viewmodel ${user?.c02Score}');
-    final res = await SharePref.getData(QUESTIONAIRE_RESULT_BOX);
+    await fetchUserInfo();
+    await fetchQuestionaireResult();
+    loadImage();
+  }
 
-    debugPrint('result profile: $res\n');
-    debugPrint('result2: ${res.runtimeType}');
+  Future<void> fetchQuestionaireResult() async {
+    final Map<String, cat.Category> questionaire = {};
+    final res = await SharePref.getData(QUESTIONAIRE_RESULT_BOX);
+    if (res == null) return;
+    debugPrint('result Questionaire: $res\n');
     print('res == $res');
     final category = res['category'];
     final utilities = Utilities.fromJson(category['Q1']);
     final transportation = Transportation.fromJson(category['Q2']);
     final food = Food.fromJson(category['Q3']);
     final goodsService = GoodsServices.fromJson(category['Q4']);
-
-    print('utilities == $utilities');
-    print('transporation == $transportation');
-    print('food: $food');
-    print('goodsService: $goodsService');
     questionaire.putIfAbsent('Q1', () => utilities);
     questionaire.putIfAbsent('Q2', () => transportation);
     questionaire.putIfAbsent('Q3', () => food);
     questionaire.putIfAbsent('Q4', () => goodsService);
-    // ignore: unnecessary_statements
     questionaireMap.setCategoryMap = questionaire;
-
     final result = res['result'];
-
     final resultObj = QuestionaireResult.fromJson(result);
     questionaireMap.result = resultObj;
     notifyListeners();
-    print('questionaire result == ${questionaireMap.result}');
+  }
+
+  Future<void> fetchUserInfo() async {
+    final userInfo = await SharePref.getData(USER_INFO) ?? null;
+    debugPrint('User info: $userInfo');
+    if (_auth.currentUser.isPresent() && userInfo == null) {
+      debugPrint('logged in user: ${_auth.currentUser.get()!}');
+      _userModel =
+          await _userAccountDb.fetchUserModel(_auth.currentUser.get()!.uid);
+    } else {
+      _userModel = UserModel.fromMap(userInfo);
+    }
   }
 
   void navigateToQuestionaireView() {
-    print('go to question view');
     _navService.navigateTo(QuickCarbonView.routeName);
   }
 
@@ -117,5 +112,24 @@ class ProfileViewModel extends BaseViewModel {
 
   void navigateToViewAll() {
     _navService.navigateTo(PersonalizedViewAll.PERSONALIZED_VIEW_ALL);
+  }
+
+  void loadImage() async {
+    final imageString = await SharePref.getData(IMAGE_KEY);
+
+    if (imageString != null) {
+      _image = File(imageString);
+      notifyListeners();
+    }
+  }
+
+  void uploadImageOrOpenCamera([bool isUpload = false]) async {
+    final pickedFile = await imagePicker.pickImage(
+        source: isUpload ? ImageSource.gallery : ImageSource.camera);
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      notifyListeners();
+      SharePref.saveQuestionaire(IMAGE_KEY, _image!.path);
+    }
   }
 }
