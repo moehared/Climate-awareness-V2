@@ -16,6 +16,8 @@ class ExpandedForumViewModel extends BaseViewModel {
   final _accountService = locator<AccountDatabaseService>();
   final _userAuthService = locator<AuthService>();
   final _commentController = TextEditingController();
+  final _editCommentController = TextEditingController();
+
   var _blackList = false;
   var formId = "";
   bool isLikePressed = false;
@@ -25,6 +27,7 @@ class ExpandedForumViewModel extends BaseViewModel {
 
   //textEditingController
   TextEditingController get commentContoller => _commentController;
+  TextEditingController get editCommentController => _editCommentController;
 
   //getters
   bool get blackListValidator => _blackList;
@@ -177,4 +180,19 @@ class ExpandedForumViewModel extends BaseViewModel {
     // _navService.pop();
     // print("pop service?");
   }
+
+  Future<String> getComment(String forumId, String commentId) async  {
+
+    final  String comment;
+    Future<UserFourmCommentModel> commentModel =   _userForumService.fetchCommentData(forumId, commentId);
+   
+    comment =  await commentModel.then((value) => value.userComment);
+    
+    print("This is the comment ${comment}");
+    notifyListeners();
+    return  comment;
+  }
+
+
+
 }

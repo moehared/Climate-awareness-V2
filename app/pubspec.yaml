@@ -49,6 +49,7 @@ dependencies:
   image_picker: ^0.8.4+4
   image_picker_for_web: ^2.1.4
   intl: ^0.17.0
+  material_floating_search_bar: ^0.3.6
   path_provider: ^2.0.8
   provider: ^6.0.1
   responsive_framework: ^0.1.4

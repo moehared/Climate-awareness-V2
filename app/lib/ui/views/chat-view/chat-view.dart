@@ -1,6 +1,7 @@
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
-import 'package:app/domain/viewmodel/chat_viewmodel/chat_viewmodel.dart';
+import 'package:app/domain/viewmodel/user_chat_viewmodel/user_chat_viewmodel.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
+import 'package:app/ui/widgets/search-bar-widget.dart';
 import 'package:flutter/material.dart';
 
 class ChatView extends StatelessWidget {
@@ -9,7 +10,7 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BuildViewModel<ChatViewModel>(
+    return BuildViewModel<UserChatViewModel>(
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -18,7 +19,7 @@ class ChatView extends StatelessWidget {
           title: const Text('Chat View'),
           actions: [
             IconButton(
-              onPressed: model.fetchQuestionaires,
+              onPressed: () => model.createChatRoom("", ""),
               icon: Icon(Icons.add),
             )
           ],
@@ -26,8 +27,29 @@ class ChatView extends StatelessWidget {
         body: BackgroundImage(
           backgroundImage: 'images/space2.png',
           child: SafeArea(
-            child: Center(child: Text('Chat View')),
-          ),
+            child: Scaffold(
+              body: SearchPage(
+                onChanged: (searchKey) {
+                  model.getData(searchKey!);
+                },
+                hint: model.getSearchHint,
+                errorMessage: model.getErrorMessage,
+                searchController: model.getSearchTextController,
+              ),
+            ),
+          //     child: Column(
+          //   children: [
+          //     const SizedBox(
+          //       height: 5,
+          //     ),
+          //     const SizedBox(
+          //       height: 15,
+          //     ),
+          //     //RecentChats()
+          //   ],
+          // )
+              // Center(child: Text('Chat View')),
+              ),
         ),
       ),
     );

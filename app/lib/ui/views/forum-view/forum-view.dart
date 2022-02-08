@@ -48,17 +48,6 @@ class _ForumView extends State<ForumView> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ),
-                  // child: Column(
-                  //   children: [
-                  //     Container(
-                  //       height: 30,
-                  //       decoration: BoxDecoration(
-                  //         color: Theme.of(context).primaryColorLight,
-                  //       ),
-                  //     ),
-                  //     AllForumViews()
-                  //   ],
-                  // ),
                 ),
               ),
             ));
