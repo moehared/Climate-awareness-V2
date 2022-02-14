@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class AllForumViews extends StatelessWidget {
   const AllForumViews({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {

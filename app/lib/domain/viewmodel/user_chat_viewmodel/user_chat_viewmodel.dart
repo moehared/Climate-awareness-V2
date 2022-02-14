@@ -40,18 +40,7 @@ class UserChatViewModel extends BaseViewModel{
       return  _chatService.getListOfUsers(searchKey);
   }
 
-  void getData(String searchKey){
-  
-    print("this is all data");
-    //_chatService.getData(searchKey);
-    _chatService.getData(searchKey).then((value) => value);
-    print(_chatService.getData(searchKey).then((value) => value));
+  Future<List<UserModel>> getFilteredUsersBySearchKey(String searchKey){
+    return _chatService.getUserModelBySearchByFirstName(searchKey);
   }
-
-
-
-
-
-
-
 }

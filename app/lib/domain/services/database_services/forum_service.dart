@@ -29,9 +29,7 @@ class ForumDatabaseService {
     await _repository.update(post);
   }
 
-
-
-//Services for forum likes and comments 
+//Services for forum likes and comments
   void likePost(String forumId) async {
     await _repository.incrementLikePost(forumId);
   }
@@ -52,12 +50,17 @@ class ForumDatabaseService {
   //   return _repository.readCommentModel(forumId, commentId);
   // }
 
-
-    Future<UserFourmCommentModel> fetchCommentData(String forumId, String commentId) async {
+  Future<UserFourmCommentModel> fetchCommentData(
+      String forumId, String commentId) async {
     try {
-      return await _repository.readCommentModel(forumId,commentId);
+      return await _repository.readCommentModel(forumId, commentId);
     } catch (e) {
       return Future.error('Post Data does not exist');
     }
   }
+
+  void userEditedForumComment(UserFourmCommentModel userFourmCommentModel) async{
+    _repository.userEditedForumComment(userFourmCommentModel);
+  }
+
 }

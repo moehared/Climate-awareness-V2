@@ -152,4 +152,13 @@ class ForumFirebaseFireStoreRepo
     }
     return Future.error('Data does not exist');
   }
+
+  Future<void> userEditedForumComment(UserFourmCommentModel userFourmCommentModel) async {
+    print('post data map: ${userFourmCommentModel.toMap()}');
+    await firestore.collection("userForumComment")
+    .doc(userFourmCommentModel.forumId)
+    .collection("comments")
+    .doc(userFourmCommentModel.commentId)
+    .set(userFourmCommentModel.toMap());
+  }
 }

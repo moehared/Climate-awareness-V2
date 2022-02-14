@@ -13,15 +13,52 @@ import 'package:app/ui/widgets/reusable-widget/resusable_forum_card.dart';
 import 'package:app/domain/models/user_model.dart';
 
 class UserForumStream extends StatelessWidget {
+  final bool sortByEnvironment;
+  final bool sortByClimate;
+  final bool sortByHelp;
+  final bool sortByOther;
+
+  const UserForumStream(
+      {this.sortByEnvironment = false,
+      this.sortByClimate = false,
+      this.sortByHelp = false,
+      this.sortByOther = false});
+
   @override
-  
+  dynamic filterForum() {
+    if (sortByEnvironment) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: "Environment")
+          .snapshots();
+    } else if (sortByClimate) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: 'Climate Awareness')
+          .snapshots();
+    } else if (sortByHelp) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: "Help")
+          .snapshots();
+    }
+    else if (sortByOther) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: "Other")
+          .snapshots();
+    }
+    else{
+      return firestore
+      .collection(FORUM_COLLECTION)
+      .orderBy("date", descending: true)
+      .snapshots();
+    }
+  }
+
   Widget build(BuildContext context) {
-    
     return StreamBuilder<QuerySnapshot<Map<String, Object?>>>(
-        stream: firestore
-            .collection(FORUM_COLLECTION)
-            .orderBy('date', descending: true)
-            .snapshots(), 
+        stream: this.filterForum(),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
             return ErrorTextWidget(errorMsg: 'No Data exists');
@@ -35,12 +72,9 @@ class UserForumStream extends StatelessWidget {
           }
           final post = snapshot.data!.docs;
 
-          
-
           List<Widget> cardWidget = post.map<Widget>((e) {
             final userData = UserForumModel.fromMap(e.data());
-      
-          
+
             return ResuableForumCard(
               forum: userData,
               id: userData.forumId,
@@ -53,13 +87,12 @@ class UserForumStream extends StatelessWidget {
               errorMsg: 'Nothing To see.',
             );
           }
-          
-          
+
           return ListView.builder(
             //key: PageStorageKey('user-forum'),
-           // scrollDirection: Axis.vertical,
-           // physics: BouncingScrollPhysics(),
-           
+            // scrollDirection: Axis.vertical,
+            // physics: BouncingScrollPhysics(),
+
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: post.length,

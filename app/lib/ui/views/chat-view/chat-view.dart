@@ -29,27 +29,31 @@ class ChatView extends StatelessWidget {
           child: SafeArea(
             child: Scaffold(
               body: SearchPage(
-                onChanged: (searchKey) {
-                  model.getData(searchKey!);
-                },
-                hint: model.getSearchHint,
-                errorMessage: model.getErrorMessage,
-                searchController: model.getSearchTextController,
-              ),
+                  onChanged: (searchKey) {
+                    //TODO fix this thing
+                    var aData = model
+                        .getFilteredUsersBySearchKey(searchKey!)
+                        .then((value) => value.map((e) => e.firstName));
+                      
+                      return aData;
+                  },
+                  hint: model.getSearchHint,
+                  errorMessage: model.getErrorMessage,
+                  searchController: model.getSearchTextController),
             ),
-          //     child: Column(
-          //   children: [
-          //     const SizedBox(
-          //       height: 5,
-          //     ),
-          //     const SizedBox(
-          //       height: 15,
-          //     ),
-          //     //RecentChats()
-          //   ],
-          // )
-              // Center(child: Text('Chat View')),
-              ),
+            //     child: Column(
+            //   children: [
+            //     const SizedBox(
+            //       height: 5,
+            //     ),
+            //     const SizedBox(
+            //       height: 15,
+            //     ),
+            //     //RecentChats()
+            //   ],
+            // )
+            // Center(child: Text('Chat View')),
+          ),
         ),
       ),
     );

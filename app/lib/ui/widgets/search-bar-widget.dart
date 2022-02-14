@@ -4,26 +4,25 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchPage extends StatelessWidget {
   //final _serachBarController = TextEditingController();
-   const SearchPage({Key? key,
+  const SearchPage({Key? key,
     required this.onChanged,
     required this.hint,
     required this.errorMessage,
-    required this.searchTemplate,
-    //required this.items,
     required this.searchController,
   }) : super(key: key);
   final TextEditingController searchController;
   final String hint;
   //final Stream<String> items;
-  final Function(String?)? onChanged;
-  final Function(SearchResults?)? searchTemplate;
+  final Function(String?) onChanged;
   final String errorMessage;
+
   @override
   Widget build(BuildContext context) {
+    List<String> data = List<String>.empty();
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
+    print("Searchpage: ${data}");
     return FloatingSearchBar(
-    
       hint: hint,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 800),
@@ -33,7 +32,12 @@ class SearchPage extends StatelessWidget {
       openAxisAlignment: 0.0,
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
-      onQueryChanged: onChanged,
+      onQueryChanged: (query) {
+        print("something here 36");
+        data = this.onChanged(query);
+        print(data);
+        print("query changed!");
+      },
       transition: CircularFloatingSearchBarTransition(),
       actions: [
         FloatingSearchBarAction(
@@ -56,7 +60,7 @@ class SearchPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                this.searchTemplate!()
+               SearchResults(data)
               ],
               // children: Colors.accents.map((color) {
               //   return Container(height: 112, color: color);

@@ -2,6 +2,7 @@ import 'package:app/domain/models/chat_model.dart';
 import 'package:app/domain/models/user_forum_model.dart';
 //import 'package:app/domain/services/repository/forum_firebase_repository.dart';
 import 'package:app/domain/models/user_forum_comment_model.dart';
+import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/repository/chat_firebase_repository.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
 import 'package:flutter/foundation.dart';
@@ -40,10 +41,8 @@ class ChatDatabaseService {
     }
   }
 
-  Future<List> getData(String something ) async{
-    return _repository.getData(something);
+  Future<List<UserModel>> getUserModelBySearchByFirstName(String searchKey) async{
+    return _repository.getUserModelBySearchKeyByFirstName(searchKey);
   }
 
-
-  
 }

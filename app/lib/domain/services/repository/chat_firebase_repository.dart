@@ -55,18 +55,17 @@ class ChatFirebaseFireStoreRepo  implements RepositoryInterface<ChatModel> {
     return something;
    }
 
-   Future<List<UserModel?>> getData(String something ) async{
+   Future<List<UserModel>> getUserModelBySearchKeyByFirstName(String searchKey) async {
      QuerySnapshot querySnapshot = await firestore
      .collection(USER_COLLECTION)
-     .where('firstName', isGreaterThanOrEqualTo: something)
-     .where("firstName", isLessThan: something + 'z')
+     .where('firstName', isGreaterThanOrEqualTo: searchKey)
+     .where("firstName", isLessThan: searchKey + 'z')
      .get();
 
-     final allData = querySnapshot
-     .docs
-     .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>)).toList();
-     print(allData);
-     return allData;
+     final userModels = querySnapshot.docs
+      .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>)).toList();
+      
+     return userModels;
    }
 
 
