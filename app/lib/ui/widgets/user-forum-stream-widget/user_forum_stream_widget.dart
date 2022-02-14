@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/common/config.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/locator.dart';
@@ -13,38 +15,34 @@ import 'package:app/ui/widgets/reusable-widget/resusable_forum_card.dart';
 import 'package:app/domain/models/user_model.dart';
 
 class UserForumStream extends StatelessWidget {
+  final File? image;
+
+  const UserForumStream({Key? key, this.image}) : super(key: key);
+
   @override
-  
   Widget build(BuildContext context) {
-    
     return StreamBuilder<QuerySnapshot<Map<String, Object?>>>(
         stream: firestore
             .collection(FORUM_COLLECTION)
             .orderBy('date', descending: true)
-            .snapshots(), 
+            .snapshots(),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
             return ErrorTextWidget(errorMsg: 'No Data exists');
           }
-          // print("This is a ${snapshot.data!.docs}");
-          // for (var item in snapshot.data!.docs) {
-          //   print(item.data());
-          // }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: Loading());
           }
           final post = snapshot.data!.docs;
 
-          
-
           List<Widget> cardWidget = post.map<Widget>((e) {
             final userData = UserForumModel.fromMap(e.data());
-      
-          
+
             return ResuableForumCard(
               forum: userData,
               id: userData.forumId,
               uuid: userData.userId,
+              image: image,
             );
           }).toList();
 
@@ -53,13 +51,8 @@ class UserForumStream extends StatelessWidget {
               errorMsg: 'Nothing To see.',
             );
           }
-          
-          
+
           return ListView.builder(
-            //key: PageStorageKey('user-forum'),
-           // scrollDirection: Axis.vertical,
-           // physics: BouncingScrollPhysics(),
-           
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: post.length,

@@ -57,7 +57,7 @@ class ExpandedForumViewModel extends BaseViewModel {
     if (forumId.isEmpty) {
       return;
     }
-   // print("This is the forumId Hello ${forumId}");
+    // print("This is the forumId Hello ${forumId}");
     _userForumModel = await _userForumService.fetchPostData(forumId);
     setUserCommentModel = userCommentModel.copyWith(forumId: forumId);
     // print(
@@ -106,7 +106,7 @@ class ExpandedForumViewModel extends BaseViewModel {
     }
     if (userForumModel.userLikePost!.containsKey(currentUser)) {
       if (userForumModel.userLikePost![currentUser] == true) {
-       // print("Or do i get to 80");
+        // print("Or do i get to 80");
         dislikePost();
       }
     } else {

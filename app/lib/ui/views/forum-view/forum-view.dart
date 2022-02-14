@@ -20,7 +20,7 @@ class _ForumView extends State<ForumView> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<ForumViewModel>(
-        //onModelReady: (model) => model.initState(this),
+        onModelReady: (model) => model.initState(),
         builder: (ctx, model, child) => SafeArea(
               child: Scaffold(
                 appBar: AppBar(
@@ -44,7 +44,7 @@ class _ForumView extends State<ForumView> with SingleTickerProviderStateMixin {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        AllForumViews(),
+                        AllForumViews(model:model),
                       ],
                     ),
                   ),

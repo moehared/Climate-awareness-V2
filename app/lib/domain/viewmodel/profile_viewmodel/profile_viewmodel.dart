@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileViewModel extends BaseViewModel {
-  static const IMAGE_KEY = '/IMAGE_KEY';
+  static const IMAGE_KEY = 'IMAGE_KEY';
   static const USER_INFO = 'USER_INFO ';
   final _authService = locator<AuthService>();
   final _navService = locator<NavigationService>();
@@ -115,21 +115,29 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   void loadImage() async {
-    final imageString = await SharePref.getData(IMAGE_KEY);
-
-    if (imageString != null) {
+    if (!_auth.currentUser.isPresent()) return;
+    final uuid = _auth.currentUser.get()!.uid;
+    final imageString = await SharePref.getData(IMAGE_KEY,uuid) as String;
+    print('image string: $imageString');
+    if (imageString.isNotEmpty) {
       _image = File(imageString);
       notifyListeners();
     }
+    // SharePref.delete(key);
   }
 
   void uploadImageOrOpenCamera([bool isUpload = false]) async {
+    if (!_auth.currentUser.isPresent()) return;
+    final uuid = _auth.currentUser.get()!.uid;
+    final key = '$IMAGE_KEY/$uuid';
+
     final pickedFile = await imagePicker.pickImage(
         source: isUpload ? ImageSource.gallery : ImageSource.camera);
     if (pickedFile != null) {
       _image = File(pickedFile.path);
       notifyListeners();
-      SharePref.saveQuestionaire(IMAGE_KEY, _image!.path);
+      debugPrint('saved at key: $uuid');
+      SharePref.saveQuestionaire(uuid, _image!.path);
     }
   }
 }

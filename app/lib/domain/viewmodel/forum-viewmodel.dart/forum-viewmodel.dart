@@ -1,8 +1,11 @@
 import 'package:app/domain/models/user_forum_model.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
+import 'package:app/domain/services/local_db/share_pref/share_pref.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
+import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/ui/views/forum-view/add-forum-view.dart';
+import 'package:app/ui/views/profile-view/profile-view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:app/common/blacklist.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +22,7 @@ class ForumViewModel extends BaseViewModel {
   File? _image;
   var _userFirstName = "";
   var _userLastName = "";
+  final _auth = locator<AuthService>();
 
   //Check variables
   var _blackList = false;
@@ -42,7 +46,6 @@ class ForumViewModel extends BaseViewModel {
   final _navService = locator<NavigationService>();
   final _accountService = locator<AccountDatabaseService>();
 
-
 //Text Editing Controller Getters
   TextEditingController get titleContoller => _titleController;
   TextEditingController get descriptionController => _descriptionController;
@@ -56,14 +59,13 @@ class ForumViewModel extends BaseViewModel {
   bool get isEdit => _isEdit;
   bool get articleValid => _validUrlPath;
   File? get image => _image;
-  Future<UserModel> getUserModel(String uid) => _accountService.fetchUserModel(uid);
+  Future<UserModel> getUserModel(String uid) =>
+      _accountService.fetchUserModel(uid);
 
-   Future<UserModel> getUserFirstName(String uid){
-     String? uid = _userAuthService.currentUser.get()?.uid;
-   return getUserModel(uid!);
+  Future<UserModel> getUserFirstName(String uid) {
+    String? uid = _userAuthService.currentUser.get()?.uid;
+    return getUserModel(uid!);
   }
-
-
 
 //User Forum Model
   UserForumModel _userForumModel = UserForumModel(
@@ -86,17 +88,30 @@ class ForumViewModel extends BaseViewModel {
     _navService.navigateTo(AddForumView.routeName, argument: '');
   }
 
-
 //Init states
-  void initState(String forumId) async {
-    if (forumId.isEmpty) {
-      return;
-    }
-    _userForumModel = await _userForumService.fetchPostData(forumId);
+  void initState() async {
+    // if (forumId.isEmpty) {
+    //   return;
+    // }
+    loadImage();
+    // _userForumModel = await _userForumService.fetchPostData(forumId);
     _urlController.text = _userForumModel.url;
     _descriptionController.text = _userForumModel.description;
     imagePathController.text = _userForumModel.imageUrl;
     notifyListeners();
+  }
+
+// TODO: load images for each user individually. We might have to store user image in firebase instead of locally
+  void loadImage() async {
+    if (!_auth.currentUser.isPresent()) return;
+    final uuid = _auth.currentUser.get()!.uid;
+    final imagePath = await SharePref.getData(ProfileViewModel.IMAGE_KEY,uuid) ?? null;
+
+    if (imagePath != null) {
+      _image = File(imagePath);
+      notifyListeners();
+    }
+
   }
 
 //User Forum Getter
@@ -142,7 +157,7 @@ class ForumViewModel extends BaseViewModel {
       _validUrlPath = false;
     }
     print("userArticleURL $userArticleUrl");
-    print("This is _validURL $_validUrlPath" );
+    print("This is _validURL $_validUrlPath");
     print("This is articleValid $articleValid");
   }
 
@@ -150,7 +165,7 @@ class ForumViewModel extends BaseViewModel {
   void submit() async {
     print("Did i Make liune 135");
     if (!_formKey.currentState!.validate()) {
-        print("could not submit");
+      print("could not submit");
       return;
     }
     print("did i make it here?");
@@ -162,8 +177,7 @@ class ForumViewModel extends BaseViewModel {
     setUserForumModel = userForumModel.copyWith(date: date);
     setUserForumModel = userForumModel.copyWith(
         userId: _userAuthService.currentUser.get()?.uid,
-        userDisplayName: _userAuthService.currentUser.get()!.displayName
-        );
+        userDisplayName: _userAuthService.currentUser.get()!.displayName);
     _userForumService.createNewForum(userForumModel);
     _navService.pop();
     print("pop service?");
@@ -180,7 +194,4 @@ class ForumViewModel extends BaseViewModel {
     // pop edit pop up menu bottom sheet modal
     _navService.pop();
   }
-
-
-
 }
