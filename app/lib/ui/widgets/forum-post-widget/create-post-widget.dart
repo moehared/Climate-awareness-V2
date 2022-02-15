@@ -52,7 +52,7 @@ class CreateUserPost extends StatelessWidget {
                   return "URL contains illicit words";
                 }
                 model.checkArticleURL(url);
-                print("valid " + model.articleValid.toString());
+                print("valid DO I Fail here" + model.articleValid.toString());
                 if (!model.articleValid) {
                   return "URL is not valid";
                 }
@@ -74,9 +74,11 @@ class CreateUserPost extends StatelessWidget {
             ),
             FormFieldDropDownWidget(
               onChanged: (dropDownValue) {
+
                 model.eventEmitted(true);
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(category: dropDownValue);
+                print("do I fail at selecting? 81 ");
               },
               editMode: model.isEdit,
               errorMessage: 'Please select a category',
@@ -118,6 +120,7 @@ class CreateUserPost extends StatelessWidget {
                 return null;
               },
               onSaved: (description) {
+                
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(description: description);
               },
@@ -193,7 +196,7 @@ class CreateUserPost extends StatelessWidget {
                         return "Image URL contains illicit words";
                       }
                       model.checkImageURL(url);
-                      print("valid " + model.imageValid.toString());
+                      print("valid OR over 196 " + model.imageValid.toString());
                       if (!model.imageValid) {
                         return "Image URL is not valid";
                       }

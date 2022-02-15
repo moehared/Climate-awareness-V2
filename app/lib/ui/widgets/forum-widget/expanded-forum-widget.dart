@@ -97,6 +97,8 @@ class ExpandedForumWidget extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
+        //TODO add a button to filter comments 
+           
         Container(
             padding: EdgeInsets.symmetric(vertical: 2.0),
             child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -139,6 +141,8 @@ class ExpandedForumWidget extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
+
+        
         // UserCommentForumStream(
         //     fourmId: !model.userForumModel.forumId.isEmpty
         //         ? model.userForumModel.forumId

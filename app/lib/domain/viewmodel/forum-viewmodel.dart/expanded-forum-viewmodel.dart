@@ -16,15 +16,35 @@ class ExpandedForumViewModel extends BaseViewModel {
   final _accountService = locator<AccountDatabaseService>();
   final _userAuthService = locator<AuthService>();
   final _commentController = TextEditingController();
+  final _editCommentController = TextEditingController();
+
   var _blackList = false;
   var formId = "";
   bool isLikePressed = false;
+
+
+
+  //For drop down Filter method
+  bool sortByUserComments = false;
+  bool sortByOldest = false;
+  List<String> listOfFilters = ["Earliest","Oldest","Your Comments"];
+  String hintText = "Filter by..";
+  String errorMsg = "Nothing";
+
+  dynamic notifyFilterListeners() {
+    notifyListeners();
+  }
+
+
 //Form Key
   final _formKey = GlobalKey<FormState>();
+  final _commentFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formkey => _formKey;
+  GlobalKey<FormState> get commentFormKey => _commentFormKey;
 
   //textEditingController
   TextEditingController get commentContoller => _commentController;
+  TextEditingController get editCommentController => _editCommentController;
 
   //getters
   bool get blackListValidator => _blackList;
@@ -53,10 +73,14 @@ class ExpandedForumViewModel extends BaseViewModel {
       userComment: "",
       date: " ");
 
-  void initState(String forumId) async {
+  void initState({String forumId = '', String commentId = ''}) async {
     if (forumId.isEmpty) {
       return;
     }
+<<<<<<< HEAD
+=======
+    getComment(forumId, commentId);
+>>>>>>> state-fix
     // print("This is the forumId Hello ${forumId}");
     _userForumModel = await _userForumService.fetchPostData(forumId);
     setUserCommentModel = userCommentModel.copyWith(forumId: forumId);
@@ -177,4 +201,36 @@ class ExpandedForumViewModel extends BaseViewModel {
     // _navService.pop();
     // print("pop service?");
   }
+
+  Future<void> getComment(String forumId, String commentId) async {
+    if (forumId.isEmpty || commentId.isEmpty) {
+      return;
+    }
+    // final String comment;
+    _userForumCommentmodel =
+        await _userForumService.fetchCommentData(forumId, commentId);
+    _editCommentController.text = _userForumCommentmodel.userComment;
+    notifyListeners();
+    debugPrint(
+        '[getComment] user comment inside: ${_userForumCommentmodel.userComment}');
+    // comment =  await commentModel.then((value) => value.userComment);
+  }
+
+  void submitEditedComment() async {
+    _userForumService.userEditedForumComment(userCommentModel);
+  }
+
+
+  
+  Future<void> updateComment() async {
+    if (!_commentFormKey.currentState!.validate()) return;
+    _commentFormKey.currentState?.save();
+ 
+    _userForumService.userEditedForumComment(userCommentModel);
+    // pop edit screen
+    _navService.pop();
+    // pop edit pop up menu bottom sheet modal
+    _navService.pop();
+  }
+
 }

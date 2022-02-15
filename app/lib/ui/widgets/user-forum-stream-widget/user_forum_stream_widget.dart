@@ -15,9 +15,57 @@ import 'package:app/ui/widgets/reusable-widget/resusable_forum_card.dart';
 import 'package:app/domain/models/user_model.dart';
 
 class UserForumStream extends StatelessWidget {
+<<<<<<< HEAD
   final File? image;
 
   const UserForumStream({Key? key, this.image}) : super(key: key);
+=======
+  final bool sortByEnvironment;
+  final bool sortByClimate;
+  final bool sortByHelp;
+  final bool sortByOther;
+  final File? image;
+  const UserForumStream(
+      {this.sortByEnvironment = false,
+      this.sortByClimate = false,
+      this.sortByHelp = false,
+      this.sortByOther = false,
+      this.image
+      });
+
+  @override
+  dynamic filterForum() {
+    if (sortByEnvironment) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: "Environment")
+          .snapshots();
+    } else if (sortByClimate) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: 'Climate Awareness')
+          .snapshots();
+    } else if (sortByHelp) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: "Help")
+          .snapshots();
+    }
+    else if (sortByOther) {
+      return firestore
+          .collection(FORUM_COLLECTION)
+          .where("topic", isEqualTo: "Other")
+          .snapshots();
+    }
+    else{
+      return firestore
+      .collection(FORUM_COLLECTION)
+      .orderBy("date", descending: true)
+      .snapshots();
+    }
+  }
+
+>>>>>>> state-fix
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +101,13 @@ class UserForumStream extends StatelessWidget {
           }
 
           return ListView.builder(
+<<<<<<< HEAD
+=======
+            //key: PageStorageKey('user-forum'),
+            // scrollDirection: Axis.vertical,
+            // physics: BouncingScrollPhysics(),
+
+>>>>>>> state-fix
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: post.length,

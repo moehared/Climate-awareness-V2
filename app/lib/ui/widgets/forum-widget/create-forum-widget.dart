@@ -66,6 +66,7 @@ class CreateUserForum extends StatelessWidget {
               onChanged: (_) {
                 model.eventEmitted(true);
               },
+              maxLines: null,
               controller: model.descriptionController,
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,

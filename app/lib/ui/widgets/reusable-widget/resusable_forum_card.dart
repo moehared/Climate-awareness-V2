@@ -102,7 +102,8 @@ class ResuableForumCard extends StatelessWidget {
                             userID: forum.userId,
                           ),
                           context: context),
-                      icon: const Icon(Icons.more_horiz))
+                      icon: const Icon(Icons.more_horiz)
+                      )
                 ],
               ),
               const SizedBox(

@@ -30,8 +30,17 @@ class ForumViewModel extends BaseViewModel {
   var _validUrlPath = false;
 
   List<String> get topicList =>
-      ['Environment', 'Climate Awareness', 'Help', 'Other'];
+      ['All', 'Environment', 'Climate Awareness', 'Help', 'Other'];
 
+  //fourm filter checks
+  bool sortByEnvironment = false;
+  bool sortByClimate = false;
+  bool sortByHelp = false;
+  bool sortByOther = false;
+
+  dynamic notifyFilterListeners() {
+    notifyListeners();
+  }
 //Form Key
   final _formKey = GlobalKey<FormState>();
 

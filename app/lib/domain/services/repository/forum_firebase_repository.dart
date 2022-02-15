@@ -92,46 +92,73 @@ class ForumFirebaseFireStoreRepo
 
   Future<void> incrementLikePost(String forumId) async {
     //print("Liking ${userId}");
-    final DocumentReference docRef = firestore.collection(FORUM_COLLECTION).doc(forumId);
-     var someCheck = await firestore
+    final DocumentReference docRef =
+        firestore.collection(FORUM_COLLECTION).doc(forumId);
+    var someCheck = await firestore
         .collection(FORUM_COLLECTION)
         .doc(forumId)
         .get()
         .then((value) {
       return value.data()!['likeCount'];
     });
-    if (someCheck == -1 ) {
+    if (someCheck == -1) {
       docRef.update({"likeCount": FieldValue.increment(1)});
     } else {
       docRef.update({"likeCount": FieldValue.increment(1)});
     }
-    
   }
 
   Future<void> decrementLikePost(String forumId) async {
     final docRef = firestore.collection(FORUM_COLLECTION).doc(forumId);
-    var someCheck = await firestore.collection(FORUM_COLLECTION).doc(forumId).get().then((value) {
-      return  value.data()!['likeCount'];
-    });  
-    if( await someCheck ==  -1  ){
-      
+    var someCheck = await firestore
+        .collection(FORUM_COLLECTION)
+        .doc(forumId)
+        .get()
+        .then((value) {
+      return value.data()!['likeCount'];
+    });
+    if (await someCheck == -1) {
       await docRef.update({"likeCount": FieldValue.increment(1)});
+    } else {
+      await docRef.update({"likeCount": FieldValue.increment(-1)});
     }
-    else{
-     await docRef.update({"likeCount": FieldValue.increment(-1)});
-    }
-
- 
   }
 
+  Future<void> deleteComment(String commentId, String forumId) async {
+    await firestore
+        .collection("userForumComment")
+        .doc(forumId)
+        .collection("comments")
+        .doc(commentId)
+        .delete();
 
-  // Future<bool> checkIfLikedPost(UserForumModel forumPost) async {
-  //   final docRef = firestore.collection(FORUM_COLLECTION).doc();
-  //   if( )
-  //   //if(userId == MapCheck(userID) if true ){return true }else: return false  
-  //   docRef.update({"likeCount": FieldValue.increment(-1)});
-  // }
+    final DocumentReference docCom =
+        firestore.collection(FORUM_COLLECTION).doc(forumId);
+    docCom.update({"commentCount": FieldValue.increment(-1)});
+  }
 
+  @override
+  Future<UserFourmCommentModel> readCommentModel(
+      String forumId, String commentId) async {
+    final doc = await firestore
+        .collection("userForumComment")
+        .doc(forumId)
+        .collection("comments")
+        .doc(commentId)
+        .get();
+    final data = Optional.ofNullable(doc.data());
+    if (data.isPresent()) {
+      return UserFourmCommentModel.fromMap(data.get()!);
+    }
+    return Future.error('Data does not exist');
+  }
 
-
+  Future<void> userEditedForumComment(UserFourmCommentModel userFourmCommentModel) async {
+    print('post data map: ${userFourmCommentModel.toMap()}');
+    await firestore.collection("userForumComment")
+    .doc(userFourmCommentModel.forumId)
+    .collection("comments")
+    .doc(userFourmCommentModel.commentId)
+    .set(userFourmCommentModel.toMap());
+  }
 }

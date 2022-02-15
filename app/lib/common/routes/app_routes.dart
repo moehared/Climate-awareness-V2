@@ -1,9 +1,11 @@
+import 'package:app/domain/models/user_forum_comment_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service_wrapper.dart';
 import 'package:app/ui/views/add-post-view/add-posts-view.dart';
 import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 
 import 'package:app/ui/views/forget-password-view/forget-password-view.dart';
 import 'package:app/ui/views/forum-view/add-forum-view.dart';
+import 'package:app/ui/views/forum-view/edit-forum-comment-view.dart';
 import 'package:app/ui/views/forum-view/expanded-forum-view.dart';
 import 'package:app/ui/views/forum-view/forum-view.dart';
 import 'package:app/ui/views/profile-view/chart-details-view.dart';
@@ -80,6 +82,12 @@ class AppRouter {
           builder: (_) =>
               PersonalizedViewAll(),
         );
+
+        case EditForumCommentView.routeName:
+        return MaterialPageRoute(
+          builder: (_) => EditForumCommentView(forumCommentData: settings.arguments as ForumCommentData,),
+        );
+
       default:
         return MaterialPageRoute(builder: (_) => AuthServiceWrapper());
     }
