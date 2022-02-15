@@ -77,10 +77,6 @@ class ExpandedForumViewModel extends BaseViewModel {
     if (forumId.isEmpty) {
       return;
     }
-<<<<<<< HEAD
-=======
-    getComment(forumId, commentId);
->>>>>>> state-fix
     // print("This is the forumId Hello ${forumId}");
     _userForumModel = await _userForumService.fetchPostData(forumId);
     setUserCommentModel = userCommentModel.copyWith(forumId: forumId);

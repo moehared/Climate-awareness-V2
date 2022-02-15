@@ -15,11 +15,6 @@ import 'package:app/ui/widgets/reusable-widget/resusable_forum_card.dart';
 import 'package:app/domain/models/user_model.dart';
 
 class UserForumStream extends StatelessWidget {
-<<<<<<< HEAD
-  final File? image;
-
-  const UserForumStream({Key? key, this.image}) : super(key: key);
-=======
   final bool sortByEnvironment;
   final bool sortByClimate;
   final bool sortByHelp;
@@ -65,7 +60,6 @@ class UserForumStream extends StatelessWidget {
     }
   }
 
->>>>>>> state-fix
 
   @override
   Widget build(BuildContext context) {
@@ -101,13 +95,10 @@ class UserForumStream extends StatelessWidget {
           }
 
           return ListView.builder(
-<<<<<<< HEAD
-=======
             //key: PageStorageKey('user-forum'),
             // scrollDirection: Axis.vertical,
             // physics: BouncingScrollPhysics(),
 
->>>>>>> state-fix
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: post.length,

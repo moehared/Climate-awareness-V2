@@ -45,9 +45,6 @@ class _ForumView extends State<ForumView> with SingleTickerProviderStateMixin {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-<<<<<<< HEAD
-                        AllForumViews(model:model),
-=======
                         FormFieldDropDownWidget(
                           onChanged: (filterValue) {
                             if (filterValue == "Environment") {
@@ -90,7 +87,6 @@ class _ForumView extends State<ForumView> with SingleTickerProviderStateMixin {
                             sortByHelp:model.sortByHelp,
                             sortByOther:model.sortByOther)
                        // AllForumViews(model.sortByEnvironment,model.sortByClimate,model.sortByHelp,model.sortByOther),
->>>>>>> state-fix
                       ],
                     ),
                   ),
