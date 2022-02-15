@@ -125,20 +125,27 @@ class ResuableForumCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "${forum.title}",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child:  Text(
+                      "${forum.title}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )
+                  ))
+                 
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
                       child: Padding(

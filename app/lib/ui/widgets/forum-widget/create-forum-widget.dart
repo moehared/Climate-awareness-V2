@@ -99,6 +99,9 @@ class CreateUserForum extends StatelessWidget {
             FormFieldDropDownWidget(
               onChanged: (dropDownValue) {
                 model.eventEmitted(true);
+                // if (dropDownValue == "Climate Awareness") {
+                //   dropDownValue = "Climate";
+                // }
                 model.setUserForumModel =
                     model.userForumModel.copyWith(topic: dropDownValue);
               },

@@ -69,6 +69,8 @@ class ShowEditForumPopUpMenu extends StatelessWidget {
                       locator<ForumDatabaseService>().delete(forumId);
                       locator<NavigationService>()
                           .navigateTo(ForumView.routeName, argument: "");
+                      locator<NavigationService>().pop();
+                      //locator<
                     }
                   },
                 ),

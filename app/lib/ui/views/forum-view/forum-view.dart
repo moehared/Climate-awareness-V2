@@ -52,7 +52,7 @@ class _ForumView extends State<ForumView> with SingleTickerProviderStateMixin {
                               model.sortByClimate = false;
                               model.sortByHelp = false;
                               model.sortByOther = false;
-                            } else if (filterValue == "Climate") {
+                            } else if (filterValue == "Climate Awareness") {
                               model.sortByEnvironment = false;
                               model.sortByClimate = true;
                               model.sortByHelp = false;

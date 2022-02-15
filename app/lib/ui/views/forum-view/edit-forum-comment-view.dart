@@ -43,7 +43,7 @@ class EditForumCommentView extends StatelessWidget {
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Theme.of(context).primaryColor,
-                  automaticallyImplyLeading: false,
+            
                   brightness: Brightness.light,
                   title: Text('Edit Comment'),
                 ),

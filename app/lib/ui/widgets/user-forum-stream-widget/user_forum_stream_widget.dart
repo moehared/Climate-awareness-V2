@@ -30,6 +30,7 @@ class UserForumStream extends StatelessWidget {
 
   @override
   dynamic filterForum() {
+    
     if (sortByEnvironment) {
       return firestore
           .collection(FORUM_COLLECTION)
@@ -38,7 +39,8 @@ class UserForumStream extends StatelessWidget {
     } else if (sortByClimate) {
       return firestore
           .collection(FORUM_COLLECTION)
-          .where("topic", isEqualTo: 'Climate Awareness')
+          .where("topic", isEqualTo: "Climate Awareness" )
+          //.where("topic", isLessThanOrEqualTo: "Climate Awareness" + "\uf8ff" )
           .snapshots();
     } else if (sortByHelp) {
       return firestore
