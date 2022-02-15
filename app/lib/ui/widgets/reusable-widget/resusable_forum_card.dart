@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/common/utils/show_pop-up_menu.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/locator.dart';
@@ -13,11 +15,12 @@ class ResuableForumCard extends StatelessWidget {
   final UserForumModel forum;
   final String id;
   final String uuid;
-
+  final File? image;
   const ResuableForumCard({
     required this.forum,
     required this.id,
     required this.uuid,
+    this.image,
   });
 
   void goToExpandedView() {
@@ -69,14 +72,17 @@ class ResuableForumCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const SizedBox(
                     width: 20.0,
                   ),
                   CircleAvatar(
                     radius: 20.0,
-                    backgroundColor: Colors.grey[200],
-                    //backgroundImage: Image.asset('images/image.png'),
+                    // backgroundColor: image == null ? Colors.grey[200] : null,
+                    backgroundImage: image != null
+                        ? FileImage(image!) as ImageProvider
+                        : null,
                   ),
                   const SizedBox(
                     width: 8.0,
@@ -103,17 +109,17 @@ class ResuableForumCard extends StatelessWidget {
               const SizedBox(
                 height: 2.5,
               ),
-              Row(
-                
-                children: [
-                  const SizedBox(width: 20.0,),
+              Row(children: [
+                const SizedBox(
+                  width: 20.0,
+                ),
                 Text(
                   "Topic: ${forum.topic}",
                   style: TextStyle(fontSize: 10),
                   maxLines: 1,
                 ),
               ]),
-                 const SizedBox(
+              const SizedBox(
                 height: 2.5,
               ),
               Row(
@@ -121,8 +127,10 @@ class ResuableForumCard extends StatelessWidget {
                 children: [
                   Text(
                     "${forum.title}",
-                    style:
-                        TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -133,11 +141,14 @@ class ResuableForumCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                      child: Text(
-                    "${forum.description}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 12),
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "${forum.description}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ))
                 ],
               ),
@@ -151,8 +162,7 @@ class ResuableForumCard extends StatelessWidget {
                     "${forum.date}",
                     style: TextStyle(
                         fontSize: 10, color: Colors.black.withOpacity(0.5)),
-                  )
-                  ,
+                  ),
                   const SizedBox(
                     width: 5,
                   )
@@ -162,7 +172,7 @@ class ResuableForumCard extends StatelessWidget {
                 height: 15.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(
                     width: 20.0,
@@ -180,8 +190,10 @@ class ResuableForumCard extends StatelessWidget {
                   const SizedBox(
                     width: 5.0,
                   ),
-                  Text(forum.likeCount == 0 ? "Likes ": 
-                    "Likes ${forum.likeCount}",
+                  Text(
+                    forum.likeCount == 0
+                        ? "Likes "
+                        : "Likes ${forum.likeCount}",
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                   const SizedBox(
@@ -209,7 +221,6 @@ class ResuableForumCard extends StatelessWidget {
             ],
           ),
         ),
-      
       ),
     ]);
   }

@@ -50,12 +50,14 @@ class ProfileView extends StatelessWidget {
                 Row(
                   children: [
                     UserAvatar(
-                      getImage: () {}, //getImage,
+                      image: model.image,
+                      getImage: () =>
+                          model.uploadImageOrOpenCamera(true), //getImage,
                       // image: _image ?? ,
-                      camera: () {},
+                      camera: model.uploadImageOrOpenCamera,
                     ),
                     Text(
-                      'test',
+                      '${model.user?.firstName} ${model.user?.lastName}',
                       style: TextStyle(
                           color: Colors.white, fontFamily: 'Roboto-Medium'),
                     ),
@@ -196,11 +198,11 @@ class TitleAndButton extends StatelessWidget {
 class UserAvatar extends StatelessWidget {
   final Function getImage;
   final Function camera;
-  // final File image;
+  final File? image;
   const UserAvatar({
     Key? key,
     required this.getImage,
-    // required this.image,
+    required this.image,
     required this.camera,
   }) : super(key: key);
 
@@ -221,7 +223,9 @@ class UserAvatar extends StatelessWidget {
                 border: Border.all(color: Colors.white, width: 1),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('images/person.png'),
+                  image: image != null
+                      ? FileImage(image!) as ImageProvider
+                      : AssetImage('images/person.png'),
                   // image: AssetImage('images/me.jpg'),
                 ),
               ),

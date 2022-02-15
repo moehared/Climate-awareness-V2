@@ -3,9 +3,11 @@ import 'package:app/common/utils/prompt_dialog.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
+import 'package:app/domain/services/local_db/share_pref/share_pref.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
+import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 import 'package:app/ui/views/community-view/community_view.dart';
 import 'package:flutter/material.dart';
@@ -137,8 +139,10 @@ class UserRegisterationViewModel extends BaseViewModel {
       if (!_authService.isUserEmailVerified()) {
         setViewState(ViewState.IDLE);
         print('sign in button tapped inside user == null ');
-        promptDialog(message: 'an Email has been sent to you. Please check your email',
-            title: 'You are not verify yet', dialogService: _dialogService);
+        promptDialog(
+            message: 'an Email has been sent to you. Please check your email',
+            title: 'You are not verify yet',
+            dialogService: _dialogService);
       } else {
         _navService.navigateAndReplce(CommunityView.routeName);
       }
@@ -152,6 +156,7 @@ class UserRegisterationViewModel extends BaseViewModel {
         isError = false;
         return;
       }
+      SharePref.saveQuestionaire(ProfileViewModel.USER_INFO, _userModel);
       _navService.navigateAndReplce(ConfirmEmailView.routeName);
     }
     setViewState(ViewState.IDLE);

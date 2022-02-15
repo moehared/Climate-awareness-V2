@@ -14,6 +14,7 @@ import 'package:app/main.dart';
 import 'package:app/ui/views/questionaire-view/questionaire-view.dart';
 import 'package:app/ui/views/tab-views/tab-views.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 
 class QuickCarbonViewModel extends BaseViewModel {
   final _textController = TextEditingController();
@@ -30,12 +31,18 @@ class QuickCarbonViewModel extends BaseViewModel {
   TextEditingController get textController => _textController;
   FocusNode get textFocusNode => _textFocusNode;
   List<SuggestionPlace> get placeList => _placeList;
-
+  var _isCalculating = false;
   double get houseHoldSize => _houseHoldSizeValue;
   double get houseHoldIncome => _houseHoldIncomeValue;
+  bool get isCalculatingCarbon => _isCalculating;
+  // set setPlaceList(List<SuggestionPlace> placeList) {
+  //   this._placeList = placeList;
+  //   notifyListeners();
+  // }
 
   Future quickCarbonEstimate() async {
     if (_textController.text.isEmpty) return;
+    _isCalculating = true;
     setViewState(ViewState.BUSY);
     debugPrint('city: ${_selectedPlace.city}');
     debugPrint('house hold size: ${houseHoldSize.toInt()}');
@@ -44,8 +51,8 @@ class QuickCarbonViewModel extends BaseViewModel {
     try {
       final result =
           await _networkService.defaultCarbonFootPrintCalculatorByPostalCode(
-        // postalCode: _selectedPlace.zipCode,
-        postalCode: _textController.text,
+        postalCode: _selectedPlace.zipCode,
+        // postalCode: _textController.text,
         income: '${1 + houseHoldIncome.toInt()}',
         size: houseHoldSize.toInt().toString(),
       );
@@ -93,35 +100,39 @@ class QuickCarbonViewModel extends BaseViewModel {
   Future fetchPlaces(city) async {
     inputLocation = city;
     try {
-      // _placeList = await _networkService.fetchPlaces(city);
+      _isCalculating = false;
+      this.setViewState(ViewState.BUSY);
+      _placeList = await _networkService.fetchPlaces(city);
+      this.setViewState(ViewState.IDLE);
       notifyListeners();
     } catch (e) {
+      throw ('could not fetch user entered $e');
 // for now commenting out this code as the api we using doesnt take city. we will
 // handle error on the client side.
 
-      // if (e.toString().contains('ZERO_RESULTS')) {
-      // this._textFocusNode.unfocus();
-      // promptDialog(
-      //   message: "we could not find the city '$city'",
-      //   dialogService: _dialogService,
-      //   title: 'No city found',
-      //   showErrorAlert: true,
-      // );
-      // _textController.text = '';
-      // _placeList = [];
-      // notifyListeners();
-
-      // return;
-      // }
-      // else {
+      //   if (e.toString().contains('ZERO_RESULTS')) {
+      //   this._textFocusNode.unfocus();
       //   promptDialog(
-      //     message: 'Could not Fetch city',
+      //     message: "we could not find the city '$city'",
       //     dialogService: _dialogService,
-      //     title: 'Something went wrong!',
+      //     title: 'No city found',
       //     showErrorAlert: true,
       //   );
+      //   _textController.text = '';
+      //   _placeList = [];
+      //   notifyListeners();
+
       //   return;
-      // }
+      //   }
+      //   else {
+      //     promptDialog(
+      //       message: 'Could not Fetch city',
+      //       dialogService: _dialogService,
+      //       title: 'Something went wrong!',
+      //       showErrorAlert: true,
+      //     );
+      //     return;
+      //   }
     }
   }
 
@@ -129,9 +140,16 @@ class QuickCarbonViewModel extends BaseViewModel {
     if (city == null) return;
     this._textController.text = city.name;
     this._textFocusNode.unfocus();
-
-    // _selectedPlace = await this._networkService.getPlaceDetails(city.placeID);
-
+    final selectedCity = this
+        .placeList
+        .firstWhere((selectedPlace) => selectedPlace.placeID == city.placeID);
+    final placeMark = await placemarkFromCoordinates(
+        double.parse(selectedCity.lat), double.parse(selectedCity.lon));
+    _selectedPlace = _selectedPlace.copyWith(
+        zipCode: placeMark[0].postalCode ?? '',
+        city: placeMark[0].locality ?? '',
+        country: placeMark[0].country ?? '');
+    print('selected city: ${_selectedPlace.toString()}');
     this._placeList = [];
     notifyListeners();
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/common/config.dart';
 import 'package:app/domain/models/user_post_model.dart';
 import 'package:app/domain/services/locator.dart';
@@ -17,12 +19,14 @@ class UserForumStream extends StatelessWidget {
   final bool sortByClimate;
   final bool sortByHelp;
   final bool sortByOther;
-
+  final File? image;
   const UserForumStream(
       {this.sortByEnvironment = false,
       this.sortByClimate = false,
       this.sortByHelp = false,
-      this.sortByOther = false});
+      this.sortByOther = false,
+      this.image
+      });
 
   @override
   dynamic filterForum() {
@@ -56,17 +60,18 @@ class UserForumStream extends StatelessWidget {
     }
   }
 
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, Object?>>>(
-        stream: this.filterForum(),
+        stream: firestore
+            .collection(FORUM_COLLECTION)
+            .orderBy('date', descending: true)
+            .snapshots(),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
             return ErrorTextWidget(errorMsg: 'No Data exists');
           }
-          // print("This is a ${snapshot.data!.docs}");
-          // for (var item in snapshot.data!.docs) {
-          //   print(item.data());
-          // }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: Loading());
           }
@@ -79,6 +84,7 @@ class UserForumStream extends StatelessWidget {
               forum: userData,
               id: userData.forumId,
               uuid: userData.userId,
+              image: image,
             );
           }).toList();
 
