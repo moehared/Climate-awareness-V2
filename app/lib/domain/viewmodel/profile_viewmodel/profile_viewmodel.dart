@@ -100,6 +100,7 @@ class ProfileViewModel extends BaseViewModel {
     } else {
       _userModel = UserModel.fromMap(userInfo);
     }
+    notifyListeners();
   }
 
   void navigateToQuestionaireView() {
