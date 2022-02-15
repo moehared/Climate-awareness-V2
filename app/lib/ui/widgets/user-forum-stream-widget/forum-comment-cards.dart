@@ -26,20 +26,26 @@ class ForumCommentCard extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
           color: Colors.white,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.grey[200],
-                    //backgroundImage: Image.asset('images/image.png'),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    '${commentForumModel.userName}',
-                    style: TextStyle(fontSize: 16),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: Colors.grey[200],
+                        //backgroundImage: Image.asset('images/image.png'),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        '${commentForumModel.userName}',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
                   ),
                   IconButton(
                       onPressed: () => showPopUpMenu(
