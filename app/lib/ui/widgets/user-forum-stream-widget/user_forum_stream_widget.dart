@@ -64,10 +64,7 @@ class UserForumStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, Object?>>>(
-        stream: firestore
-            .collection(FORUM_COLLECTION)
-            .orderBy('date', descending: true)
-            .snapshots(),
+        stream: filterForum(),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
             return ErrorTextWidget(errorMsg: 'No Data exists');
