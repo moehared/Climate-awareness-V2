@@ -1,3 +1,5 @@
+import 'package:app/domain/services/database_services/chat_service.dart';
+import 'package:app/domain/services/locator.dart';
 import 'package:app/ui/widgets/search-results-list-view.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -32,11 +34,14 @@ class SearchPage extends StatelessWidget {
       openAxisAlignment: 0.0,
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
-      onQueryChanged: (query) {
+      onQueryChanged: (query) async {
         print("something here 36");
-        data = this.onChanged(query);
-        print(data);
+        data =  await this.onChanged(query);
+        print("this is some data ${data}");
+        locator<ChatDatabaseService>().setSearchUserListResults(data);
+       // SearchResults(data);
         print("query changed!");
+
       },
       transition: CircularFloatingSearchBarTransition(),
       actions: [
@@ -44,7 +49,9 @@ class SearchPage extends StatelessWidget {
           showIfOpened: false,
           child: CircularButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+            
+            },
           ),
         ),
         FloatingSearchBarAction.searchToClear(
@@ -60,10 +67,17 @@ class SearchPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-               SearchResults(data)
+                 SearchResults(locator<ChatDatabaseService>()
+                    .getSearchUserListResults())
+                //Text("is there something here"),
+               
               ],
-              // children: Colors.accents.map((color) {
-              //   return Container(height: 112, color: color);
+              // children: data.map((e) {
+              //   print("do i get here ");
+              //   return Container(child: ListTile(
+              //       title: Text("${e}"),
+              //       subtitle: Text("Something here"),
+              //   ),);
               // }).toList(),
             ),
           ),

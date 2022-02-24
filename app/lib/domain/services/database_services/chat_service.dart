@@ -12,6 +12,8 @@ class ChatDatabaseService {
   ChatDatabaseService(this._repository);
 
 
+
+
   Future <void> create(ChatModel chatModel) async {
     return _repository.create(chatModel);
   }
@@ -44,5 +46,18 @@ class ChatDatabaseService {
   Future<List<UserModel>> getUserModelBySearchByFirstName(String searchKey) async{
     return _repository.getUserModelBySearchKeyByFirstName(searchKey);
   }
+
+  void setSearchUserListResults( List<String> searchResults){
+      
+      return _repository.setSearchUserListResults(searchResults);
+  }
+
+  List<String> getSearchUserListResults() {
+    return _repository.getSearchUserListResults();
+  }
+
+
+
+
 
 }

@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatFirebaseFireStoreRepo  implements RepositoryInterface<ChatModel> {
   ChatFirebaseFireStoreRepo();
+  List<String> searchUserResults = [];
 
   @override
   Future<void> create(ChatModel chatModel) async {
@@ -62,10 +63,20 @@ class ChatFirebaseFireStoreRepo  implements RepositoryInterface<ChatModel> {
      .where("firstName", isLessThan: searchKey + 'z')
      .get();
 
-     final userModels = querySnapshot.docs
+     final userModels =  querySnapshot.docs
       .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>)).toList();
       
-     return userModels;
+     return  await userModels;
+   }
+
+
+
+   void setSearchUserListResults(List<String> searchResults){
+     this.searchUserResults = searchResults; 
+   }
+
+   List<String> getSearchUserListResults(){
+     return this.searchUserResults;
    }
 
 

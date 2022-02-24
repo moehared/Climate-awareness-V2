@@ -11,10 +11,11 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BuildViewModel<UserChatViewModel>(
+      onModelReady: (model) =>  model.initState(),
       builder: (ctx, model, child) => Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
+          //automaticallyImplyLeading: false,
           elevation: 0,
           title: const Text('Chat View'),
           actions: [
@@ -24,38 +25,31 @@ class ChatView extends StatelessWidget {
             )
           ],
         ),
-        body: BackgroundImage(
-          backgroundImage: 'images/space2.png',
-          child: SafeArea(
-            child: Scaffold(
-              body: SearchPage(
-                  onChanged: (searchKey) {
-                    //TODO fix this thing
-                    var aData = model
-                        .getFilteredUsersBySearchKey(searchKey!)
-                        .then((value) => value.map((e) => e.firstName));
+        body: Stack(
+          //backgroundImage: 'images/space2.png',
+          fit: StackFit.expand,
+                children: [
+                  SearchPage(
+                      onChanged: (searchKey) async {
+                        //TODO fix this thing
+                        var aData = await model
+                            .getFilteredUsersBySearchKey(searchKey!)
+                            .then((value) =>
+                                value.map((e) => e.firstName).toList());
+                        print("this is aData ${aData}");
+                        model.setSomeData = aData;
+                        return aData;
+                      },
+                      hint: model.getSearchHint,
+                      errorMessage: model.getErrorMessage,
+                      searchController: model.getSearchTextController),
                       
-                      return aData;
-                  },
-                  hint: model.getSearchHint,
-                  errorMessage: model.getErrorMessage,
-                  searchController: model.getSearchTextController),
+                ],
+              ),
+              
             ),
-            //     child: Column(
-            //   children: [
-            //     const SizedBox(
-            //       height: 5,
-            //     ),
-            //     const SizedBox(
-            //       height: 15,
-            //     ),
-            //     //RecentChats()
-            //   ],
-            // )
-            // Center(child: Text('Chat View')),
-          ),
-        ),
-      ),
-    );
+            
+        
+        );
   }
 }

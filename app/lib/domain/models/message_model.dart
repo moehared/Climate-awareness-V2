@@ -4,6 +4,7 @@ import 'package:app/domain/models/user_model.dart';
 
 class MessageModel {
  final  UserModel sender;
+  String message;
   String timeStamp;
   String messageId;
   String chatId;
@@ -11,15 +12,18 @@ class MessageModel {
   final bool isRead;
   MessageModel({
     required this.sender,
+    required this.message,
     required this.timeStamp,
     required this.messageId,
     required this.chatId,
     required this.isLiked,
     required this.isRead,
   });
+ 
 
   MessageModel copyWith({
     UserModel? sender,
+    String? message,
     String? timeStamp,
     String? messageId,
     String? chatId,
@@ -28,6 +32,7 @@ class MessageModel {
   }) {
     return MessageModel(
       sender: sender ?? this.sender,
+      message: message ?? this.message,
       timeStamp: timeStamp ?? this.timeStamp,
       messageId: messageId ?? this.messageId,
       chatId: chatId ?? this.chatId,
@@ -39,6 +44,7 @@ class MessageModel {
   Map<String, dynamic> toMap() {
     return {
       'sender': sender.toMap(),
+      'message': message,
       'timeStamp': timeStamp,
       'messageId': messageId,
       'chatId': chatId,
@@ -50,6 +56,7 @@ class MessageModel {
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
       sender: UserModel.fromMap(map['sender']),
+      message: map['message'] ?? '',
       timeStamp: map['timeStamp'] ?? '',
       messageId: map['messageId'] ?? '',
       chatId: map['chatId'] ?? '',
@@ -64,7 +71,7 @@ class MessageModel {
 
   @override
   String toString() {
-    return 'MessageModel(sender: $sender, timeStamp: $timeStamp, messageId: $messageId, chatId: $chatId, isLiked: $isLiked, isRead: $isRead)';
+    return 'MessageModel(sender: $sender, message: $message, timeStamp: $timeStamp, messageId: $messageId, chatId: $chatId, isLiked: $isLiked, isRead: $isRead)';
   }
 
   @override
@@ -73,6 +80,7 @@ class MessageModel {
   
     return other is MessageModel &&
       other.sender == sender &&
+      other.message == message &&
       other.timeStamp == timeStamp &&
       other.messageId == messageId &&
       other.chatId == chatId &&
@@ -83,6 +91,7 @@ class MessageModel {
   @override
   int get hashCode {
     return sender.hashCode ^
+      message.hashCode ^
       timeStamp.hashCode ^
       messageId.hashCode ^
       chatId.hashCode ^

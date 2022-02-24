@@ -17,11 +17,25 @@ class UserChatViewModel extends BaseViewModel{
   final _searchBarController = TextEditingController();
   final _searchHint = "Search..";
   final _errorMessage = "Nothing..";
+  List<String> _somedata = []; 
+  set setSomeData(List<String> copy) {
+    _somedata = copy;
+    notifyListeners();
+  }
+  List<String> get getSomeData =>  _somedata;
+
+  
 
 
   String get getSearchHint =>  _searchHint;
   String get getErrorMessage => _errorMessage;
   TextEditingController  get getSearchTextController => _searchBarController;
+
+
+  void initState({String searchKey = ''}) async{
+    getListOfUsers(searchKey);
+    notifyListeners();
+  }
 
 
 
@@ -40,7 +54,7 @@ class UserChatViewModel extends BaseViewModel{
       return  _chatService.getListOfUsers(searchKey);
   }
 
-  Future<List<UserModel>> getFilteredUsersBySearchKey(String searchKey){
-    return _chatService.getUserModelBySearchByFirstName(searchKey);
+  Future<List<UserModel>> getFilteredUsersBySearchKey(String searchKey)async {
+    return  _chatService.getUserModelBySearchByFirstName(searchKey);
   }
 }
