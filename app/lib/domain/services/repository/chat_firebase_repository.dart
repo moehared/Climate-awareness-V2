@@ -1,22 +1,24 @@
 import 'package:app/common/config.dart';
 import 'package:app/common/utils/optional.dart';
 import 'package:app/domain/models/chat_model.dart';
+import 'package:app/domain/models/message_model.dart';
 import 'package:app/domain/models/user_model.dart';
+import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatFirebaseFireStoreRepo  implements RepositoryInterface<ChatModel> {
   ChatFirebaseFireStoreRepo();
-  List<String> searchUserResults = [];
+  List<UserModel> searchUserResults = [];
 
   @override
-  Future<void> create(ChatModel chatModel) async {
+  Future<String> create(ChatModel chatModel) async {
     final doc = firestore.collection(CHAT_COLLECTION).doc();
     final docId = doc.id;
     chatModel = chatModel.copyWith(chatId: docId);
-    final finalDoc = await doc.set(chatModel.toMap());
-    return finalDoc;
+    await doc.set(chatModel.toMap());
+    return doc.id;
   }
 
     @override
@@ -69,17 +71,74 @@ class ChatFirebaseFireStoreRepo  implements RepositoryInterface<ChatModel> {
      return  await userModels;
    }
 
+   Future<List<ChatModel>> getChatModels(String currentUserId) async{
+     QuerySnapshot querySnapshot = await firestore
+     .collection("userChat")
+     .where("userId", isEqualTo: currentUserId)
+     .get();
+
+     final chatModels = querySnapshot.docs
+     .map((doc) => ChatModel.fromMap(doc.data()as Map<String,dynamic>)).toList();
+     return await chatModels;
+
+   }
 
 
-   void setSearchUserListResults(List<String> searchResults){
+
+   void setSearchUserListResults(List<UserModel> searchResults){
      this.searchUserResults = searchResults; 
    }
 
-   List<String> getSearchUserListResults(){
+   List<UserModel> getSearchUserListResults(){
      return this.searchUserResults;
    }
 
 
+  //  UserModel fetchReciverOrSender(String chatID ){
+  //    if()
+  //  }
+
+
+
+   void createNewMessage(MessageModel messageModel) async{
+     print("Do i get to this part 98");
+      final docRef = firestore.
+      collection("messages")
+      .doc(messageModel.chatId);
+      print("got to line 101 chat repo");
+      final userMessages = docRef.collection("userMessages").doc();
+      final userMessagesId = userMessages.id;
+      messageModel = messageModel.copyWith(messageId: userMessagesId);
+      userMessages.set(messageModel.toMap());
+      print(" message sent this is from chat repo");
+   }
+
+
+   Future<List<MessageModel>> getMessages(String userId,String chatId) async{
+     QuerySnapshot querySnapshot = await firestore
+     .collection("messages")
+     .doc(chatId)
+     .collection("userMessages")
+     .where("userID",isEqualTo: userId)
+     .orderBy("timeStamp", descending: false)
+     .get();
+
+    final messageModels = querySnapshot.docs
+    .map((doc) => MessageModel.fromMap(doc.data() as Map<String, dynamic>)).toList();
+    return await messageModels;
+
+   }
+
+   Future<String>getUserNameFromChatModel(String chatId) async{
+      ChatModel chatModel = await read(chatId);
+      if(locator<AuthService>().currentUser.get()!.uid == chatModel.reciever.userId){
+      return  "${chatModel.reciever.firstName} ${chatModel.reciever.lastName}";
+      }
+      else 
+      {
+        return  "${chatModel.reciever.firstName} ${chatModel.reciever.lastName}";
+      }
+   }
 
   
 

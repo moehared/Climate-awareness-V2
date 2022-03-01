@@ -1,8 +1,11 @@
 import 'package:app/domain/models/chat_model.dart';
+import 'package:app/domain/models/message_model.dart';
 import 'package:app/domain/models/user_forum_model.dart';
 //import 'package:app/domain/services/repository/forum_firebase_repository.dart';
 import 'package:app/domain/models/user_forum_comment_model.dart';
 import 'package:app/domain/models/user_model.dart';
+import 'package:app/domain/services/authentication_service/auth_service.dart';
+import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/repository/chat_firebase_repository.dart';
 import 'package:app/domain/services/repository/repo_interface.dart';
 import 'package:flutter/foundation.dart';
@@ -14,7 +17,7 @@ class ChatDatabaseService {
 
 
 
-  Future <void> create(ChatModel chatModel) async {
+  Future <String> create(ChatModel chatModel) async {
     return _repository.create(chatModel);
   }
   
@@ -47,13 +50,26 @@ class ChatDatabaseService {
     return _repository.getUserModelBySearchKeyByFirstName(searchKey);
   }
 
-  void setSearchUserListResults( List<String> searchResults){
+  Future<List<ChatModel>> getChatModels(String currentUserId) async {
+    return _repository.getChatModels(currentUserId);
+  }
+
+  void setSearchUserListResults( List<UserModel> searchResults){
       
       return _repository.setSearchUserListResults(searchResults);
   }
 
-  List<String> getSearchUserListResults() {
+  List<UserModel> getSearchUserListResults() {
     return _repository.getSearchUserListResults();
+  }
+
+
+  void createNewMessage(MessageModel messageModel ) async{
+    return _repository.createNewMessage(messageModel);
+  }
+
+  Future <String>getUserName(String chatId) async{
+  return _repository.getUserNameFromChatModel(chatId);
   }
 
 

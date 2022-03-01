@@ -1,3 +1,4 @@
+import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/database_services/chat_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/ui/widgets/search-results-list-view.dart';
@@ -6,7 +7,8 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchPage extends StatelessWidget {
   //final _serachBarController = TextEditingController();
-  const SearchPage({Key? key,
+  const SearchPage({
+    Key? key,
     required this.onChanged,
     required this.hint,
     required this.errorMessage,
@@ -20,7 +22,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> data = List<String>.empty();
+    List<UserModel> data = [];
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     print("Searchpage: ${data}");
@@ -36,12 +38,11 @@ class SearchPage extends StatelessWidget {
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) async {
         print("something here 36");
-        data =  await this.onChanged(query);
+        data = await this.onChanged(query);
         print("this is some data ${data}");
         locator<ChatDatabaseService>().setSearchUserListResults(data);
-       // SearchResults(data);
+        // SearchResults(data);
         print("query changed!");
-
       },
       transition: CircularFloatingSearchBarTransition(),
       actions: [
@@ -49,16 +50,14 @@ class SearchPage extends StatelessWidget {
           showIfOpened: false,
           child: CircularButton(
             icon: const Icon(Icons.search),
-            onPressed: () {
-            
-            },
+            onPressed: () {},
           ),
         ),
         FloatingSearchBarAction.searchToClear(
           showIfClosed: false,
         ),
       ],
-        builder: (context, transition) {
+      builder: (context, transition) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Material(
@@ -67,54 +66,14 @@ class SearchPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                 SearchResults(locator<ChatDatabaseService>()
-                    .getSearchUserListResults())
+                SearchResults(
+                    locator<ChatDatabaseService>().getSearchUserListResults()),
                 //Text("is there something here"),
-               
               ],
-              // children: data.map((e) {
-              //   print("do i get here ");
-              //   return Container(child: ListTile(
-              //       title: Text("${e}"),
-              //       subtitle: Text("Something here"),
-              //   ),);
-              // }).toList(),
             ),
           ),
         );
       },
-
     );
-
-     
-
-
-
-          // The search area here
-      //   return  Container(
-      //   width: double.infinity,
-      //   height: 40,
-      //   decoration: BoxDecoration(
-      //       color: Colors.white, borderRadius: BorderRadius.circular(5)),
-      //   child: Center(
-      //     child: TextField(
-      //       onChanged: onChanged,
-      //       controller: searchController,
-      //       decoration: InputDecoration(
-      //           prefixIcon: Icon(Icons.search),
-      //           suffixIcon: IconButton(
-      //             icon: Icon(Icons.clear),
-      //             onPressed: () {
-      //              // _serachBarController.clear();
-      //               searchController.clear();
-      //               /* Clear the search field */
-      //             },
-      //           ),
-      //           hintText: hint,
-      //           border: InputBorder.none),
-      //     ),
-      //   ),
-      // );
- 
   }
 }

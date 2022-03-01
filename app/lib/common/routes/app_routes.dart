@@ -1,6 +1,7 @@
 import 'package:app/domain/models/user_forum_comment_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service_wrapper.dart';
 import 'package:app/ui/views/add-post-view/add-posts-view.dart';
+import 'package:app/ui/views/chat-view/message-view.dart';
 import 'package:app/ui/views/confirm-user-email-view/confirm_user_email.dart';
 
 import 'package:app/ui/views/forget-password-view/forget-password-view.dart';
@@ -46,6 +47,13 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ExpandedForumView(
             forumId: settings.arguments as String,
+          ),
+        );
+      
+       case MessageView.routeName:
+        return MaterialPageRoute(
+          builder: (_) => MessageView(
+            chatId: settings.arguments as String,
           ),
         );
 
