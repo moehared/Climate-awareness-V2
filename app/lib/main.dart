@@ -1,7 +1,8 @@
-import 'package:hive_flutter/adapters.dart';
+import 'package:app/common/constant.dart';
+import 'package:app/domain/services/local_db/hive/boxes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:path_provider/path_provider.dart';
-import 'common/constant.dart';
 import 'common/routes/app_routes.dart';
 import 'domain/models/questionaire-model/questionaire.dart';
 import 'domain/services/authentication_service/auth_service_wrapper.dart';
@@ -11,17 +12,24 @@ import 'domain/dialog_manager/dialog_manager.dart';
 import 'domain/services/locator.dart';
 import 'domain/services/navigation_service/navigation_service.dart';
 
+import 'domain/models/Achievement-model.dart';
+
 var questionaireMap = locator<Questionaire>();
 String inputLocation = '';
+var achievmentMap = <String, Achievement>{};
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // final director = await getApplicationDocumentsDirectory();
- 
-    
-  setUpLocatorService();
+  ;
+  final director = await getApplicationDocumentsDirectory();
+  Hive.init(director.path);
+  Hive.initFlutter();
+  // Hive.registerAdapter(AchievementAdapter());
+  // Hive.registerAdapter(AchievementTypesAdapter());
 
-  // await Hive.openBox<QuestionaireResult>(QUESTIONAIRE_RESULT_BOX);
+  // await Hive.openBox<Achievement>(ACHIEVEMENT_BOX);
+  setUpLocatorService();
+  // locator<Boxes<Achievement>>().openBox();
   runApp(MyApp());
 }
 
