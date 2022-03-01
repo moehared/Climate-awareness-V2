@@ -21,10 +21,13 @@ class ReusableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {
-        locator<NavigationService>()
-            .navigateTo(PersonalizedTipsDetailsView.routeName,argument: id);
-      },
+      onTap: id.isNotEmpty
+          ? () {
+              locator<NavigationService>().navigateTo(
+                  PersonalizedTipsDetailsView.routeName,
+                  argument: id);
+            }
+          : null,
       child: Container(
         width: deviceSize.width * 0.40,
         margin: EdgeInsets.only(left: 10.0),

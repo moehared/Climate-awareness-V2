@@ -81,6 +81,7 @@ flutter:
   assets:
     - images/
     - chart-data-icon/
+    - achievement-icons/
   fonts:
     - family: Roboto-Bold
       fonts:

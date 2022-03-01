@@ -11,6 +11,7 @@ import 'package:app/domain/models/questionaire-model/concrete-objects/transporta
 import 'package:app/domain/models/questionaire-model/concrete-objects/utilities.dart';
 import 'package:app/domain/models/questionaire-model/questionaire-result.dart';
 import 'package:app/domain/services/dialog_service/dialog_service.dart';
+import 'package:app/domain/services/local_db/hive/boxes.dart';
 import 'package:app/domain/services/local_db/share_pref/share_pref.dart';
 
 import 'package:app/domain/services/locator.dart';
@@ -20,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
+import 'package:app/domain/models/Achievement-model.dart';
 
 // const GEOAPIFYENDPOINT = 'https://api.geoapify.com/v1/geocode/autocomplete?text=Mosco&apiKey';
 const NOMINATIM_OPENSTREETMAP_API =
@@ -41,6 +43,7 @@ const alternativeEndPoint =
     'https://coolclimate.berkeley.edu/calculators/household-staging/api.php';
 
 class NetworkService {
+  // final _achievement = locator<Boxes<Achievement>>();
   final _dialogService = locator<DiaglogService>();
 
   // final _questionaireBox = locator<Boxes<QuestionaireResult>>();
@@ -207,8 +210,11 @@ class NetworkService {
         resultWaterSewage: double.tryParse(waterUsage),
       );
 
+      initPrev();
+
       try {
-        // save data on location device;
+        checkValidAchievment();
+        // save data on local device;
         SharePref.saveQuestionaire(QUESTIONAIRE_RESULT_BOX, questionaireMap);
         // _questionaireBox.getQuestionaireResultBox
         //     .put(questionaireMap.result.id, questionaireMap.result);
@@ -219,6 +225,31 @@ class NetworkService {
       // return double.parse(result) / 12.0;
     } catch (e) {
       throw ('error occurred $e');
+    }
+  }
+
+  void checkValidAchievment() {
+    if (questionaireMap.result.checkForAchievement()) {
+      try {
+        debugPrint('Is valid check!!');
+        final data = Achievement(
+            achievementTypes: AchievementTypes.ECO_FRIENDLY.name,
+            icon: 'achievement-icons/eco-friendly.jpeg',
+            description: 'You have recieved Eco Friendly badge');
+        achievmentMap.putIfAbsent(ECO_FRIENDLY_ACHIEVEMENT, () => data);
+        SharePref.saveQuestionaire(ECO_FRIENDLY_ACHIEVEMENT, data);
+      } catch (e) {
+        throw ('could not save achievement data $e');
+      }
+    }
+  }
+
+  void initPrev() {
+    if (questionaireMap.result.previusScoreIsNull()) {
+      debugPrint(
+          'prev score was null and inititailize with current score ${questionaireMap.result.previousScore}');
+      questionaireMap.result = questionaireMap.result
+          .copyWith(previous: questionaireMap.result.resultGrandTotal);
     }
   }
 
@@ -247,8 +278,6 @@ class NetworkService {
       throw ('error occurred $e');
     }
   }
-
-
 
   // Future<SelectedCity> getPlaceDetails(String placeID) async {
   //   late final http.Response response;
@@ -739,12 +768,13 @@ class NetworkService {
         resultFoodTotal: double.tryParse(food),
         resultWaterSewage: double.tryParse(waterUsage),
       );
+      initPrev();
 
       try {
+        //TODO: remove achievement if user score gets worse after improved score.
+        checkValidAchievment();
         // save data on location device;
         SharePref.saveQuestionaire(QUESTIONAIRE_RESULT_BOX, questionaireMap);
-        // _questionaireBox.getQuestionaireResultBox
-        //     .put(questionaireMap.result.id, questionaireMap.result);
       } catch (e) {
         throw ('Could not persist data in local storage');
       }
@@ -756,5 +786,17 @@ class NetworkService {
     } catch (e) {
       throw ('could not fetch from refined api: $e');
     }
+  }
+}
+
+extension CheckNotNull on QuestionaireResult {
+  bool checkForAchievement() {
+    return this.previousScore != null &&
+        this.resultGrandTotal != null &&
+        this.resultGrandTotal! <= this.previousScore!;
+  }
+
+  bool previusScoreIsNull() {
+    return this.previousScore == null;
   }
 }
