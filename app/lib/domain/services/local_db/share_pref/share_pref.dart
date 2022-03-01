@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:app/common/constant.dart';
 import 'package:app/domain/models/questionaire-model/category.dart';
-import 'package:app/domain/models/questionaire-model/questionaire.dart';
+import 'package:app/domain/models/Achievement-model.dart';
 import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
@@ -18,6 +18,8 @@ class SharePref {
     if (data is String) {
       pref.setString(key, data);
     } else if (data is UserModel) {
+      pref.setString(key, data.toJson());
+    } else if (data is Achievement) {
       pref.setString(key, data.toJson());
     } else {
       pref.setString(key, questionaireMap.toJson());
@@ -42,6 +44,11 @@ class SharePref {
         return json.decode(pref.getString(key) ?? '');
       case ProfileViewModel.IMAGE_KEY:
         return pref.getString(uuid) ?? '';
+      case ECO_FRIENDLY_ACHIEVEMENT:
+        final data = pref.get(key);
+        print('achievment data is $data');
+        if (data == null) return null;
+        return json.decode(pref.getString(key) ?? '');
       default:
         return '';
     }

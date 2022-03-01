@@ -1,3 +1,4 @@
+import 'package:app/common/constant.dart';
 import 'package:app/domain/models/chat_model.dart';
 import 'package:app/domain/models/questionaire-model/questionaire-result.dart';
 import 'package:app/domain/models/questionaire-model/questionaire.dart';
@@ -7,7 +8,8 @@ import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/database_services/chat_service.dart';
 import 'package:app/domain/services/database_services/post_service.dart';
-
+import 'package:app/domain/services/local_db/hive/boxes.dart';
+import 'package:app/domain/models/Achievement-model.dart';
 import 'package:app/domain/services/network_service/questionaires_endpoint/network_service.dart';
 import 'package:app/domain/services/repository/account_firebase_repository.dart';
 import 'package:app/domain/services/repository/chat_firebase_repository.dart';
@@ -40,11 +42,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app/domain/services/database_services/forum_service.dart';
 import 'package:app/domain/services/repository/forum_firebase_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:app/domain/models/user_forum_model.dart';
 import 'dialog_service/dialog_service.dart';
 import 'navigation_service/navigation_service.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 // locator design pattern youtube tutorial
 // https://youtu.be/DbV5RV2HRUk
@@ -54,7 +60,7 @@ final locator = GetIt.instance;
 final firestore = FirebaseFirestore.instance;
 final firebaseAuth = FirebaseAuth.instance;
 final xml2Json = Xml2Json();
-void setUpLocatorService() {
+void setUpLocatorService() async {
   // init singleton object here
   locator.registerLazySingleton<RepositoryInterface<UserModel>>(
       () => AccountFirebaseFireStoreRepo());
@@ -65,8 +71,8 @@ void setUpLocatorService() {
       () => ForumFirebaseFireStoreRepo());
   locator.registerLazySingleton<RepositoryInterface<ChatModel>>(
       () => ChatFirebaseFireStoreRepo());
-  // locator.registerLazySingleton<Boxes<QuestionaireResult>>(
-  //     () => Boxes(QUESTIONAIRE_RESULT_BOX));
+  locator
+      .registerLazySingleton<Boxes<Achievement>>(() => Boxes(ACHIEVEMENT_BOX));
   locator.registerLazySingleton<AccountFirebaseFireStoreRepo>(
       () => AccountFirebaseFireStoreRepo());
   locator.registerLazySingleton<ChatFirebaseFireStoreRepo>(

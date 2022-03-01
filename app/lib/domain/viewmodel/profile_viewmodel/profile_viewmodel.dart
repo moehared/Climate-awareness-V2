@@ -11,7 +11,7 @@ import 'package:app/domain/models/user_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
 import 'package:app/domain/services/database_services/account_service.dart';
 import 'package:app/domain/services/local_db/share_pref/share_pref.dart';
-
+import 'package:app/domain/models/Achievement-model.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/domain/viewmodel/base_viewmodel/baseview_model.dart';
@@ -71,9 +71,10 @@ class ProfileViewModel extends BaseViewModel {
   Future<void> fetchQuestionaireResult() async {
     final Map<String, cat.Category> questionaire = {};
     final res = await SharePref.getData(QUESTIONAIRE_RESULT_BOX);
+    final achievmentData = await SharePref.getData(ECO_FRIENDLY_ACHIEVEMENT);
     if (res == null) return;
-    debugPrint('result Questionaire: $res\n');
-    print('res == $res');
+    debugPrint('res == $res');
+    fetchAchievment(achievmentData);
     final category = res['category'];
     final utilities = Utilities.fromJson(category['Q1']);
     final transportation = Transportation.fromJson(category['Q2']);
@@ -88,6 +89,15 @@ class ProfileViewModel extends BaseViewModel {
     final resultObj = QuestionaireResult.fromJson(result);
     questionaireMap.result = resultObj;
     notifyListeners();
+  }
+
+  void fetchAchievment(achievmentData) {
+    if (achievmentData == null) return;
+    debugPrint('achievment map resul: $achievmentData\n');
+    final achievment = Achievement.fromMap(achievmentData);
+    debugPrint('achievment  resul: $achievment\n');
+    achievmentMap.putIfAbsent(ECO_FRIENDLY_ACHIEVEMENT, () => achievment);
+    debugPrint('achievmentMap === $achievmentMap');
   }
 
   Future<void> fetchUserInfo() async {
@@ -118,7 +128,7 @@ class ProfileViewModel extends BaseViewModel {
   void loadImage() async {
     if (!_auth.currentUser.isPresent()) return;
     final uuid = _auth.currentUser.get()!.uid;
-    final imageString = await SharePref.getData(IMAGE_KEY,uuid) as String;
+    final imageString = await SharePref.getData(IMAGE_KEY, uuid) as String;
     print('image string: $imageString');
     if (imageString.isNotEmpty) {
       _image = File(imageString);

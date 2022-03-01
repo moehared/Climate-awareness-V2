@@ -5,6 +5,8 @@ import 'package:app/common/utils/getcategory-obj.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/main.dart';
+import 'package:app/ui/widgets/container-list/build-achievement-list.dart';
+import 'package:app/ui/widgets/container-list/build-container-list.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
 import 'package:app/ui/widgets/reusable-widget/reusable_card.dart';
 import 'package:flutter/material.dart';
@@ -109,28 +111,8 @@ class ProfileView extends StatelessWidget {
                 // categories,
                 // if (questionaireMap.result.category != null && questionaireMap.result.category!.isNotEmpty)
                 if (questionaireMap.categoryMap.isNotEmpty)
-                  Container(
-                    height: 100,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (ctx, index) {
-                        // var data = tipData.elementAt(index).values.toList();
-                        var data = getCategoryObject(index);
-
-                        print('data: $data');
-                        // var data = tipData.elementAt(index);
-                        // var data = newList.elementAt(index);
-                        return ReusableCard(
-                          id: data.questionID,
-                          subTitle: data.title,
-                          imageAsset: data.imageAsset,
-                        );
-                      },
-                      // itemCount: questionaireMap.result.category!.length,
-                      itemCount: questionaireMap.categoryMap.length,
-                      scrollDirection: Axis.horizontal,
-                    ),
+                  BuildListContainer(
+                    length: questionaireMap.categoryMap.length,
                   ),
                 if (questionaireMap.categoryMap.isEmpty)
                   Center(
@@ -145,10 +127,14 @@ class ProfileView extends StatelessWidget {
                   title: 'Achievement',
                   viewAll: () {},
                 ),
-                Text(
-                  'under construction',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
+                // BuildListContainer(
+                //   isAchievement: true,
+                // ),
+                if (achievmentMap.isNotEmpty)
+                  BuildListContainer(
+                    length: achievmentMap.length,
+                    isAchievement: true,
+                  ),
               ],
             ),
           ),

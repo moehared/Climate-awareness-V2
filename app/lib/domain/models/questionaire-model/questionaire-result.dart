@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 
 class QuestionaireResult {
   final double? resultGrandTotal;
-
+  final double? previousScore;
   final double? resultAirTravelDirect;
 
   final double? resultMotorVehiclesDirect;
@@ -31,6 +31,7 @@ class QuestionaireResult {
     this.resultFoodTotal,
     this.resultWaterSewage,
     this.energy,
+    this.previousScore,
     this.id,
     // this.category,
   });
@@ -45,10 +46,12 @@ class QuestionaireResult {
     double? resultWaterSewage,
     double? energy,
     String? id,
+    double? previous,
     // Map<String, cat.Category>? category,
   }) {
     return QuestionaireResult(
       resultGrandTotal: resultGrandTotal ?? this.resultGrandTotal,
+      previousScore: previous ?? this.previousScore,
       resultAirTravelDirect:
           resultAirTravelDirect ?? this.resultAirTravelDirect,
       resultMotorVehiclesDirect:
@@ -74,6 +77,7 @@ class QuestionaireResult {
       'resultFoodTotal': resultFoodTotal,
       'resultWaterSewage': resultWaterSewage,
       'energy': energy,
+      'previous': previousScore,
       'id': id,
       // 'category': this.category?.map((key, value) => MapEntry(key, value)),
       //  'category': category,
@@ -91,6 +95,7 @@ class QuestionaireResult {
       resultWaterSewage: map['resultWaterSewage']?.toDouble(),
       energy: map['energy']?.toDouble(),
       id: map['id'],
+      previousScore: map['previous']
       // category: Map<String, cat.Category>.from(map['category']),
     );
   }
@@ -102,7 +107,7 @@ class QuestionaireResult {
 
   @override
   String toString() {
-    return 'QuestionaireResult(resultGrandTotal: $resultGrandTotal, resultAirTravelDirect: $resultAirTravelDirect, resultMotorVehiclesDirect: $resultMotorVehiclesDirect, resultPublictransDirect: $resultPublictransDirect, resultServicesTotal: $resultServicesTotal, resultFoodTotal: $resultFoodTotal, resultWaterSewage: $resultWaterSewage, energy: $energy, id: $id)';
+    return 'QuestionaireResult(resultGrandTotal: $resultGrandTotal, resultAirTravelDirect: $resultAirTravelDirect, resultMotorVehiclesDirect: $resultMotorVehiclesDirect, resultPublictransDirect: $resultPublictransDirect, resultServicesTotal: $resultServicesTotal, resultFoodTotal: $resultFoodTotal, resultWaterSewage: $resultWaterSewage, energy: $energy, id: $id previousScore: $previousScore)';
   }
 
   @override
@@ -118,6 +123,7 @@ class QuestionaireResult {
         other.resultFoodTotal == resultFoodTotal &&
         other.resultWaterSewage == resultWaterSewage &&
         other.energy == energy &&
+        other.previousScore == previousScore &&
         other.id == id;
 //         &&
 //  mapEquals(other.category, category);
@@ -133,6 +139,7 @@ class QuestionaireResult {
         resultFoodTotal.hashCode ^
         resultWaterSewage.hashCode ^
         energy.hashCode ^
+        previousScore.hashCode ^
         id.hashCode;
     // ^
     // category.hashCode;
