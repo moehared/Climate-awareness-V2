@@ -233,7 +233,7 @@ class NetworkService {
       try {
         debugPrint('Is valid check!!');
         final data = Achievement(
-            achievementTypes: AchievementTypes.ECO_FRIENDLY.name,
+            achievementTypes: AchievementTypes.ECO_FRIENDLY.toString(),
             icon: 'achievement-icons/eco-friendly.jpeg',
             description: 'You have recieved Eco Friendly badge');
         achievmentMap.putIfAbsent(ECO_FRIENDLY_ACHIEVEMENT, () => data);
