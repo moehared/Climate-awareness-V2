@@ -38,6 +38,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animation_progress_bar: ^2.0.1
+  flutter_osm_plugin: ^0.31.0
   flutter_pw_validator: ^1.2.1
   focused_menu: ^1.0.5
   geocoding: ^2.0.1
