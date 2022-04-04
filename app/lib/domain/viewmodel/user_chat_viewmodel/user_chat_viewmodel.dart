@@ -43,18 +43,18 @@ class UserChatViewModel extends BaseViewModel {
     //check current uid to chatModel.sender Uid if different then change to reciever else sender
     if (_userAuthService.currentUser.get()!.uid == _chatModel.sender.userId) {
       setMessageModel = await messageModel.copyWith(sender: _chatModel.sender);
-    }
-    else
-    {
-      setMessageModel = await messageModel.copyWith(sender: _chatModel.reciever);
+    } else {
+      setMessageModel =
+          await messageModel.copyWith(sender: _chatModel.reciever);
     }
     //setMessageModel = await messageModel.copyWith(sender: _chatModel.sender);
     setChatModel = chatModel.copyWith(chatId: chatId);
+    locator<ChatDatabaseService>().getRecentChatMessage("CSK8OzqnuXX15lyV3cwt");
     getListOfUsers(searchKey);
     notifyListeners();
   }
 
-  String getUserName(){
+  String getUserName() {
     if (locator<AuthService>().currentUser.get()!.uid ==
         chatModel.reciever.userId) {
       return "${chatModel.sender.firstName} ${chatModel.sender.lastName}";
@@ -69,21 +69,44 @@ class UserChatViewModel extends BaseViewModel {
 
   String get getUserId => _userAuthService.currentUser.get()!.uid;
 
-//TODO move this to a service
+  // Future<bool> ifChatAlreadyExistsNavTo(String recieverId) async {
+  //   bool cond1 = await _chatService.checkIfUserAlreadyHasChatRoom(recieverId);
+  //   if(cond1 == true){
+  //     var getChatId = await _chatService.
+  //     navigateToDirectMessage()
+  //   }
+  // }
+
   Future<bool> createChatRoom(String recieverId) async {
     var senderId = _userAuthService.currentUser.get()!.uid;
+    bool cond1 = await _chatService.checkIfUserAlreadyHasChatRoom(recieverId);
+    var getChatIdFromChatService = await _chatService
+        .getChatModelFromCurrentUserAndRecieverId(senderId, recieverId);
+    print(
+        " this is the getChatIdFromChatService :   ${getChatIdFromChatService}");
     if (recieverId == senderId) {
       print("Same Person");
       return false;
     }
-    var senderUserModel = await _accountService.fetchUserModel(senderId);
-    var recieverUserModel = await _accountService.fetchUserModel(recieverId);
-    ChatModel chatModel = ChatModel(
-        sender: senderUserModel, reciever: recieverUserModel, chatId: " ");
-    var createdChatId = await _chatService.create(chatModel);
-    print("Created chatroom with id: ${createdChatId}");
-    navigateToDirectMessage(createdChatId);
-    return true;
+
+    if (cond1) {
+      navigateToDirectMessage(getChatIdFromChatService);
+      print("user has chat with person already ${cond1}");
+      return false;
+    } else {
+      print("line 89 user chat viewmodel ${cond1}");
+      var senderUserModel = await _accountService.fetchUserModel(senderId);
+      var recieverUserModel = await _accountService.fetchUserModel(recieverId);
+      ChatModel chatModel = ChatModel(
+          arrayOfUserAndReciever: [senderId, recieverId],
+          sender: senderUserModel,
+          reciever: recieverUserModel,
+          chatId: " ");
+      var createdChatId = await _chatService.create(chatModel);
+      print("Created chatroom with id: ${createdChatId}");
+      navigateToDirectMessage(createdChatId);
+      return true;
+    }
   }
 
   Stream getListOfUsers(String searchKey) {
@@ -106,6 +129,7 @@ class UserChatViewModel extends BaseViewModel {
   }
 
   ChatModel _chatModel = ChatModel(
+      arrayOfUserAndReciever: [],
       sender: UserModel(
           userId: "",
           firstName: "",
@@ -162,7 +186,7 @@ class UserChatViewModel extends BaseViewModel {
       return;
     }
     _formKey.currentState?.save();
-    final date = getCurrentDateFormat();
+    final date = getMessageCurrentDateFormat();
     setMessageModel =
         messageModel.copyWith(timeStamp: date, chatId: chatModel.chatId);
     _chatService.createNewMessage(messageModel);

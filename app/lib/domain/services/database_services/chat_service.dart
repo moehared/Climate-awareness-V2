@@ -20,6 +20,13 @@ class ChatDatabaseService {
   Future <String> create(ChatModel chatModel) async {
     return _repository.create(chatModel);
   }
+
+  Future<bool> checkIfUserAlreadyHasChatRoom(String recieverId){
+    return _repository.checkIfUserAlreadyHasChatRoom(recieverId);
+  }
+  Future<String> getChatModelFromCurrentUserAndRecieverId(String currentUId, String recieverId){
+    return _repository.getChatModelFromCurrentUserAndRecieverId(currentUId, recieverId);
+  }
   
   void delete(String chatId) async {
     return await _repository.delete(chatId);
@@ -70,6 +77,14 @@ class ChatDatabaseService {
 
   Future <String>getUserName(String chatId) async{
   return _repository.getUserNameFromChatModel(chatId);
+  }
+
+  Future<MessageModel> getRecentChatMessage(String chatId) async {
+    try {
+      return await _repository.getRecentChatMessage(chatId);
+    } catch (e) {
+      return Future.error('Recent chat Data does not exist');
+    }
   }
 
 

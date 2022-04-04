@@ -1,55 +1,84 @@
 import 'package:app/domain/models/chat_model.dart';
+import 'package:app/domain/models/message_model.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
+import 'package:app/domain/services/database_services/chat_service.dart';
 import 'package:app/domain/services/locator.dart';
 import 'package:app/domain/services/navigation_service/navigation_service.dart';
 import 'package:app/ui/views/chat-view/message-view.dart';
+import 'package:app/ui/widgets/avator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RecentChatCards extends StatelessWidget{
+import '../../../common/utils/date_format.dart';
+
+class RecentChatCards extends StatefulWidget {
   final ChatModel chatModel;
-  const RecentChatCards({
-    required this.chatModel
+
+  RecentChatCards({
+    required this.chatModel,
   });
 
+  @override
+  State<RecentChatCards> createState() => _RecentChatCardsState();
+}
 
-  void goToChatView(){
+class _RecentChatCardsState extends State<RecentChatCards> {
+  var msg = '';
+  var date = "";
+  var person = "";
+  void goToChatView() {
     final navigationServices = locator<NavigationService>();
-    navigationServices.navigateTo(MessageView.routeName, argument: chatModel.chatId);
+    navigationServices.navigateTo(MessageView.routeName,
+        argument: widget.chatModel.chatId);
   }
+
+  @override
+  void initState() {
+    print('init ....');
+    super.initState();
+    //  getCurrentMsg();
+
+    final msgData = locator<ChatDatabaseService>()
+        .getRecentChatMessage(widget.chatModel.chatId)
+        .then((value) {
+      print('value nessage inside init state ${value.message}');
+      setState(() {
+        date = recentChatDateFormat(value.timeStamp);
+        msg = value.message;
+        person = value.sender.firstName + " " + value.sender.lastName;
+        print('msg is $msg');
+      });
+    });
+    setState(() {});
+  }
+
+  // Future<MessageModel> getRecentMessage() async {
+  Future<void> getCurrentMsg() async {
+    final msgData = await locator<ChatDatabaseService>()
+        .getRecentChatMessage(widget.chatModel.chatId);
+
+    print('message data $msgData');
+    msg = msgData.message;
+  }
+
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
+    //print("This is recent messages ${getRecentMessage()}");
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      //TODO: Add profile picture
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         const SizedBox(
-          height: 15,
+          height: 20,
         )
-        //   TextButton(
-        //     style: TextButton.styleFrom(padding: EdgeInsets.all(5)),
-        //     onPressed: () => showPopUpMenu(
-        //         child: ShowEditForumPopUpMenu(
-        //           forumId: forum.forumId,
-        //           userID: forum.userId,
-        //         ),
-        //         context: context),
-        //     child: Text(
-        //       'Edit Forum Post',
-        //       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-        //             backgroundColor: Colors.pink,
-        //           ),
-        //     ),
-        //   ),
       ]),
       //This is for the background]
+
       GestureDetector(
         onTap: () => goToChatView(),
         child: Container(
-          height: media.height * 0.10,
-          // padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-         // margin: const EdgeInsets.symmetric(horizontal: 10),
+          //height: media.height * 0.10,
           width: double.infinity,
+          //margin: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.all(
@@ -61,46 +90,65 @@ class RecentChatCards extends StatelessWidget{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        UserAvatar(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(locator<AuthService>()
+                                        .currentUser
+                                        .get()!
+                                        .uid ==
+                                    widget.chatModel.reciever.userId
+                                ? "${widget.chatModel.sender.firstName} ${widget.chatModel.sender.lastName}"
+                                : "${widget.chatModel.reciever.firstName} ${widget.chatModel.reciever.lastName}"),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            
+                          ],
+                        )
+                      ],
+                    ),
+                    
+                  ]
+                ),
+              Row(
                 children: [
-            
-                  // CircleAvatar(
-                  //   radius: 20.0,
-                  //   // backgroundColor: image == null ? Colors.grey[200] : null,
-                  //   backgroundImage: image != null
-                  //       ? FileImage(image!) as ImageProvider
-                  //       : null,
-                  // ),
-                  const SizedBox(
-                    width: 2,
+                  Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text( msg.isNotEmpty ?"${person}" + ": " +
+                            msg : "",
+                            style: TextStyle(color: Colors.grey[350], fontSize: 12),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: false,
+                            
+                          )
+                          )),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      // top: 15.0,
+                      right: 15,
+                    ),
+                    child: Text("${date}", style:
+                            TextStyle(color: Colors.grey[350], fontSize: 12)),
                   ),
-                  Column(
-                    children: [
-                      Text( locator<AuthService>().currentUser.get()!.uid == chatModel.reciever.userId ? 
-                        "${chatModel.sender.firstName} ${chatModel.sender.lastName}" : "${chatModel.reciever.firstName} ${chatModel.reciever.lastName}"),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 150.0,
-                  ),
-                  // IconButton(
-                  //     onPressed: () => showPopUpMenu(
-                  //         child: ShowEditForumPopUpMenu(
-                  //           forumId: forum.forumId,
-                  //           userID: forum.userId,
-                  //         ),
-                  //         context: context),
-                  //     icon: const Icon(Icons.more_horiz)
-                  //     )
                 ],
               ),
- 
+
+              // show current time message is read or seen
             ],
+            //),
+            //],
           ),
         ),
       ),
     ]);
   }
-  
-
 }

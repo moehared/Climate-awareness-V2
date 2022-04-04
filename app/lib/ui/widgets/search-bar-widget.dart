@@ -7,7 +7,7 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchPage extends StatelessWidget {
   //final _serachBarController = TextEditingController();
-  const SearchPage({
+   SearchPage({
     Key? key,
     required this.onChanged,
     required this.hint,
@@ -19,15 +19,19 @@ class SearchPage extends StatelessWidget {
   //final Stream<String> items;
   final Function(String?) onChanged;
   final String errorMessage;
+  final controller = FloatingSearchBarController();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("search controller -> ${controller.query}");
     List<UserModel> data = [];
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     print("Searchpage: ${data}");
     return FloatingSearchBar(
       hint: hint,
+      controller: controller,
+      automaticallyImplyBackButton: false,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 800),
       transitionCurve: Curves.easeInOut,
@@ -37,6 +41,7 @@ class SearchPage extends StatelessWidget {
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) async {
+  
         print("something here 36");
         data = await this.onChanged(query);
         print("this is some data ${data}");
@@ -58,22 +63,32 @@ class SearchPage extends StatelessWidget {
         ),
       ],
       builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Material(
-            color: Colors.white,
-            elevation: 4.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SearchResults(
-                    locator<ChatDatabaseService>().getSearchUserListResults()),
-                //Text("is there something here"),
-              ],
+        print("searach bar widget line 63");
+         
+        // if (data.isEmpty) return Container();
+         //return Visibility(
+          // visible: data.isNotEmpty,
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Material(
+              color: Colors.white,
+              elevation: 4.0,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  
+                  SearchResults(
+                      locator<ChatDatabaseService>().getSearchUserListResults()),
+                  //Text("is there something here"),
+                ],
+              ),
             ),
-          ),
-        );
+                 );
+        // );
       },
     );
   }
 }
+
+// profile image (place holder) usee name 
+// message 

@@ -30,6 +30,15 @@ class MessageCards extends StatelessWidget{
               Text("${messageModel.message}",
               style: TextStyle(color: locator<AuthService>().currentUser.get()!.uid == messageModel.sender.userId ? Colors.black : Colors.white),
               textAlign: locator<AuthService>().currentUser.get()!.uid == messageModel.sender.userId ? TextAlign.end : TextAlign.start,
+              ),
+              const SizedBox(height: 5,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("${messageModel.timeStamp}",
+                  style: TextStyle(fontSize: 7),
+                  )
+                ],
               )
             ],
           ) ,

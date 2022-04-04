@@ -23,43 +23,51 @@ class SearchResults extends StatelessWidget {
     }
     List<Widget> cardWidget = toDisplay.map<Widget>((e) {
       print("from SearchResults ${e}");
-      return ListTile(
-        title: Text(" ${e.firstName}"),
-        onTap: () => {
-          showDialog(
-              context: context,
-              builder: (_) => Dialog(
-                    child: Container(
-                      width: 250,
-                      height: 100,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("Create chat room with ${e.firstName}"),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                child: Text("Cancel"),
-                                onPressed: () {
-                                },
-                              ),
-                              TextButton(
-                                child: Text("Continue"),
-                                onPressed: () {
-                                  locator<UserChatViewModel>()
-                                      .createChatRoom(e.userId);
-                                },
-                              )
-                            ],
-                          )
-                        ],
+      print('todispaly data is $toDisplay');
+      return Visibility(
+        visible: toDisplay.isNotEmpty,
+        child: ListTile(
+          title: Text(" ${e.firstName}"),
+          onTap: () => {
+            showDialog(
+                context: context,
+                builder: (BuildContext context ) => Dialog(
+                      child: Container(
+                        width: 250,
+                        height: 100,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Create chat room with ${e.firstName}"),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.pop(context,true);
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text("Continue"),
+                                  onPressed: () {
+                                    locator<UserChatViewModel>()
+                                        .createChatRoom(e.userId);
+                                        Navigator.pop(context,false);
+                                        // 
+                                  },
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  )),
-          print("I pressed a tile ${e}")
-        },
-        //subtitle: Text("Something here"),
+                    )),
+            print("I pressed a tile ${e}"),
+        
+          },
+          //subtitle: Text("Something here"),
+        ),
       );
     }).toList();
 

@@ -5,3 +5,13 @@ import 'package:intl/intl.dart';
 String getCurrentDateFormat() {
   return DateFormat.yMEd().add_jms().format(DateTime.now());
 }
+
+String getMessageCurrentDateFormat() {
+  var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+  return outputFormat.format(DateTime.now());
+}
+
+String recentChatDateFormat(String dateFormat) {
+  var substring = dateFormat.substring(10);
+  return substring;
+}

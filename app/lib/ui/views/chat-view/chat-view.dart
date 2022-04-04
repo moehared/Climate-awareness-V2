@@ -17,7 +17,8 @@ class ChatView extends StatelessWidget {
         builder: (ctx, model, child) => Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).primaryColor,
-              //automaticallyImplyLeading: false,
+              automaticallyImplyLeading: false,
+              
               elevation: 0,
               title: Text('Chat'),
             ),
@@ -66,10 +67,9 @@ class ChatView extends StatelessWidget {
                 ),
                 SearchPage(
                     onChanged: (searchKey) async {
+                      if(searchKey == null) return null;
                       var aData =
-                          await model.getFilteredUsersBySearchKey(searchKey!);
-                      // .then((value) =>
-                      //     value.map((e) => e.toJson()).toList());
+                          await model.getFilteredUsersBySearchKey(searchKey);
                       print("this is aData ${aData}");
                       model.setSomeData = aData;
                       return aData;
