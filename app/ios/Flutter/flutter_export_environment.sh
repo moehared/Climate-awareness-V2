@@ -1,9 +1,9 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/mohamedbashir/flutter_sdk/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/mohamedbashir/Documents/Capstone project/Climate-awareness-V2/app"
+export "FLUTTER_ROOT=E:\Flutter\flutter"
+export "FLUTTER_APPLICATION_PATH=E:\Climate Awarenes\Climate-awareness-V2\app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
-export "FLUTTER_TARGET=/Users/mohamedbashir/Documents/Capstone project/Climate-awareness-V2/app/lib/main.dart"
+export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"
 export "FLUTTER_BUILD_NUMBER=1"

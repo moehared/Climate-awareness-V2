@@ -5,6 +5,7 @@ import 'package:app/common/utils/getcategory-obj.dart';
 import 'package:app/domain/viewmodel/buildView_modelTemplate.dart/buildView_modelTemplate.dart';
 import 'package:app/domain/viewmodel/profile_viewmodel/profile_viewmodel.dart';
 import 'package:app/main.dart';
+import 'package:app/ui/widgets/avator.dart';
 import 'package:app/ui/widgets/container-list/build-achievement-list.dart';
 import 'package:app/ui/widgets/container-list/build-container-list.dart';
 import 'package:app/ui/widgets/image-widgets/background_image.dart';
@@ -179,75 +180,6 @@ class TitleAndButton extends StatelessWidget {
       ],
     );
   }
-}
 
-class UserAvatar extends StatelessWidget {
-  final Function getImage;
-  final Function camera;
-  final File? image;
-  const UserAvatar({
-    Key? key,
-    required this.getImage,
-    required this.image,
-    required this.camera,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    var media = MediaQuery.of(context);
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Stack(
-        children: [
-          ClipRect(
-            child: Container(
-              width: 100.0,
-              height: 100.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-// borderRadius: BorderRadius.all(Radius.circular(50)),
-                border: Border.all(color: Colors.white, width: 1),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: image != null
-                      ? FileImage(image!) as ImageProvider
-                      : AssetImage('images/person.png'),
-                  // image: AssetImage('images/me.jpg'),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 10,
-            left: 60,
-            top: 80,
-            child: FocusedMenuHolder(
-              blurSize: 5.0,
-              animateMenuItems: true,
-              openWithTap: true,
-              menuWidth: media.size.width * 0.50,
-              menuItems: [
-                FocusedMenuItem(
-                  title: Text('Camera'),
-                  trailingIcon: Icon(Icons.camera_alt_rounded),
-                  onPressed: camera,
-                ),
-                FocusedMenuItem(
-                  title: Text('Gallery'),
-                  trailingIcon: Icon(Icons.photo),
-                  onPressed: getImage,
-                ),
-              ],
-              onPressed: () {},
-              child: Icon(
-                Icons.camera_alt_rounded,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 26,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
