@@ -17,12 +17,6 @@ class AccountFirebaseFireStoreRepo implements RepositoryInterface<UserModel> {
   }
 
   @override
-  Future<void> delete(String id) async {
-    // TODO: implement delete
-    throw UnimplementedError();
-  }
-
-  @override
   Future<UserModel> read(String id) async {
     final doc = await firestore.collection(USER_COLLECTION).doc(id).get();
     final data = Optional.ofNullable(doc.data());
@@ -38,5 +32,12 @@ class AccountFirebaseFireStoreRepo implements RepositoryInterface<UserModel> {
         .collection(USER_COLLECTION)
         .doc(user.userId)
         .set(user.toMap());
+  }
+
+
+  @override
+  Future<void> delete(String id) async {
+    // TODO: implement delete
+    throw UnimplementedError();
   }
 }

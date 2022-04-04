@@ -43,6 +43,11 @@ class _BuildViewModelState<T extends BaseViewModel>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (ctx) => model,
