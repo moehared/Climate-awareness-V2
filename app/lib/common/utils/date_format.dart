@@ -8,7 +8,7 @@ String getCurrentDateFormat() {
 
 String getMessageCurrentDateFormat() {
   var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
-  return outputFormat.format(DateTime.now());
+  return outputFormat.format(DateTime.now().toLocal());
 }
 
 String recentChatDateFormat(String dateFormat) {
