@@ -37,6 +37,8 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [User Testing Document](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20closing/User%20Testing%20Document.pdf)
 * [User Guide](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20closing/User%20Guide.pdf)
 * [Code Testing Plan and Result](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20closing/Code%20Testing%20Plan%20And%20Result.pdf)
+* [Project Poster](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/project%20closing/Portrait%20(2)%20(1).pdf)
+* [Project Advertisement](https://www.youtube.com/watch?v=J99W_-FJZRU)
 
 ### Scrum meeting
 * [Scrum 1 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%201.pdf)
