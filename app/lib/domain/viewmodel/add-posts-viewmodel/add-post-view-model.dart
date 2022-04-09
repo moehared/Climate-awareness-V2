@@ -1,3 +1,4 @@
+import 'package:app/common/enums/view_state.dart';
 import 'package:app/common/utils/date_format.dart';
 import 'package:app/common/utils/regex-patterns.dart';
 import 'package:app/domain/services/authentication_service/auth_service.dart';
@@ -16,10 +17,10 @@ import 'package:intl/intl.dart';
 
 //TODO: To seperate catergory and type create maybe another drop down widget
 class AddPostViewModel extends BaseViewModel {
-  var _validUrlPath = false;
+  var _validPostUrl = false;
   var _validImageUrlPath = false;
   final _navService = locator<NavigationService>();
-  var _validImagePath = false;
+  var _validImageUrl = false;
   var _blackList = false;
   String _postId = "";
 
@@ -92,14 +93,15 @@ class AddPostViewModel extends BaseViewModel {
 
   //TODO: One validator is for http|https and another is for images .png , jpeg
 
-  void checkArticleURL(String userArticleUrl) {
+  void checkArticleURL(String userArticleUrl) async {
     try {
-      final response = http.get(Uri.parse(userArticleUrl));
-      if (response == 200) {
-        _validUrlPath = true;
+      final response = await http.get(Uri.parse(userArticleUrl));
+      debugPrint('response code is --> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        _validPostUrl = true;
       }
     } on Exception catch (_) {
-      _validUrlPath = false;
+      _validPostUrl = false;
     }
     var isUrlValid =
         (RegExp(urlPattern, caseSensitive: false).firstMatch(userArticleUrl) !=
@@ -109,26 +111,28 @@ class AddPostViewModel extends BaseViewModel {
                 null);
 
     if (isUrlValid) {
-      _validUrlPath = true;
+      _validPostUrl = true;
     } else {
-      _validUrlPath = false;
+      _validPostUrl = false;
     }
-    print(_validUrlPath);
-    print(articleValid);
+
+    debugPrint('valid url path $_validPostUrl');
+    debugPrint('is articleValid valid ? $articleValid');
+    notifyListeners();
   }
 
-  bool get articleValid => _validUrlPath;
+  bool get articleValid => _validPostUrl;
 
-  void checkImageURL(String userImageUrl) {
+  void checkImageURL(String userImageUrl) async {
     try {
-      final response = http.get(Uri.parse(userImageUrl));
-      if (response == 200) {
-        _validUrlPath = true;
+      final response = await http.get(Uri.parse(userImageUrl));
+      if (response.statusCode == 200) {
+        _validImageUrl = true;
       }
     } on Exception catch (_) {
-      _validUrlPath = false;
+      _validImageUrl = false;
     }
-    print(_validImageUrlPath);
+    debugPrint('_validImageUrl --> $_validImageUrl');
     var isUrlValid =
         (RegExp(imagePattern, caseSensitive: false).firstMatch(userImageUrl) !=
             null);
@@ -138,8 +142,9 @@ class AddPostViewModel extends BaseViewModel {
     } else {
       _validImageUrlPath = false;
     }
-    print(_validImageUrlPath);
-    print(imageValid);
+    debugPrint('valid image url path $_validImageUrlPath');
+    debugPrint('is image valid ? $imageValid');
+    notifyListeners();
   }
 
   bool get imageValid => _validImageUrlPath;
@@ -184,13 +189,14 @@ class AddPostViewModel extends BaseViewModel {
     _navService.pop();
   }
 
-  void submit() async {
-    if (!_formKey.currentState!.validate() ||
-        _image == null ||
-        _imageUrlController.text.isEmpty) {
+  Future submit() async {
+    if (!_formKey.currentState!.validate()) {
+      debugPrint("could not submit ...\n");
+      debugPrint("_image === null ? $_image");
       return;
     }
-
+    debugPrint("user post...");
+    setViewState(ViewState.BUSY);
     _formKey.currentState?.save();
     final date = getCurrentDateFormat();
     setUserPostObj = userPostsModel.copyWith(imagePath: _image!.path);
@@ -198,7 +204,8 @@ class AddPostViewModel extends BaseViewModel {
     setUserPostObj = userPostsModel.copyWith(date: date);
     setUserPostObj = userPostsModel.copyWith(
         userId: _userAuthService.currentUser.get()?.uid);
-    _userPostService.createNewPost(userPostsModel);
+    await _userPostService.createNewPost(userPostsModel);
+    setViewState(ViewState.IDLE);
     _navService.pop();
   }
 

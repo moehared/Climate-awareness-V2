@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app/common/enums/view_state.dart';
 import 'package:app/common/styles/style.dart';
 import 'package:app/domain/viewmodel/add-posts-viewmodel/add-post-view-model.dart';
 import 'package:app/ui/widgets/button-widget/rounded-long-button.dart';
@@ -35,8 +36,9 @@ class CreateUserPost extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
-              onChanged: (_) {
+              onChanged: (url) {
                 model.eventEmitted(true);
+                   model.checkArticleURL(url);
               },
               controller: model.urlController,
               style: TextStyle(color: Colors.white),
@@ -51,8 +53,7 @@ class CreateUserPost extends StatelessWidget {
                 if (model.blackListValid) {
                   return "URL contains illicit words";
                 }
-                model.checkArticleURL(url);
-                print("valid DO I Fail here" + model.articleValid.toString());
+                 print("valid DO I Fail here " + model.articleValid.toString());
                 if (!model.articleValid) {
                   return "URL is not valid";
                 }
@@ -74,7 +75,6 @@ class CreateUserPost extends StatelessWidget {
             ),
             FormFieldDropDownWidget(
               onChanged: (dropDownValue) {
-
                 model.eventEmitted(true);
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(category: dropDownValue);
@@ -120,7 +120,6 @@ class CreateUserPost extends StatelessWidget {
                 return null;
               },
               onSaved: (description) {
-                
                 model.setUserPostObj =
                     model.userPostsModel.copyWith(description: description);
               },
@@ -188,22 +187,23 @@ class CreateUserPost extends StatelessWidget {
                     },
                     onEditingComplete: model.onEditComplete,
                     validator: (url) {
-                      if (url!.isEmpty) {
+                      if (url!.isEmpty && !model.isUserUpload) {
                         return "Enter a Image URL";
                       }
-                      model.blacklistCheck(url);
+
                       if (model.blackListValid) {
                         return "Image URL contains illicit words";
                       }
-                      model.checkImageURL(url);
-                      print("valid OR over 196 " + model.imageValid.toString());
-                      if (!model.imageValid) {
-                        return "Image URL is not valid";
+                      if (!model.isUserUpload) {
+                        model.blacklistCheck(url);
+                        model.checkImageURL(url);
                       }
                     },
                     onSaved: (imageURL) {
-                      model.setUserPostObj =
-                          model.userPostsModel.copyWith(imageUrl: imageURL);
+                      if (!model.isUserUpload) {
+                        model.setUserPostObj =
+                            model.userPostsModel.copyWith(imageUrl: imageURL);
+                      }
                     },
                   ),
                 ),
@@ -224,6 +224,7 @@ class CreateUserPost extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: BuildRoundedLongButton(
+                isBusy: model.viewState == ViewState.BUSY,
                 title: model.userPostsModel.postId.isEmpty
                     ? 'Create Post'
                     : 'Update',
