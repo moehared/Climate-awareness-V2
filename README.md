@@ -45,6 +45,9 @@ Focusing on Target 13.3: Improve education, awareness-raising and human and inst
 * [Scrum 2 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%202.pdf)
 * [Scrum 3 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%203.pdf)
 * [Scrum 4 Meeting Presentation](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%204.pdf)
+* [Scrum 5](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%205.pdf)
+* [Scrum 6](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%206.pdf)
+* [Scrum 7](https://github.com/moehared/Climate-awareness-V2/blob/main/documents/scrum%20meeting/Scrum%207.pdf)
 # Project vlogs
 * [Project vlog video #1](https://youtu.be/VdBLrs5eckA) due Sept 17, 2021
 * [Project vlog video #2](https://www.youtube.com/watch?v=zmd04wQEFMM) due Oct 15, 2021
