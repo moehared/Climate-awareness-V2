@@ -11,6 +11,6 @@ EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ==
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386 arm64
 DART_OBFUSCATION=false
-TRACK_WIDGET_CREATION=true
+TRACK_WIDGET_CREATION=false
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=/Users/mohamedbashir/Documents/Capstone project/Climate-awareness-V2/app/.dart_tool/package_config.json
+PACKAGE_CONFIG=.packages

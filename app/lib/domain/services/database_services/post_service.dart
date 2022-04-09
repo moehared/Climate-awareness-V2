@@ -7,8 +7,8 @@ class PostDatabaseService {
   final PostFirebaseFireStoreRepo _repository;
   PostDatabaseService(this._repository);
 
-  void createNewPost(UserPostModel userPostModel) async {
-    _repository.create(userPostModel);
+  Future <void> createNewPost(UserPostModel userPostModel) async {
+    await _repository.create(userPostModel);
     //print(userPostModel.toMap().toString());
   }
 
